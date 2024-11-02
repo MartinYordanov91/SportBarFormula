@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBarFormula", "SportBar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportBarFormula.Core", "SportBarFormula.Core\SportBarFormula.Core.csproj", "{562669F4-7ACD-440F-8DA4-91467D3B4608}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportBarFormula.Infastructure", "SportBarFormula.Infastructure\SportBarFormula.Infastructure.csproj", "{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{562669F4-7ACD-440F-8DA4-91467D3B4608}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{562669F4-7ACD-440F-8DA4-91467D3B4608}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{562669F4-7ACD-440F-8DA4-91467D3B4608}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
