@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SportBarFormula.Infrastructure.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class SportBarFormulaDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public SportBarFormulaDbContext(DbContextOptions<SportBarFormulaDbContext> options)
             : base(options)
         {
         }

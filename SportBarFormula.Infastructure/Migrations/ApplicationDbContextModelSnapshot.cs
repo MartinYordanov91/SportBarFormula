@@ -10,7 +10,7 @@ using SportBarFormula.Infrastructure.Data;
 
 namespace SportBarFormula.Infastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SportBarFormulaDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

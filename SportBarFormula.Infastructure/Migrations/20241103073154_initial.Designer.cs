@@ -11,7 +11,7 @@ using SportBarFormula.Infrastructure.Data;
 
 namespace SportBarFormula.Infastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(SportBarFormulaDbContext))]
     [Migration("20241103073154_initial")]
     partial class initial
     {

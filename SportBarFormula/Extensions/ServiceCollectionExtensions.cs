@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplicationDbcContext(this IServiceCollection services, IConfiguration config)
     {
         var connectionString = config.GetConnectionString("DefaultConnection");
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<SportBarFormulaDbContext>(options =>
              options.UseSqlServer(connectionString));
 
         services.AddDatabaseDeveloperPageExceptionFilter();
@@ -29,7 +29,7 @@ public static class ServiceCollectionExtensions
         {
             options.SignIn.RequireConfirmedAccount = true;
         })
-        .AddEntityFrameworkStores<ApplicationDbContext>();
+        .AddEntityFrameworkStores<SportBarFormulaDbContext>();
 
         return services;
     }
