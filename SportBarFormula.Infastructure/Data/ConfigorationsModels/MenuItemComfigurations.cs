@@ -10,6 +10,12 @@ public class MenuItemComfigurations : IEntityTypeConfiguration<MenuItem>
     public void Configure(EntityTypeBuilder<MenuItem> builder)
     {
         builder
+            .HasOne(mi => mi.Category)
+            .WithMany(c => c.MenuItems)
+            .HasForeignKey(mi => mi.CategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
            .HasData(MenuItemsSeeds.GenerateMenuItems());
     }
 
