@@ -7,13 +7,8 @@ using static SportBarFormula.Infastructure.Constants.DataConstants.OrdersConstan
 namespace SportBarFormula.Infastructure.Data.Models;
 
 [Comment("Contains information about orders placed by customers.")]
-public class Order
+public class Orders
 {
-    public Order()
-    {
-        this.OrderItems = new HashSet<OrderItem>();
-    }
-
     [Key]
     [Comment("Unique identifier of the order")]
     public int OrderId { get; set; }
@@ -30,8 +25,4 @@ public class Order
     [Column(TypeName = OrderTotalAmountPrecision)]
     [Comment("Total amount of the order")]
     public required decimal TotalAmount { get; set; }
-
-    [Comment("Collection of order items")] 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } 
-
 }

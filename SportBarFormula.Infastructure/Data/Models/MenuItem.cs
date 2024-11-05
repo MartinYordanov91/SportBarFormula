@@ -8,11 +8,6 @@ namespace SportBarFormula.Infastructure.Data.Models;
 [Comment("Contains information about menu items - food, drinks and more.")]
 public class MenuItem
 {
-    public MenuItem()
-    {
-        this.OrderItems = new HashSet<OrderItem>();
-    }
-
     [Key]
     [Comment("Unique identifier of the item")]
     public int MenuItemId { get; set; }
@@ -52,7 +47,4 @@ public class MenuItem
 
     [Comment("Soft delit flag")]
     public bool IsDeleted { get; set; } = false;
-
-    [Comment("Collection of order items associated with this menu item")]
-    public virtual ICollection<OrderItem> OrderItems { get; set; }
 }
