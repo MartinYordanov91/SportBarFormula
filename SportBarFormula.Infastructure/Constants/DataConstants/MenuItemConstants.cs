@@ -2,7 +2,7 @@
 
 namespace SportBarFormula.Infastructure.Constants.DataConstants;
 
-public static class MenuItemsConstants
+public static class MenuItemConstants
 {
     public const int MenuItemNameMinLength = 3;
     public const int MenuItemNameMaxLength = 150;

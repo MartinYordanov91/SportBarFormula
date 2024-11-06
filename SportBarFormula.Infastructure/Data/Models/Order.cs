@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SportBarFormula.Infastructure.Constants.DataConstants.OrdersConstants;
+using static SportBarFormula.Infastructure.Constants.DataConstants.OrderConstants;
 
 namespace SportBarFormula.Infastructure.Data.Models;
 
@@ -27,7 +27,7 @@ public class Order
     [Comment("Order date")]
     public required DateTime OrderDate { get; set; }
 
-    [Column(TypeName = OrderTotalAmountPrecision)]
+    [Column(TypeName = OrderDateStringFormat)]
     [Comment("Total amount of the order")]
     public required decimal TotalAmount { get; set; }
 

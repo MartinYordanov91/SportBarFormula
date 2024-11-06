@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SportBarFormula.Infastructure.Constants.DataConstants.MenuItemsConstants;
+using static SportBarFormula.Infastructure.Constants.DataConstants.MenuItemConstants;
 
 namespace SportBarFormula.Infastructure.Data.Models;
 
