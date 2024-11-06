@@ -4,8 +4,6 @@ using SportBarFormula.Infastructure.Data.Models;
 
 namespace SportBarFormula.Infastructure.Data.ConfigorationsModels;
 
-
-
 public class ReserwationConfigurations : IEntityTypeConfiguration<Reservation>
 {
     public void Configure(EntityTypeBuilder<Reservation> builder)
