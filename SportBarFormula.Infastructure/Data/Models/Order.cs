@@ -12,6 +12,7 @@ public class Order
     public Order()
     {
         this.OrderItems = new HashSet<OrderItem>();
+        this.Payments = new HashSet<Payment>();
     }
 
     [Key]
@@ -33,4 +34,7 @@ public class Order
 
     [Comment("Collection of order items")]
     public virtual ICollection<OrderItem> OrderItems { get; set; }
+
+    [Comment("Collection of payments associated with this order")] 
+    public virtual ICollection<Payment> Payments { get; set; }
 }
