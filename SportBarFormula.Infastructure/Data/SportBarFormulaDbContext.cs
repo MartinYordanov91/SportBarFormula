@@ -16,6 +16,8 @@ namespace SportBarFormula.Infrastructure.Data
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderItem> OrderItems { get; set; }
+        public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<Table> Tables { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
