@@ -2,11 +2,11 @@
 
 public static class PaymentConstants
 {
-    public const string PaymentDateStringFormat = "dd-MM-yyyy";
-    //[RegularExpression(@"^\d{2}-\d{2}-\d{4}$")]
+    public const string PaymentDateStringFormat = "dd-MM-yyyy HH:mm";
+    //[RegularExpression(@"^\d{2}-\d{2}-\d{4} \d{2}:\d{2}$")]
     //var isValid = DateTime.TryParseExact(model.PaymentDate, PaymentDateStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime result);
 
-    
+
     public const string PaymantAmountPrecision = "decimal(18,2)";
 
     public const int PaymentMethodMinLength = 3; 

@@ -23,5 +23,5 @@ public static class MenuItemConstants
 
     public const string MenuItemPreparationTimeMin = "5";
     public const string MenuItemPreparationTimeMax = "30";
-    //[Range(typeof(int), MenuItemPreparationTimeMin, MenuItemPreparationTimeMax, ConvertValueInInvariantCulture = true)]
+    //[Range(typeof(int), MenuItemPreparationTimeMin, MenuItemPreparationTimeMax)]
 }
