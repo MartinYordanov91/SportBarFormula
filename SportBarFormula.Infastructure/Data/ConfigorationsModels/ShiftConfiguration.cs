@@ -8,5 +8,10 @@ public class ShiftConfigurations : IEntityTypeConfiguration<Shift>
 {
     public void Configure(EntityTypeBuilder<Shift> builder)
     {
+        builder
+            .HasOne(s => s.User)
+            .WithMany()
+            .HasForeignKey(s => s.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
