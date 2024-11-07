@@ -28,7 +28,7 @@ public class Order
     [Comment("Order date")]
     public required DateTime OrderDate { get; set; }
 
-    [Column(TypeName = OrderDateStringFormat)]
+    [Column(TypeName = OrderTotalAmountPrecision)]
     [Comment("Total amount of the order")]
     public required decimal TotalAmount { get; set; }
 

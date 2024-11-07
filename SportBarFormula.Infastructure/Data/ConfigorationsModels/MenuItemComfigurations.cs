@@ -23,8 +23,8 @@ public class MenuItemComfigurations : IEntityTypeConfiguration<MenuItem>
             .HasForeignKey(oi => oi.MenuItemId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder
-           .HasData(MenuItemsSeeds.GenerateMenuItems());
+        //builder
+        //   .HasData(MenuItemsSeeds.GenerateMenuItems());
     }
 
   

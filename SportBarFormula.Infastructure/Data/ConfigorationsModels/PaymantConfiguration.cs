@@ -10,14 +10,14 @@ public class PaymentConfigurations : IEntityTypeConfiguration<Payment>
     {
         builder.HasKey(p => p.PaymentId);
 
-        builder.HasOne(p => p.Order)
-               .WithMany()
-               .HasForeignKey(p => p.OrderId)
-               .OnDelete(DeleteBehavior.Restrict);
+        //builder.HasOne(p => p.Order)
+        //       .WithMany()
+        //       .HasForeignKey(p => p.OrderId)
+        //       .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(p => p.User)
-               .WithMany()
-               .HasForeignKey(p => p.UserId)
-               .OnDelete(DeleteBehavior.Restrict);
+        //builder.HasOne(p => p.User)
+        //       .WithMany()
+        //       .HasForeignKey(p => p.UserId)
+        //       .OnDelete(DeleteBehavior.Restrict);
     }
 }
