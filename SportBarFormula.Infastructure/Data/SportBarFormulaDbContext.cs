@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SportBarFormula.Infastructure.Data.Models;
+using SportBarFormula.Infrastructure.Data.Models;
 using System.Reflection;
 
 namespace SportBarFormula.Infrastructure.Data
@@ -20,6 +20,7 @@ namespace SportBarFormula.Infrastructure.Data
         public virtual DbSet<Table> Tables { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
+        public virtual DbSet<Shift> Shifts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
