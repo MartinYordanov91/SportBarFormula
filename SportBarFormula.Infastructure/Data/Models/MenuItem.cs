@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SportBarFormula.Infastructure.Constants.DataConstants.MenuItemConstants;
+using static SportBarFormula.Infrastructure.Constants.DataConstants.MenuItemConstants;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 [Comment("Contains information about menu items - food, drinks and more.")]
 public class MenuItem

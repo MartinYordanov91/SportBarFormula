@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using static SportBarFormula.Infastructure.Constants.DataConstants.CategoryConstants;
+using static SportBarFormula.Infrastructure.Constants.DataConstants.CategoryConstants;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 [Comment("Group menu items by categories such as drinks, main courses, desserts.")]
 public class Category

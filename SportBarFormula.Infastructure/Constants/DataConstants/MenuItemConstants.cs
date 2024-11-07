@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SportBarFormula.Infastructure.Constants.DataConstants;
+namespace SportBarFormula.Infrastructure.Constants.DataConstants;
 
 public static class MenuItemConstants
 {

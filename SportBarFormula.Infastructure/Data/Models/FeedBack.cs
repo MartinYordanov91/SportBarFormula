@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 [Comment("Stores customer feedback and ratings for service, menu, or events.")]
 public class Feedback

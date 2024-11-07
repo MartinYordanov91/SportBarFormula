@@ -1,6 +1,6 @@
-﻿using SportBarFormula.Infastructure.Data.Models;
+﻿using SportBarFormula.Infrastructure.Data.Models;
 
-namespace SportBarFormula.Infastructure.Data.SeedData;
+namespace SportBarFormula.Infrastructure.Data.SeedData;
 
 public static class MenuItemsSeeds
 {

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 
 [Comment("Manages table reservations in the sports bar.")]

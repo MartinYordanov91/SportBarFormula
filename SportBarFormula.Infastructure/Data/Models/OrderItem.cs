@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SportBarFormula.Infastructure.Constants.DataConstants.OrderItemConstants;
+using static SportBarFormula.Infrastructure.Constants.DataConstants.OrderItemConstants;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 [Comment("This table is the link between Orders and MenuItems. Each line in it represents one item in the order")]
 public class OrderItem

@@ -9,7 +9,7 @@ using SportBarFormula.Infrastructure.Data;
 
 #nullable disable
 
-namespace SportBarFormula.Infastructure.Migrations
+namespace SportBarFormula.Infrastructure.Migrations
 {
     [DbContext(typeof(SportBarFormulaDbContext))]
     [Migration("20241107064148_AddMainEntitys")]
@@ -227,7 +227,7 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Category", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -250,7 +250,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Feedback", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Feedback", b =>
                 {
                     b.Property<int>("FeedbackId")
                         .ValueGeneratedOnAdd()
@@ -286,7 +286,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.MenuItem", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.MenuItem", b =>
                 {
                     b.Property<int>("MenuItemId")
                         .ValueGeneratedOnAdd()
@@ -347,7 +347,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Order", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -379,7 +379,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.OrderItem", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.OrderItem", b =>
                 {
                     b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
@@ -416,7 +416,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Payment", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Payment", b =>
                 {
                     b.Property<int>("PaymentId")
                         .ValueGeneratedOnAdd()
@@ -466,7 +466,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Reservation", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Reservation", b =>
                 {
                     b.Property<int>("ReservationId")
                         .ValueGeneratedOnAdd()
@@ -508,7 +508,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Table", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Table", b =>
                 {
                     b.Property<int>("TableId")
                         .ValueGeneratedOnAdd()
@@ -593,7 +593,7 @@ namespace SportBarFormula.Infastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Feedback", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Feedback", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
@@ -604,9 +604,9 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.MenuItem", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.MenuItem", b =>
                 {
-                    b.HasOne("SportBarFormula.Infastructure.Data.Models.Category", "Category")
+                    b.HasOne("SportBarFormula.Infrastructure.Data.Models.Category", "Category")
                         .WithMany("MenuItems")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -615,7 +615,7 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Order", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Order", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
@@ -626,15 +626,15 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.OrderItem", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.OrderItem", b =>
                 {
-                    b.HasOne("SportBarFormula.Infastructure.Data.Models.MenuItem", "MenuItem")
+                    b.HasOne("SportBarFormula.Infrastructure.Data.Models.MenuItem", "MenuItem")
                         .WithMany("OrderItems")
                         .HasForeignKey("MenuItemId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SportBarFormula.Infastructure.Data.Models.Order", "Order")
+                    b.HasOne("SportBarFormula.Infrastructure.Data.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -645,9 +645,9 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Payment", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Payment", b =>
                 {
-                    b.HasOne("SportBarFormula.Infastructure.Data.Models.Order", "Order")
+                    b.HasOne("SportBarFormula.Infrastructure.Data.Models.Order", "Order")
                         .WithMany("Payments")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -664,9 +664,9 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Reservation", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Reservation", b =>
                 {
-                    b.HasOne("SportBarFormula.Infastructure.Data.Models.Table", "Table")
+                    b.HasOne("SportBarFormula.Infrastructure.Data.Models.Table", "Table")
                         .WithMany()
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -683,17 +683,17 @@ namespace SportBarFormula.Infastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Category", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Category", b =>
                 {
                     b.Navigation("MenuItems");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.MenuItem", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.MenuItem", b =>
                 {
                     b.Navigation("OrderItems");
                 });
 
-            modelBuilder.Entity("SportBarFormula.Infastructure.Data.Models.Order", b =>
+            modelBuilder.Entity("SportBarFormula.Infrastructure.Data.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
 

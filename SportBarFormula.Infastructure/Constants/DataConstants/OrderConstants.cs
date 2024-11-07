@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace SportBarFormula.Infastructure.Constants.DataConstants;
+namespace SportBarFormula.Infrastructure.Constants.DataConstants;
 
 public static class OrderConstants
 {

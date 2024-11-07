@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SportBarFormula.Infastructure.Constants.DataConstants.OrderConstants;
+using static SportBarFormula.Infrastructure.Constants.DataConstants.OrderConstants;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 [Comment("Contains information about orders placed by customers.")]
 public class Order

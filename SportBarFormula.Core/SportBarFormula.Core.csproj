@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SportBarFormula.Infastructure\SportBarFormula.Infastructure.csproj" />
+    <ProjectReference Include="..\SportBarFormula.Infastructure\SportBarFormula.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@ using SportBarFormula.Infrastructure.Data;
 
 #nullable disable
 
-namespace SportBarFormula.Infastructure.Migrations
+namespace SportBarFormula.Infrastructure.Migrations
 {
     [DbContext(typeof(SportBarFormulaDbContext))]
     [Migration("20241103073154_initial")]

@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using static SportBarFormula.Infastructure.Constants.DataConstants.PaymentConstants;
+using static SportBarFormula.Infrastructure.Constants.DataConstants.PaymentConstants;
 
-namespace SportBarFormula.Infastructure.Data.Models;
+namespace SportBarFormula.Infrastructure.Data.Models;
 
 [Comment("Tracks information about payments for orders.")]
 public class Payment

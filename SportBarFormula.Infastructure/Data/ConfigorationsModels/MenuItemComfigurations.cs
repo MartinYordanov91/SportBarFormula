@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SportBarFormula.Infastructure.Data.Models;
-using SportBarFormula.Infastructure.Data.SeedData;
+using SportBarFormula.Infrastructure.Data.Models;
+using SportBarFormula.Infrastructure.Data.SeedData;
 
-namespace SportBarFormula.Infastructure.Data.ConfigorationsModels;
+namespace SportBarFormula.Infrastructure.Data.ConfigorationsModels;
 
 public class MenuItemComfigurations : IEntityTypeConfiguration<MenuItem>
 {

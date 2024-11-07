@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SportBarFormula.Infastructure.Migrations
+namespace SportBarFormula.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class initial : Migration
