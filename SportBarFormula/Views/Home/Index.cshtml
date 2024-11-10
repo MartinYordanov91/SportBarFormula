@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+
 <section class="page-section clearfix">
     <div class="container">
         <div class="intro">
@@ -12,10 +13,22 @@
                 </h2>
                 <p class="mb-3">Всяка чаша от нашето качествено майсторско кафе започва с местни, ръчно подбрани съставки. След като го опитате, нашето кафе ще бъде блажено допълнение към ежедневната ви сутрешна рутина - гарантираме го!</p>
                 <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">Visit Us Today!</a></div>
+
             </div>
+
         </div>
+
     </div>
+
 </section>
+<div class="product-item-description d-flex ms-auto">
+    <div class="embed-responsive embed-responsive-16by9 mx-auto">
+        <iframe class="embed-responsive-item" id="facebookVideo" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1988760764860138&show_text=0&width=560" width="315" height="630" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        @* <iframe class="embed-responsive-item" id="facebookVideo2" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1198771361167065&show_text=0&width=560" width="315" height="630" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe> *@
+    </div>
+
+</div>
+
 <section class="page-section cta">
     <div class="container">
         <div class="row">
@@ -31,3 +44,5 @@
         </div>
     </div>
 </section>
+
+<script src="~/js/videoScript.js" asp-append-version="true"></script>
