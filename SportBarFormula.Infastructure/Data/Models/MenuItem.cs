@@ -30,7 +30,7 @@ public class MenuItem
     public required decimal Price { get; set; }
 
     [Comment("Item category (drink, pizza, etc.)")]
-    public required Category Category { get; set; }
+    public  Category Category { get; set; }
 
     [ForeignKey(nameof(Category))]
     [Comment("Unique identifier of the Category")]

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportBarFormula.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SportBarFormula.Infrastructure.Data;
 namespace SportBarFormula.Infrastructure.Migrations
 {
     [DbContext(typeof(SportBarFormulaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111073234_addtestseed")]
+    partial class addtestseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -508,21 +511,6 @@ namespace SportBarFormula.Infrastructure.Migrations
                     b.ToTable("MenuItems", t =>
                         {
                             t.HasComment("Contains information about menu items - food, drinks and more.");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            MenuItemId = 1,
-                            CategoryId = 10,
-                            Description = "Почувствайте аромата на прясно изпечен, хрупкав блат, намазан с богата доматена салса, овкусена с риган и босилек. Върху него се разстила нежен слой разтопена моцарела, която съчетава вкусовете на апетитните парчета салам чоризо. Нотките на червен сладък лук и тънко нарязани черни маслини допълват вкусовото удоволствие, докато свежите доматени резени и парченца люта чушка добавят свежест и пикантност.Прекрасно съчетание на вкусове, което ви кара да се върнете за още!",
-                            ImageURL = "https://photos.fife.usercontent.google.com/pw/AP1GczPjbg3nRj01AJP_kW1FMV_yeooafZOz8X0vJuFx1tGPOq8nHbshZFuE=w1200-h800-s-no-gm?authuser=0",
-                            Ingredients = "Доматена паста, Моцарела, Чоризо, Люта Чушка, Червен Лук, Черна Маслина, Пресен Домат ",
-                            IsAvailable = true,
-                            IsDeleted = false,
-                            Name = "Чориззо",
-                            PreparationTime = 5,
-                            Price = 10.90m
                         });
                 });
 

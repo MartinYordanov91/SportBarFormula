@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SportBarFormula.Infrastructure.Data.Models;
+using SportBarFormula.Infrastructure.Data.SeedData;
 
 namespace SportBarFormula.Infrastructure.Data.ConfigorationsModels;
 
@@ -14,5 +15,8 @@ public class CategoryConfigurations : IEntityTypeConfiguration<Category>
                .WithOne(mi => mi.Category)
                .HasForeignKey(mi => mi.CategoryId)
                .OnDelete(DeleteBehavior.Restrict);
+
+        builder
+          .HasData(CategorySeeds.GenerateCategorys());
     }
 }

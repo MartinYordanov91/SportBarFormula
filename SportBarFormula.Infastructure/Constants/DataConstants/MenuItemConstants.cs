@@ -8,7 +8,7 @@ public static class MenuItemConstants
     public const int MenuItemNameMaxLength = 150;
 
     public const int MenuItemDescriptionMinLength = 0; 
-    public const int MenuItemDescriptionMaxLength = 300;
+    public const int MenuItemDescriptionMaxLength = 500;
     
     public const string MenuItemPriceMin = "0.00";
     public const string MenuItemPricenMax = "200.00";
