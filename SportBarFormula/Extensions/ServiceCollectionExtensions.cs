@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Infrastructure.Data;
+using SportBarFormula.Core.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceCollectionExtensions
@@ -8,6 +10,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
+        services.AddScoped<IMenuItemService , MenuItemService>();
         return services;
     }
 
