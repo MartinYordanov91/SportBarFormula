@@ -1,0 +1,69 @@
+﻿@model SportBarFormula.Infrastructure.Data.Models.MenuItem
+
+@{
+    ViewData["Title"] = "Create Menu Item";
+}
+
+<h2 class="text-center" style="color:#E4C087;">Create Menu Item</h2>
+
+<div class="d-flex justify-content-center">
+    <form asp-action="Create" class="p-3 w-50" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <input asp-for="Name" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" placeholder="Enter the name of the menu item" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <textarea asp-for="Description" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" placeholder="Describe the menu item"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <input asp-for="Price" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" placeholder="Enter the price in decimal format" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <select asp-for="CategoryId" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" asp-items="ViewBag.Categories"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <input asp-for="ImageURL" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" placeholder="Enter the image URL"></input>
+                <span asp-validation-for="ImageURL" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <textarea asp-for="Ingredients" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" placeholder="List the ingredients"></textarea>
+                <span asp-validation-for="Ingredients" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <input asp-for="PreparationTime" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" placeholder="Enter the preparation time in minutes"></input>
+                <span asp-validation-for="PreparationTime" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 text-center">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

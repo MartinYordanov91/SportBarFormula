@@ -1,0 +1,39 @@
+﻿@model ICollection<MenuItemViewModel>
+
+@{
+    ViewData["Title"] = "Menu Items";
+    int index = 0;
+}
+
+@foreach (var item in Model)
+{
+    var isEven = (index % 2 == 0);
+    <section class="page-section">
+        <div class="container">
+            <div class="product-item">
+                <div class="product-item-title d-flex">
+                    <div class="bg-faded p-5 d-flex @(isEven ? "me-auto" : "ms-auto") rounded">
+                        <h2 class="section-heading mb-0">
+                            <span class="section-heading-lower">@item.Name</span>
+                        </h2>
+                    </div>
+                </div>
+                <img class="product-item-img mx-auto d-flex rounded img-fluid w-75 mb-3 mb-lg-0" src="@item.ImageURL" alt="Image of @item.Name" />
+                <div class="product-item-description d-flex @(isEven ? "ms-auto" : "me-auto")">
+                    <div class="bg-faded p-5 rounded">
+                        <p class="mb-0"><strong>Description:</strong> @item.Description</p>
+                        <p class="mb-0"><strong>Price:</strong> $@item.Price</p>
+                        <p class="mb-0"><strong>Ingredients:</strong> @item.Ingredients</p>
+                        <p class="mb-0"><strong>Preparation Time:</strong> @item.PreparationTime minutes</p>
+                        @if (!item.IsAvailable)
+                        {
+                            <p class="text-danger"><strong>Not Available</strong></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    index++;
+}
+
