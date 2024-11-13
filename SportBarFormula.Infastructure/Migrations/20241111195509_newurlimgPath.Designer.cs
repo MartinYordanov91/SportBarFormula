@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportBarFormula.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SportBarFormula.Infrastructure.Data;
 namespace SportBarFormula.Infrastructure.Migrations
 {
     [DbContext(typeof(SportBarFormulaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111195509_newurlimgPath")]
+    partial class newurlimgPath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -501,10 +504,6 @@ namespace SportBarFormula.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasComment("Item price");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int")
-                        .HasComment("Shows how many grams or how many milliliters the given product is");
-
                     b.HasKey("MenuItemId");
 
                     b.HasIndex("CategoryId");
@@ -526,8 +525,7 @@ namespace SportBarFormula.Infrastructure.Migrations
                             IsDeleted = false,
                             Name = "Чориззо",
                             PreparationTime = 5,
-                            Price = 10.90m,
-                            Quantity = 480
+                            Price = 10.90m
                         });
                 });
 

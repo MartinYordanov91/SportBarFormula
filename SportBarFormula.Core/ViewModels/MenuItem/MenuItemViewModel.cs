@@ -1,11 +1,14 @@
-﻿namespace SportBarFormula.Core.ViewModels;
+﻿namespace SportBarFormula.Core.ViewModels.MenuItem;
 
 public class MenuItemViewModel
 {
     public required string Name { get; set; }
 
     public string? Description { get; set; }
+
     public required decimal Price { get; set; }
+
+    public int Quantity { get; set; }
 
     public required string Category { get; set; }
 

@@ -29,6 +29,9 @@ public class MenuItem
     [Comment("Item price")]
     public required decimal Price { get; set; }
 
+    [Comment("Shows how many grams or how many milliliters the given product is")]
+    public int Quantity { get; set; }
+
     [Comment("Item category (drink, pizza, etc.)")]
     public  Category Category { get; set; }
 
