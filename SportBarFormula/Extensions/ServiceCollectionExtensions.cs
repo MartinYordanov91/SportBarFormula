@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ICategoryService , CategoryService>();
 
         services.AddScoped<IRepository<MenuItem>, MenuItemRepository>();
+        services.AddScoped<IRepository<Category>, CategoryRepository>();
 
         return services;
     }
