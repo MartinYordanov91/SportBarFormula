@@ -2,6 +2,7 @@
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
 using SportBarFormula.Infrastructure.Data;
+using SportBarFormula.Infrastructure.Data.Models;
 
 namespace SportBarFormula.Core.Services;
 
@@ -9,6 +10,25 @@ public class MenuItemService(SportBarFormulaDbContext context) : IMenuItemServic
 {
     private readonly SportBarFormulaDbContext _context = context;
 
+    public async Task AddMenuItem(CreateMenuItemViewModel model)
+    {
+        var newMenuItem = new MenuItem()
+        {
+            Name = model.Name,
+            Description = model.Description,
+            Price = model.Price,
+            Quantity = model.Quantity,
+            ImageURL = model.ImageURL,
+            CategoryId = model.CategoryId,
+            Ingredients = model.Ingredients,
+            PreparationTime = model.PreparationTime,
+            IsDeleted = false,
+            IsAvailable = true,
+        };
+
+        await _context.MenuItems.AddAsync(newMenuItem);
+        await _context.SaveChangesAsync();
+    }
 
     public async Task<ICollection<MenuItemViewModel>> GetAllMenuItemsAsync()
     {
