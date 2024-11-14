@@ -1,18 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SportBarFormula.Core.Services.Contracts;
+﻿using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
-using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
+using SportBarFormula.Infrastructure.Repositorys.Contracts;
 
 namespace SportBarFormula.Core.Services;
 
-public class MenuItemService(SportBarFormulaDbContext context) : IMenuItemService
+public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemService
 {
-    private readonly SportBarFormulaDbContext _context = context;
+    private readonly IRepository<MenuItem> _repository = repository;
 
     public async Task AddMenuItem(CreateMenuItemViewModel model)
     {
-        var newMenuItem = new MenuItem()
+        MenuItem newMenuItem = new MenuItem()
         {
             Name = model.Name,
             Description = model.Description,
@@ -26,13 +25,14 @@ public class MenuItemService(SportBarFormulaDbContext context) : IMenuItemServic
             IsAvailable = true,
         };
 
-        await _context.MenuItems.AddAsync(newMenuItem);
-        await _context.SaveChangesAsync();
+        await _repository.AddAsync(newMenuItem);
     }
 
     public async Task<ICollection<MenuItemViewModel>> GetAllMenuItemsAsync()
     {
-        return await _context.MenuItems
+        var menuItemColection = await _repository.GetAllAsync();
+
+            return menuItemColection
              .Where(mi => mi.IsDeleted == false)
              .Select(mi => new MenuItemViewModel
              {
@@ -47,16 +47,14 @@ public class MenuItemService(SportBarFormulaDbContext context) : IMenuItemServic
                  IsAvailable = mi.IsAvailable,
                  IsDeleted = mi.IsDeleted,
              })
-             .ToListAsync();
+             .ToList();
     }
 
     public async Task<MenuItemViewModel> GetMenuItemByIdAsync(int id)
     {
-        var currentItem = await _context.MenuItems
-               .Where(mi => mi.IsDeleted == false)
-               .FirstOrDefaultAsync(mi => mi.MenuItemId == id);
+        var currentItem = await _repository.GetByIdAsync(id);
 
-        if (currentItem == null)
+        if (currentItem == null )
         {
             throw new NullReferenceException("Invalid MenuItem Id");
         }

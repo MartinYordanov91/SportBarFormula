@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Core.Services;
+using SportBarFormula.Infrastructure.Repositorys.Contracts;
+using SportBarFormula.Infrastructure.Repositorys;
+using SportBarFormula.Infrastructure.Data.Models;
 
 namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceCollectionExtensions
@@ -12,6 +15,9 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IMenuItemService , MenuItemService>();
         services.AddScoped<ICategoryService , CategoryService>();
+
+        services.AddScoped<IRepository<MenuItem>, MenuItemRepository>();
+
         return services;
     }
 
