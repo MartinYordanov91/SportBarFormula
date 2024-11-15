@@ -74,4 +74,16 @@ public class MenuController(
 
         return RedirectToAction(nameof(Index));
     }
+
+    /// <summary>
+    /// Form for editing an existing item.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var model = await _service.GetMenuItemByIdAsync(id);
+        return View(model);
+    }
 }

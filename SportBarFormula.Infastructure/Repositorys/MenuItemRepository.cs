@@ -17,7 +17,7 @@ public class MenuItemRepository(SportBarFormulaDbContext context) : IRepository<
 
     public async Task<MenuItem> GetByIdAsync(int id)
     {
-        return await _context.MenuItems.FindAsync(id);
+        return await _context.MenuItems.Include(mi => mi.Category).FirstOrDefaultAsync(mi => mi.MenuItemId == id);
     }
 
     public async Task AddAsync(MenuItem entity)
