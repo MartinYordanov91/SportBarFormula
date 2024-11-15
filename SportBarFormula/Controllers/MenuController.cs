@@ -29,7 +29,7 @@ public class MenuController(
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var models = await _service.GetAllMenuItemsAsync();
+        var models = await _service.GetCardMenuItemsAsync();
         return View(models);
     }
 

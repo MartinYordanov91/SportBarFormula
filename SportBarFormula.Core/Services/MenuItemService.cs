@@ -32,29 +32,47 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     {
         var menuItemColection = await _repository.GetAllAsync();
 
-            return menuItemColection
-             .Where(mi => mi.IsDeleted == false)
-             .Select(mi => new MenuItemViewModel
-             {
-                 Name = mi.Name,
-                 Description = mi.Description,
-                 Category = mi.Category.Name,
-                 Price = mi.Price,
-                 Quantity = mi.Quantity,
-                 PreparationTime = mi.PreparationTime,
-                 ImageURL = mi.ImageURL,
-                 Ingredients = mi.Ingredients,
-                 IsAvailable = mi.IsAvailable,
-                 IsDeleted = mi.IsDeleted,
-             })
-             .ToList();
+        return menuItemColection
+         .Where(mi => mi.IsDeleted == false)
+         .Select(mi => new MenuItemViewModel
+         {
+             Name = mi.Name,
+             Description = mi.Description,
+             Category = mi.Category.Name,
+             Price = mi.Price,
+             Quantity = mi.Quantity,
+             PreparationTime = mi.PreparationTime,
+             ImageURL = mi.ImageURL,
+             Ingredients = mi.Ingredients,
+             IsAvailable = mi.IsAvailable,
+             IsDeleted = mi.IsDeleted,
+         })
+         .ToList();
+    }
+    public async Task<ICollection<MenuItemCardViewModel>> GetCardMenuItemsAsync()
+    {
+        var menuItemColection = await _repository.GetAllAsync();
+
+        return menuItemColection
+         .Where(mi => mi.IsDeleted == false)
+         .Select(mi => new MenuItemCardViewModel
+         {
+             MenuItemId = mi.MenuItemId,
+             Name = mi.Name,
+             Price = mi.Price,
+             Quantity = mi.Quantity,
+             ImageURL = mi.ImageURL,
+             Ingredients = mi.Ingredients,
+             CategoryId = mi.CategoryId,
+         })
+         .ToList();
     }
 
     public async Task<MenuItemViewModel> GetMenuItemByIdAsync(int id)
     {
         var currentItem = await _repository.GetByIdAsync(id);
 
-        if (currentItem == null )
+        if (currentItem == null)
         {
             throw new NullReferenceException("Invalid MenuItem Id");
         }
