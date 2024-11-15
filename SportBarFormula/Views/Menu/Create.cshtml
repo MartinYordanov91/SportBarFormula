@@ -4,7 +4,8 @@
     ViewData["Title"] = "Create Menu Item";
 }
 
-<h2 class="text-center" style="color:#E4C087;">Create Menu Item</h2>
+<h2 class="text-center mt-5" style="color:#E4C087;">@ViewData["Title"]</h2>
+<hr />
 
 <div class="d-flex justify-content-center">
     <form asp-action="Create" method="post" class="p-3 w-50" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
@@ -18,7 +19,7 @@
         <div class="form-group row">
             <div class="col-sm-12">
                 <label asp-for="@Model.Description" class="form-label-add-edit" style="color:#E4C087;">Описание</label>
-                <textarea asp-for="@Model.Description" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" ></textarea>
+                <textarea asp-for="@Model.Description" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" rows="5"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
         </div>
@@ -49,7 +50,7 @@
         <div class="form-group row">
             <div class="col-sm-12">
                 <label asp-for="@Model.ImageURL" class="form-label-add-edit" style="color:#E4C087;">Път/Линк до снимката</label>
-                <input asp-for="@Model.ImageURL" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" ></input>
+                <input asp-for="@Model.ImageURL" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" />
                 <span asp-validation-for="ImageURL" class="text-danger"></span>
             </div>
         </div>
@@ -63,20 +64,20 @@
         <div class="form-group row">
             <div class="col-sm-12">
                 <label asp-for="@Model.PreparationTime" class="form-label-add-edit" style="color:#E4C087;">Време за приготвяне</label>
-                <input asp-for="@Model.PreparationTime" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);"></input>
+                <input asp-for="@Model.PreparationTime" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);"/>
                 <span asp-validation-for="PreparationTime" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-sm-12 text-center">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Създай" class="btn btn-primary" />
             </div>
         </div>
     </form>
 </div>
 
-<div class="text-center mt-3">
-    <a asp-action="Index">Back to List</a>
+<div class="text-center mt-3 mb-5">
+    <a asp-action="Index">Назад към списъка</a>
 </div>
 
 @section Scripts {
