@@ -48,12 +48,21 @@ public class MenuController(
     /// Shows details about a specific menu item.
     /// </summary>
     /// <param name="id"></param>
+    /// <param name="categoryId"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(int id, int? categoryId)
     {
-        var model = await _service.GetMenuItemByIdAsync(id);
-        return View();
+        MenuItemDetailsViewModel viewModel = await _service.GetMenuItemDetailsByIdAsync(id);
+
+        if (viewModel == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.SelectedCategoryId = categoryId;
+
+        return View(viewModel);
     }
 
     /// <summary>
