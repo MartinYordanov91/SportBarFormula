@@ -9,7 +9,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 {
     private readonly IRepository<MenuItem> _repository = repository;
 
-    public async Task AddMenuItem(CreateMenuItemViewModel model)
+    public async Task AddMenuItemAsync(CreateMenuItemViewModel model)
     {
         MenuItem newMenuItem = new MenuItem()
         {
@@ -67,6 +67,28 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
          })
          .ToList();
     }
+
+    public async Task<ICollection<MenuItemCardViewModel>> GetMenuItemsByCategoryAsync(int? categoryId)
+    {
+        var menuItems = await _repository.GetAllAsync();
+
+        var filteredMenuItems = menuItems
+            .Where(mi => !categoryId.HasValue || mi.CategoryId == categoryId)
+            .Select(mi => new MenuItemCardViewModel
+            {
+                MenuItemId = mi.MenuItemId,
+                Name = mi.Name,
+                ImageURL = mi.ImageURL,
+                Ingredients = mi.Ingredients,
+                Price = mi.Price,
+                Quantity = mi.Quantity,
+                CategoryId = mi.CategoryId
+            })
+            .ToList();
+
+        return filteredMenuItems;
+    }
+
 
     public async Task<MenuItemViewModel> GetMenuItemByIdAsync(int id)
     {

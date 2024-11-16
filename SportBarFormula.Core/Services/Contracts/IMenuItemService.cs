@@ -8,7 +8,9 @@ public interface IMenuItemService
 
     Task<ICollection<MenuItemCardViewModel>> GetCardMenuItemsAsync();
 
+    Task<ICollection<MenuItemCardViewModel>> GetMenuItemsByCategoryAsync(int? categoryId);
+
     Task<MenuItemViewModel> GetMenuItemByIdAsync(int id);
 
-    Task AddMenuItem(CreateMenuItemViewModel model);
+    Task AddMenuItemAsync(CreateMenuItemViewModel model);
 }
