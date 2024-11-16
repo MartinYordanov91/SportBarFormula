@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MenuItemCardViewModel>
+﻿@model IEnumerable<SportBarFormula.Core.ViewModels.MenuItem.MenuItemCardViewModel>
 
 @{
     ViewData["Title"] = "Меню Артикули";
@@ -6,6 +6,32 @@
 
 <h2 class="text-center mt-5" style="color:#E4C087;">@ViewData["Title"]</h2>
 <hr />
+
+<nav class="navbar navbar-expand-lg mb-4" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCategories" aria-controls="navbarCategories" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCategories">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#E4C087;">
+                    Категории
+                </a>
+                <ul class="dropdown-menu overflow-auto custom-scrollbar" aria-labelledby="categoryDropdown" style="background-color: rgba(147, 98, 33, 0.5); max-height: 200px;">
+                    <li>
+                        <a class="dropdown-item @(ViewBag.SelectedCategoryId == null ? "active" : "")" asp-action="Index" style="color:#E4C087;">Всички категории</a>
+                    </li>
+                    @foreach (var category in (IEnumerable<SelectListItem>)ViewBag.Categories)
+                    {
+                        <li>
+                            <a class="dropdown-item @(category.Value == (ViewBag.SelectedCategoryId?.ToString() ?? string.Empty) ? "active" : "")" asp-action="Index" asp-route-categoryId="@category.Value" style="color:#E4C087;">@category.Text</a>
+                        </li>
+                    }
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <div class="container">
     <div class="row">
@@ -16,8 +42,8 @@
                     <a asp-action="Details" asp-route-id="@item.MenuItemId" class="text-decoration-none h-100 d-flex flex-column">
                         <img src="@item.ImageURL" class="card-img-top" alt="@item.Name" style="border-radius: 10px 10px 0 0;">
                         <div class="card-body flex-grow-1 d-flex flex-column">
-                            <h5 class="card-title mb-5" style="color:#E4C087;">@item.Name</h5>
-                            <p class="card-text" style="color:#E4C087;">@item.Ingredients</p>
+                            <h5 class="card-title mb-3" style="color:#E4C087;">@item.Name</h5>
+                            <p class="card-text mt-auto" style="color:#E4C087;">@item.Ingredients</p>
                         </div>
                         <div class="card-footer d-flex justify-content-between" style="color:#E4C087;">
                             <span>@item.Price лв</span>
@@ -29,3 +55,7 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <link href="~/css/custom-styles.css" rel="stylesheet" asp-append-version="true" />
+}

@@ -1,0 +1,25 @@
+﻿.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* Ширина на скролбара */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #E4C087; /* Цвят на скролбара */
+    border-radius: 10px; /* Заоблени ръбове на скролбара */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(147, 98, 33, 0.5); /* Цвят на фона на скролбара */
+}
+
+/* Стил за активния елемент в drop-down менюто */
+.dropdown-item.active {
+    background-color: rgba(255, 255, 255, 0.5) !important; /* Прозрачно бял фон */
+    color: #000 !important; /* Тъмен цвят на текста */
+    font-weight: bold !important; /* Болднат текст */
+}
+
+/* Премахване на hover ефекта за drop-down менюто */
+.dropdown-item:hover {
+    background-color: transparent !important; /* Запазване на прозрачен фон при hover */
+    color: #E4C087 !important; /* Запазване на цвета на текста */
+}
