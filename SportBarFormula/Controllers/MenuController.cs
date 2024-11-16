@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using SportBarFormula.Core.Services;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
 
@@ -25,12 +26,17 @@ public class MenuController(
     /// <summary>
     /// Displays lists of all menu items.
     /// </summary>
+    /// <param name="categoryId"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int? categoryId)
     {
-        var models = await _service.GetCardMenuItemsAsync();
-        return View(models);
+        var menuItems = await _service.GetMenuItemsByCategoryAsync(categoryId);
+        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
+
+        ViewBag.SelectedCategoryId = categoryId;
+
+        return View(menuItems);
     }
 
     /// <summary>
@@ -52,7 +58,7 @@ public class MenuController(
     [HttpGet]
     public async Task<IActionResult> Create()
     {
-        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoyAsinc(), "CategoryId", "Name");
+        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
         return View();
     }
 
@@ -66,11 +72,11 @@ public class MenuController(
     {
         if (!ModelState.IsValid)
         {
-            ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoyAsinc(), "CategoryId", "Name");
+            ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
             return View(model);
         }
 
-        await _service.AddMenuItem(model);
+        await _service.AddMenuItemAsync(model);
 
         return RedirectToAction(nameof(Index));
     }
