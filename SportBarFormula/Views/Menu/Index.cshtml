@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SportBarFormula.Core.ViewModels.MenuItem.MenuItemCardViewModel>
+﻿@model IPagedList<MenuItemCardViewModel>
 
 @{
     ViewData["Title"] = "Меню Артикули";
@@ -39,13 +39,13 @@
         {
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100 d-flex flex-column" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
-                    <a asp-action="Details" asp-route-id="@item.MenuItemId" class="text-decoration-none h-100 d-flex flex-column">
+                    <a asp-action="Details" asp-route-id="@item.MenuItemId" class="text-decoration-none h-100 д-flex flex-column">
                         <img src="@item.ImageURL" class="card-img-top" alt="@item.Name" style="border-radius: 10px 10px 0 0;">
-                        <div class="card-body flex-grow-1 d-flex flex-column">
+                        <div class="card-body flex-grow-1 д-flex flex-column">
                             <h5 class="card-title mb-3" style="color:#E4C087;">@item.Name</h5>
                             <p class="card-text mt-auto" style="color:#E4C087;">@item.Ingredients</p>
                         </div>
-                        <div class="card-footer d-flex justify-content-between" style="color:#E4C087;">
+                        <div class="card-footer д-flex justify-content-between" style="color:#E4C087;">
                             <span>@item.Price лв</span>
                             <span>@item.Quantity гр/мл</span>
                         </div>
@@ -54,8 +54,20 @@
             </div>
         }
     </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, categoryId = ViewBag.SelectedCategoryId }), new PagedListRenderOptions
+       {
+           DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+           DisplayLinkToLastPage = PagedListDisplayMode.Always,
+           DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+           DisplayLinkToNextPage = PagedListDisplayMode.Always,
+           MaximumPageNumbersToDisplay = 5
+       })
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-    <link href="~/css/custom-styles.css" rel="stylesheet" asp-append-version="true" />
+<link href="~/css/custom-styles.css" rel="stylesheet" asp-append-version="true" />
 }

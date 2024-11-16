@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using SportBarFormula.Core.Services;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
+using X.PagedList.Extensions;
 
 namespace SportBarFormula.Controllers;
 
@@ -24,20 +23,26 @@ public class MenuController(
     private readonly ILogger<MenuController> _logger = logger;
 
     /// <summary>
-    /// Displays lists of all menu items.
+    ///  Displays lists of all menu items.
     /// </summary>
     /// <param name="categoryId"></param>
+    /// <param name="page"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IActionResult> Index(int? categoryId)
+    public async Task<IActionResult> Index(int? categoryId, int? page)
     {
         var menuItems = await _service.GetMenuItemsByCategoryAsync(categoryId);
         ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
-
         ViewBag.SelectedCategoryId = categoryId;
 
-        return View(menuItems);
+        int pageSize = 20;
+        int pageNumber = (page ?? 1);
+
+        var pagedList = menuItems.ToPagedList(pageNumber, pageSize);
+
+        return View(pagedList);
     }
+
 
     /// <summary>
     /// Shows details about a specific menu item.

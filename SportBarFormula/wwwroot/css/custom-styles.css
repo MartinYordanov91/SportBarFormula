@@ -23,3 +23,32 @@
     background-color: transparent !important; /* Запазване на прозрачен фон при hover */
     color: #E4C087 !important; /* Запазване на цвета на текста */
 }
+
+/* Стилизация за пейджирането */
+.pagination {
+    justify-content: center; /* Центриране на пейджирането */
+    background-color: rgba(147, 98, 33, 0.5); /* Прозрачно кафяв фон */
+    border-radius: 10px; /* Заоблени ръбове */
+    padding: 10px; /* Падинг за естетика */
+    display: flex;
+    gap: 5px; /* Отстояние между елементите */
+}
+
+    .pagination li {
+        background-color: rgba(147, 98, 33, 0.5); /* Прозрачен фон за елементите */
+        margin: 2px; /* Малък маргин между елементите */
+        border-radius: 5px; /* Заоблени ръбове на елементите */
+    }
+
+        .pagination li a, .pagination li span {
+            color: #E4C087 !important; /* Цвят на текста за линкове и спанове */
+            padding: 8px 12px; /* Падинг за по-добра видимост */
+            display: block;
+            text-decoration: none; /* Премахване на подчертаването */
+        }
+
+        .pagination li.active a, .pagination li.active span {
+            background-color: rgba(255, 255, 255, 0.5) !important; /* Прозрачен бял фон за активен елемент */
+            color: #000 !important; /* Тъмен цвят на текста за активен елемент */
+            font-weight: bold !important; /* Болднат текст за активен елемент */
+        }
