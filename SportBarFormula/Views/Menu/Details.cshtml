@@ -1,0 +1,31 @@
+﻿@model MenuItemDetailsViewModel
+
+@{
+    ViewData["Title"] = "Детайли за артикул";
+}
+
+<div class="container mt-5">
+    <div class="card" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px 0 0 0;">
+                <div class="d-flex flex-column align-items-center mt-3">
+                    <a href="@Url.Action("Index", new { categoryId = ViewBag.SelectedCategoryId })" class="btn btn-primary mb-2" style="width: 80%;">Назад към списъка</a>
+                    <a href="@Url.Action("Edit", new { id = Model.MenuItemId })" class="btn btn-secondary mb-2" style="width: 80%;">Редактирай</a> 
+                    <a href="@Url.Action("AddToCart", new { id = Model.MenuItemId })" class="btn btn-success mb-2" style="width: 80%;">Добави в количката</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" style="color:#E4C087;">@Model.Name</h5>
+                    <p class="card-text" style="color:#E4C087;">@Model.Description</p>
+                    <p class="card-text" style="color:#E4C087;">Цена: @Model.Price лв</p>
+                    <p class="card-text" style="color:#E4C087;">Количество: @Model.Quantity гр/мл</p>
+                    <p class="card-text" style="color:#E4C087;">Категория: @Model.Category</p>
+                    <p class="card-text" style="color:#E4C087;">Съставки: @Model.Ingredients</p>
+                    <p class="card-text" style="color:#E4C087;">Време за подготовка: @Model.PreparationTime минути</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
