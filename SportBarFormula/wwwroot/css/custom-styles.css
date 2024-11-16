@@ -52,3 +52,28 @@
             color: #000 !important; /* Тъмен цвят на текста за активен елемент */
             font-weight: bold !important; /* Болднат текст за активен елемент */
         }
+
+/* Стилизация за картичките */
+.card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: rgba(147, 98, 33, 0.5);
+    border-radius: 10px;
+}
+
+    .card .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card .card-footer {
+        background-color: rgba(147, 98, 33, 0.5); /* Прозрачно кафяв фон */
+        color: #E4C087; /* Цвят на текста */
+        border-radius: 0 0 10px 10px; /* Заоблени ръбове в долната част */
+        display: flex;
+        justify-content: space-between;
+        padding: 10px; /* Падинг за естетика */
+        margin-top: auto; /* Автоматичен маргин за избутване на footer към дъното */
+    }
