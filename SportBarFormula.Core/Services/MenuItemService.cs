@@ -1,4 +1,5 @@
-﻿using SportBarFormula.Core.Services.Contracts;
+﻿using Microsoft.AspNetCore.Mvc;
+using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
@@ -28,27 +29,33 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         await _repository.AddAsync(newMenuItem);
     }
 
-    public async Task<ICollection<MenuItemViewModel>> GetAllMenuItemsAsync()
+    public async Task<MenuItemDetailsViewModel> GetMenuItemDetailsByIdAsync(int id)
     {
-        var menuItemColection = await _repository.GetAllAsync();
+        var menuItem = await _repository.GetByIdAsync(id);
 
-        return menuItemColection
-         .Where(mi => mi.IsDeleted == false)
-         .Select(mi => new MenuItemViewModel
-         {
-             Name = mi.Name,
-             Description = mi.Description,
-             Category = mi.Category.Name,
-             Price = mi.Price,
-             Quantity = mi.Quantity,
-             PreparationTime = mi.PreparationTime,
-             ImageURL = mi.ImageURL,
-             Ingredients = mi.Ingredients,
-             IsAvailable = mi.IsAvailable,
-             IsDeleted = mi.IsDeleted,
-         })
-         .ToList();
+        if (menuItem == null)
+        {
+           throw new ArgumentNullException(nameof(menuItem));
+        }
+
+        var viewModel = new MenuItemDetailsViewModel
+        {
+            MenuItemId = menuItem.MenuItemId,
+            Name = menuItem.Name,
+            Description = menuItem.Description,
+            Price = menuItem.Price,
+            Quantity = menuItem.Quantity,
+            Category = menuItem.Category.Name,
+            CategoryId = menuItem.CategoryId,
+            ImageURL = menuItem.ImageURL,
+            IsAvailable = menuItem.IsAvailable,
+            Ingredients = menuItem.Ingredients,
+            PreparationTime = menuItem.PreparationTime
+        };
+
+        return viewModel;
     }
+
     public async Task<ICollection<MenuItemCardViewModel>> GetCardMenuItemsAsync()
     {
         var menuItemColection = await _repository.GetAllAsync();
@@ -88,7 +95,6 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 
         return filteredMenuItems;
     }
-
 
     public async Task<MenuItemViewModel> GetMenuItemByIdAsync(int id)
     {

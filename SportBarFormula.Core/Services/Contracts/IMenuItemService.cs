@@ -4,7 +4,7 @@ namespace SportBarFormula.Core.Services.Contracts;
 
 public interface IMenuItemService
 {
-    Task<ICollection<MenuItemViewModel>> GetAllMenuItemsAsync();
+    Task<MenuItemDetailsViewModel> GetMenuItemDetailsByIdAsync(int id);
 
     Task<ICollection<MenuItemCardViewModel>> GetCardMenuItemsAsync();
 
