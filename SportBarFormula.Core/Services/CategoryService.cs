@@ -10,7 +10,7 @@ namespace SportBarFormula.Core.Services
     public class CategoryService(IRepository<Category> repository) : ICategoryService
     {
         private readonly IRepository<Category> _repository = repository;
-        public async Task<ICollection<CategoryViewModel>> GetAllCategoyAsinc()
+        public async Task<ICollection<CategoryViewModel>> GetAllCategoriesAsync()
         {
             var categories = await _repository.GetAllAsync();
 
