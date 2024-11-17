@@ -151,7 +151,13 @@ public class MenuController(
         return View(pagedList);
     }
 
-    public async Task<IActionResult> Undelete(int id)
+    /// <summary>
+    /// restores a deleted item and references item details
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IActionResult> UnDelete(int id)
     {
         await _service.UnDeleteItemAsync(id);
         return RedirectToAction(nameof(Details), new { id });
