@@ -17,7 +17,14 @@ public class MenuItemRepository(SportBarFormulaDbContext context) : IRepository<
 
     public async Task<MenuItem> GetByIdAsync(int id)
     {
-        return await _context.MenuItems.Include(mi => mi.Category).FirstOrDefaultAsync(mi => mi.MenuItemId == id);
+        var menuItem = await _context.MenuItems.Include(mi => mi.Category).FirstOrDefaultAsync(mi => mi.MenuItemId == id);
+
+        if(menuItem == null)
+        {
+            throw new Exception("MenuItem not found");
+        }
+
+        return menuItem;
     }
 
     public async Task AddAsync(MenuItem entity)
