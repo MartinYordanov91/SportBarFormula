@@ -8,7 +8,7 @@ public interface ICategoryService
 
     public Task AddCategoryAsync(CategoryViewModel model);
 
-    public Task<CategoryViewModel> GetCategoryByIdAsync(int id);
+    public Task<CategoryViewModel?> GetCategoryByIdAsync(int id);
 
     public Task UpdateCategoryAsync(CategoryViewModel model);
 

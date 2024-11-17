@@ -31,7 +31,7 @@ public class CategoryService(IRepository<Category> repository) : ICategoryServic
         await _repository.AddAsync(category);
     }
 
-    public async Task<CategoryViewModel> GetCategoryByIdAsync(int id)
+    public async Task<CategoryViewModel?> GetCategoryByIdAsync(int id)
     {
         var category = await _repository.GetByIdAsync(id);
 
