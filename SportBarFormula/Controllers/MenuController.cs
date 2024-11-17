@@ -22,6 +22,7 @@ public class MenuController(
     private readonly ICategoryService _categoryService = categoryService;
     private readonly ILogger<MenuController> _logger = logger;
 
+    //--------------------------------------------------------------------------------------------------------------------->   Index
     /// <summary>
     ///  Displays lists of all menu items.
     /// </summary>
@@ -43,7 +44,7 @@ public class MenuController(
         return View(pagedList);
     }
 
-
+    //--------------------------------------------------------------------------------------------------------------------->   Details
     /// <summary>
     /// Shows details about a specific menu item.
     /// </summary>
@@ -65,6 +66,7 @@ public class MenuController(
         return View(viewModel);
     }
 
+    //--------------------------------------------------------------------------------------------------------------------->   Create
     /// <summary>
     ///Form to create a new menu item.
     /// </summary>
@@ -95,6 +97,7 @@ public class MenuController(
         return RedirectToAction(nameof(Index));
     }
 
+    //--------------------------------------------------------------------------------------------------------------------->   Edit
     /// <summary>
     /// Form for editing an existing item.
     /// </summary>
@@ -104,8 +107,29 @@ public class MenuController(
     public async Task<IActionResult> Edit(int id)
     {
         var model = await _service.GetMenuItemEditFormByIdAsync(id);
-        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name" , model.CategoryId);
+        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name", model.CategoryId);
 
         return View(model);
     }
+
+    /// <summary>
+    /// Saves changes to the item.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<IActionResult> Edit(MenuItemEditViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name", model.CategoryId);
+            return View(model);
+        }
+
+        await _service.UpdateMenuItemAsync(model);
+        return RedirectToAction(nameof(Details), new { id = model.MenuItemId });
+    }
+
+
+
 }
