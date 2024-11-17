@@ -5,6 +5,8 @@ namespace SportBarFormula.Core.ViewModels.MenuItem;
 
 public class MenuItemEditViewModel
 {
+    public int MenuItemId { get; set; }
+
     [StringLength(MenuItemNameMaxLength, MinimumLength = MenuItemNameMinLength)]
     public required string Name { get; set; }
 
