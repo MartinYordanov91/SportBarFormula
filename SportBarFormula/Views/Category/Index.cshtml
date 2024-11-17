@@ -6,6 +6,12 @@
 
 <h2 class="text-center mt-5" style="color:#E4C087;">Категории</h2>
 <hr />
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <div class="d-flex justify-content-center mb-3">
     <a asp-action="Create" class="btn btn-primary custom-btn">Добавяне на категория</a>
 </div>
@@ -29,7 +35,7 @@
         }
     </div>
 </div>
-<br class="hiding"/>
+<br class="hiding" />
 @section Scripts {
     <link href="~/css/category/custom-styles.css" rel="stylesheet" asp-append-version="true" />
 }
