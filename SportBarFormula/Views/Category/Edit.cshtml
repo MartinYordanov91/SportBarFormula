@@ -1,0 +1,33 @@
+﻿@model SportBarFormula.Core.ViewModels.Category.CategoryViewModel
+
+@{
+    ViewData["Title"] = "Редактиране на категория";
+}
+
+<h2 class="text-center mt-5" style="color:#E4C087;">Редактиране на категория</h2>
+<hr />
+
+<div class="d-flex justify-content-center">
+    <form asp-action="Edit" method="post" class="p-3 w-50" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="CategoryId" />
+        <div class="form-group">
+            <label asp-for="Name" class="control-label" style="color:#E4C087;">Име</label>
+            <input asp-for="Name" class="form-control" style="background-color: rgba(255, 255, 255, 0.5);" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <input type="submit" value="Запази" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index">Назад към списъка</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
