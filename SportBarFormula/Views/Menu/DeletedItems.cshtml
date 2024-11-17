@@ -1,4 +1,4 @@
-﻿@model IPagedList<SportBarFormula.Core.ViewModels.MenuItem.MenuItemCardViewModel>
+﻿@model IPagedList<MenuItemCardViewModel>
 
 @{
     ViewData["Title"] = "Изтрити Артикули";
@@ -39,7 +39,7 @@
         {
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100 d-flex flex-column" style="position: relative; background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
-                    <a href="javascript:void(0);" class="text-decoration-none h-100 d-flex flex-column" onclick="confirmRestore('@Url.Action("UnDelete", new { id = item.MenuItemId })')">
+                    <form asp-action="UnDelete" asp-route-id="@item.MenuItemId" method="post" class="text-decoration-none h-100 d-flex flex-column" onsubmit="return confirm('Сигурни ли сте, че искате да възстановите този артикул?');">
                         <img src="~/@item.ImageURL" class="card-img-top" alt="@item.Name" style="border-radius: 10px 10px 0 0;">
                         <div class="card-body flex-grow-1 d-flex flex-column">
                             <h5 class="card-title mb-3" style="color:#E4C087;">@item.Name</h5>
@@ -49,9 +49,11 @@
                             <span>@item.Price лв</span>
                             <span>@item.Quantity гр/мл</span>
                         </div>
-                    </a>
+                        <button type="submit" class="btn btn-primary mt-2">Възстановяване</button>
+                    </form>
                 </div>
             </div>
+
         }
     </div>
     <div class="row">
@@ -70,5 +72,4 @@
 
 @section Scripts {
     <link href="~/css/custom-styles.css" rel="stylesheet" asp-append-version="true" />
-    <script src="~/js/restoreConfirmation.js"></script>
 }

@@ -570,15 +570,17 @@
         defaultPrevented = jQueryEvent.isDefaultPrevented();
       }
 
-      if (isNative) {
-        evt = document.createEvent('HTMLEvents');
-        evt.initEvent(typeEvent, bubbles, true);
-      } else {
-        evt = new CustomEvent(event, {
-          bubbles,
-          cancelable: true
-        });
-      } // merge custom information in our event
+        if (isNative) {
+            evt = new Event(typeEvent, {
+                bubbles: bubbles,
+                cancelable: true
+            });
+        } else {
+            evt = new CustomEvent(event, {
+                bubbles: bubbles,
+                cancelable: true
+            });
+        } // merge custom information in our event
 
 
       if (typeof args !== 'undefined') {
