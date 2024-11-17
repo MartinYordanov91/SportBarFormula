@@ -1,0 +1,63 @@
+﻿/* Центриране на бутона за добавяне на категории */
+.d-flex.justify-content-center .custom-btn {
+    background-color: rgba(147, 98, 33, 0.8); /* Прозрачно кафяв фон */
+    color: #E4C087; /* Цвят на текста */
+    border: none; /* Без граници */
+    border-radius: 5px; /* Заоблени ръбове */
+    padding: 10px 20px; /* Падинг за бутона */
+    text-align: center; /* Центриране на текста */
+    text-decoration: none; /* Премахване на подчертаването */
+    display: inline-block; /* Блоково показване */
+    font-size: 16px; /* Размер на текста */
+    transition: background-color 0.3s ease; /* Плавен преход за фона */
+    margin: 0 auto; /* Центриране */
+}
+
+/* Стилизация на картите */
+.custom-card {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(147, 98, 33, 0.5); /* Прозрачно кафяв фон */
+    border-radius: 10px;
+    border: none;
+    box-shadow: 6px 6px 10px 0px rgb(167 117 62); /* Подсека */
+    margin-bottom: 5px; /* По-малко отстояние между картите */
+    padding: 10px;
+}
+
+    .custom-card .card-body {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px; /* По-малко padding */
+    }
+
+    .custom-card .category-name {
+        font-size: 18px;
+        color: #E4C087;
+    }
+
+    .custom-card .btn.custom-btn {
+        margin-left: 10px; /* Отстояние между бутоните и името */
+    }
+
+    .custom-card .d-flex {
+        flex-shrink: 0;
+        flex-basis: auto;
+    }
+
+.custom-card {
+    background-color: rgba(147, 98, 33, 0.5); /* Прозрачно кафяв фон за цялата таблица */
+    border-radius: 10px; /* Заоблени ръбове */
+    padding: 0px; /* Падинг за цялата таблица */
+}
+
+.row {
+    --bs-gutter-x: 2.5rem;
+    border-radius: 10px;
+    padding-bottom: calc(var(--bs-gutter-x)* 1);
+}
+.mb-4 {
+    margin-bottom: -0.5rem !important;
+    margin-top: 2rem;
+}
