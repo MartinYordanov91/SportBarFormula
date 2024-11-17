@@ -16,7 +16,14 @@ public class CategoryRepository(SportBarFormulaDbContext context) : IRepository<
 
     public async Task<Category> GetByIdAsync(int id)
     {
-        return await _context.Categories.FindAsync(id);
+        var category = await _context.Categories.Include(c => c.MenuItems).FirstOrDefaultAsync(c => c.CategoryId == id);
+
+        if (category == null)
+        {
+            throw new Exception("Category not Found");
+        }
+
+        return category;
     }
 
     public async Task AddAsync(Category entity)
