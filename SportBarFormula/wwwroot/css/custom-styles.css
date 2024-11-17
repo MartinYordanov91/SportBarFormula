@@ -95,3 +95,29 @@
         background-color: rgba(147, 98, 33, 1); /* По-тъмен прозрачно кафяв фон при hover */
         color: #fff; /* Бял цвят на текста при hover */
     }
+
+/*Стилизация на модолният прозореца  за съгласие*/
+.custom-modal-content {
+    background-color: rgba(147, 98, 33, 0.5); /* Вашият фон */
+    border-radius: 10px; /* Заоблени ръбове */
+}
+
+.custom-modal-header,
+.custom-modal-body,
+.custom-modal-footer {
+    background-color: rgba(147, 98, 33, 0.5); /* Вашият фон */
+}
+
+.custom-modal-header {
+    border-top-left-radius: 10px; /* Заоблени ръбове */
+    border-top-right-radius: 10px; /* Заоблени ръбове */
+}
+
+.custom-modal-body {
+    color: #E4C087; /* Цвят на текста */
+}
+
+.custom-modal-footer {
+    border-bottom-left-radius: 10px; /* Заоблени ръбове */
+    border-bottom-right-radius: 10px; /* Заоблени ръбове */
+}

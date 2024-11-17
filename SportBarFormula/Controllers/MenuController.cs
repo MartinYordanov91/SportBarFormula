@@ -130,6 +130,31 @@ public class MenuController(
         return RedirectToAction(nameof(Details), new { id = model.MenuItemId });
     }
 
+    //--------------------------------------------------------------------------------------------------------------------->   DeletedItems
+    /// <summary>
+    /// <summary>
+    /// Shows all deleted items.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public async Task<IActionResult> DeletedItems(int? categoryId, int? page)
+    {
+        var deletedItems = await _service.GetDeletedItemsByCategoryAsync(categoryId);
+        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
+        ViewBag.SelectedCategoryId = categoryId;
 
+        int pageSize = 4;
+        int pageNumber = (page ?? 1);
+
+        var pagedList = deletedItems.ToPagedList(pageNumber, pageSize);
+
+        return View(pagedList);
+    }
+
+    public async Task<IActionResult> Undelete(int id)
+    {
+        await _service.UnDeleteItemAsync(id);
+        return RedirectToAction(nameof(Details), new { id });
+    }
 
 }
