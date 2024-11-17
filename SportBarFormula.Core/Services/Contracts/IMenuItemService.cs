@@ -10,7 +10,7 @@ public interface IMenuItemService
 
     Task<ICollection<MenuItemCardViewModel>> GetMenuItemsByCategoryAsync(int? categoryId);
 
-    Task<MenuItemViewModel> GetMenuItemByIdAsync(int id);
+    Task<MenuItemEditViewModel> GetMenuItemEditFormByIdAsync(int id);
 
     Task AddMenuItemAsync(CreateMenuItemViewModel model);
 }

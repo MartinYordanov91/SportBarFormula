@@ -35,7 +35,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 
         if (menuItem == null)
         {
-           throw new ArgumentNullException(nameof(menuItem));
+            throw new ArgumentNullException(nameof(menuItem));
         }
 
         var viewModel = new MenuItemDetailsViewModel
@@ -96,7 +96,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         return filteredMenuItems;
     }
 
-    public async Task<MenuItemViewModel> GetMenuItemByIdAsync(int id)
+    public async Task<MenuItemEditViewModel> GetMenuItemEditFormByIdAsync(int id)
     {
         var currentItem = await _repository.GetByIdAsync(id);
 
@@ -105,11 +105,12 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
             throw new NullReferenceException("Invalid MenuItem Id");
         }
 
-        var model = new MenuItemViewModel
+        var model = new MenuItemEditViewModel
         {
             Name = currentItem.Name,
             Description = currentItem.Description,
             Category = currentItem.Category.Name,
+            CategoryId = currentItem.CategoryId,
             Price = currentItem.Price,
             Quantity = currentItem.Quantity,
             PreparationTime = currentItem.PreparationTime,

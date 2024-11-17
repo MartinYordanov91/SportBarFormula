@@ -1,4 +1,4 @@
-﻿@model MenuItemViewModel
+﻿@model MenuItemEditViewModel
 
 @{
     ViewData["Title"] = "Редактиране на артикул";
@@ -42,9 +42,10 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-12">
-                <label asp-for="Category" class="control-label" style="color:#E4C087;">Категория</label>
-                <input asp-for="Category" class="form-control mb-3" style="background-color: rgba(255, 255, 255, 0.5);" />
-                <span asp-validation-for="Category" class="text-danger"></span>
+                <label asp-for="CategoryId" class="control-label" style="color:#E4C087;">Категория</label>
+                <select asp-for="CategoryId" class="form-control mb-3" asp-items="ViewBag.Categories" style="background-color: rgba(255, 255, 255, 0.5);">
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group row">

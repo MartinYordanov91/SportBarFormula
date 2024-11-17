@@ -103,7 +103,9 @@ public class MenuController(
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var model = await _service.GetMenuItemByIdAsync(id);
+        var model = await _service.GetMenuItemEditFormByIdAsync(id);
+        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name" , model.CategoryId);
+
         return View(model);
     }
 }
