@@ -56,31 +56,13 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         return viewModel;
     }
 
-    public async Task<ICollection<MenuItemCardViewModel>> GetCardMenuItemsAsync()
-    {
-        var menuItemColection = await _repository.GetAllAsync();
-
-        return menuItemColection
-         .Where(mi => mi.IsDeleted == false)
-         .Select(mi => new MenuItemCardViewModel
-         {
-             MenuItemId = mi.MenuItemId,
-             Name = mi.Name,
-             Price = mi.Price,
-             Quantity = mi.Quantity,
-             ImageURL = mi.ImageURL,
-             Ingredients = mi.Ingredients,
-             CategoryId = mi.CategoryId,
-         })
-         .ToList();
-    }
-
     public async Task<ICollection<MenuItemCardViewModel>> GetMenuItemsByCategoryAsync(int? categoryId)
     {
         var menuItems = await _repository.GetAllAsync();
 
         var filteredMenuItems = menuItems
             .Where(mi => !categoryId.HasValue || mi.CategoryId == categoryId)
+            .Where(mi => mi.IsDeleted == false)
             .Select(mi => new MenuItemCardViewModel
             {
                 MenuItemId = mi.MenuItemId,
@@ -107,6 +89,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 
         var model = new MenuItemEditViewModel
         {
+            MenuItemId = currentItem.MenuItemId,
             Name = currentItem.Name,
             Description = currentItem.Description,
             Category = currentItem.Category.Name,
@@ -123,4 +106,29 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         return model;
     }
 
+    public async Task UpdateMenuItemAsync(MenuItemEditViewModel model)
+    {
+        MenuItem existingMenuItem = await _repository.GetByIdAsync(model.MenuItemId);
+
+        if (existingMenuItem == null)
+        {
+            throw new Exception("MenuItem not found");
+        }
+
+
+        existingMenuItem.Name = model.Name;
+        existingMenuItem.Description = model.Description;
+        existingMenuItem.Price = model.Price;
+        existingMenuItem.Quantity = model.Quantity;
+        existingMenuItem.ImageURL = model.ImageURL;
+        existingMenuItem.CategoryId = model.CategoryId;
+        existingMenuItem.Ingredients = model.Ingredients;
+        existingMenuItem.PreparationTime = model.PreparationTime;
+        existingMenuItem.IsDeleted = model.IsDeleted;
+        existingMenuItem.IsAvailable = model.IsAvailable;
+
+
+
+        await _repository.UpdateAsync(existingMenuItem);
+    }
 }
