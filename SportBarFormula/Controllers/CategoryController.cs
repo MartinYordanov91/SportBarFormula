@@ -60,5 +60,40 @@ public class CategoryController(
         return RedirectToAction(nameof(Index));
     }
 
+    //----------------------------------------------------------------------------------------------------> Edit
+    /// <summary>
+    /// Displays a form to edit an existing category by given id.
+    /// </summary>
+    /// <param name="id">Id of the category to edit.</param>
+    /// <returns>View to edit the category if the category exists, or NotFound if it does not.</returns>
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var category = await _service.GetCategoryByIdAsync(id);
 
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        return View(category);
+    }
+
+    /// <summary>
+    /// Handles the post request to edit an existing category. 
+    /// </summary>
+    /// <param name="model">ViewModel with the updated category data.</param>
+    /// <returns>Redirects to the Index view on successful update or displays the form again on failure</returns>
+    [HttpPost]
+    public async Task<IActionResult> Edit(CategoryViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(model);
+        }
+
+        await _service.UpdateCategoryAsync(model);
+
+        return RedirectToAction(nameof(Index));
+    }
 }
