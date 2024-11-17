@@ -8,11 +8,11 @@
     <div class="card" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
         <div class="row no-gutters">
             <div class="col-md-4">
-                <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px 0 0 0;">
+                <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px 0 0 10px;">
                 <div class="d-flex flex-column align-items-center mt-3">
-                    <a href="@Url.Action("Index", new { categoryId = ViewBag.SelectedCategoryId })" class="btn btn-primary mb-2" style="width: 80%;">Назад към списъка</a>
-                    <a href="@Url.Action("Edit", new { id = Model.MenuItemId })" class="btn btn-secondary mb-2" style="width: 80%;">Редактирай</a> 
-                    <a href="@Url.Action("AddToCart", new { id = Model.MenuItemId })" class="btn btn-success mb-2" style="width: 80%;">Добави в количката</a>
+                    <a href="@Url.Action("Index", new { categoryId = ViewBag.SelectedCategoryId })" class="btn custom-btn mb-2" style="width: 80%;">Назад към списъка</a>
+                    <a href="@Url.Action("Edit", new { id = Model.MenuItemId })" class="btn custom-btn mb-2" style="width: 80%;">Редактирай</a>
+                    <a href="@Url.Action("AddToCart", new { id = Model.MenuItemId })" class="btn custom-btn mb-2" style="width: 80%;">Добави в количката</a>
                 </div>
             </div>
             <div class="col-md-8">
@@ -29,3 +29,7 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <link href="~/css/custom-styles.css" rel="stylesheet" asp-append-version="true" />
+}
