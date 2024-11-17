@@ -96,4 +96,31 @@ public class CategoryController(
 
         return RedirectToAction(nameof(Index));
     }
+
+    //----------------------------------------------------------------------------------------------------> Delete
+    /// <summary>
+    /// Handles the post request to delete an existing category by a given ID.
+    /// </summary>
+    /// <param name="id">Identifier of the category to delete.</param>
+    /// <returns>Redirects to the Index view on successful deletion or NotFound if the category does not exist.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var category = await _service.GetCategoryByIdAsync(id);
+
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        var result = await _service.DeleteCategoryAsync(id);
+
+        if (!result)
+        {
+            TempData["ErrorMessage"] = "Не можете да изтриете тази категория, защото се използва.";
+        }
+
+        return RedirectToAction(nameof(Index));
+    }
+
 }
