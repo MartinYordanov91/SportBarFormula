@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SportBarFormula.Core.Services.Contracts;
+﻿using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
