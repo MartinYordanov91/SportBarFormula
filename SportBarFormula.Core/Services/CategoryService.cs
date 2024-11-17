@@ -59,4 +59,22 @@ public class CategoryService(IRepository<Category> repository) : ICategoryServic
         category.Name = model.Name;
         await _repository.UpdateAsync(category);
     }
+
+    public async Task<bool> DeleteCategoryAsync(int id)
+    {
+        var category = await _repository.GetByIdAsync(id);
+
+        if (category == null)
+        {
+            throw new Exception("Category not found");
+        }
+
+        if (category.MenuItems.Any())
+        {
+           return false;
+        }
+
+        await _repository.DeleteAsync(id);
+        return true;
+    }
 }

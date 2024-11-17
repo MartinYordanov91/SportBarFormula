@@ -11,4 +11,6 @@ public interface ICategoryService
     public Task<CategoryViewModel> GetCategoryByIdAsync(int id);
 
     public Task UpdateCategoryAsync(CategoryViewModel model);
+
+    public Task<bool> DeleteCategoryAsync(int id);
 }
