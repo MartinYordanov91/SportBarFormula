@@ -56,6 +56,28 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         return viewModel;
     }
 
+    public async Task<ICollection<MenuItemCardViewModel>> GetDeletedItemsByCategoryAsync(int? categoryId)
+    {
+        var menuItems = await _repository.GetAllAsync();
+
+        var filteredMenuItems = menuItems
+            .Where(mi => !categoryId.HasValue || mi.CategoryId == categoryId)
+            .Where(mi => mi.IsDeleted == true)
+            .Select(mi => new MenuItemCardViewModel
+            {
+                MenuItemId = mi.MenuItemId,
+                Name = mi.Name,
+                ImageURL = mi.ImageURL,
+                Ingredients = mi.Ingredients,
+                Price = mi.Price,
+                Quantity = mi.Quantity,
+                CategoryId = mi.CategoryId
+            })
+            .ToList();
+
+        return filteredMenuItems;
+    }
+
     public async Task<ICollection<MenuItemCardViewModel>> GetMenuItemsByCategoryAsync(int? categoryId)
     {
         var menuItems = await _repository.GetAllAsync();
@@ -84,7 +106,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 
         if (currentItem == null)
         {
-            throw new NullReferenceException("Invalid MenuItem Id");
+            throw new Exception("MenuItem not found");
         }
 
         var model = new MenuItemEditViewModel
@@ -130,5 +152,19 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 
 
         await _repository.UpdateAsync(existingMenuItem);
+    }
+
+    public async Task UnDeleteItemAsync(int id)
+    {
+        var unDeleteItem = await _repository.GetByIdAsync(id);
+
+        if(unDeleteItem == null)
+        {
+            throw new Exception("MenuItem not found");
+        }
+
+        unDeleteItem.IsDeleted = false;
+
+        await _repository.UpdateAsync(unDeleteItem);
     }
 }

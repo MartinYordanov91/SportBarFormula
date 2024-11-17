@@ -8,9 +8,13 @@ public interface IMenuItemService
 
     Task<ICollection<MenuItemCardViewModel>> GetMenuItemsByCategoryAsync(int? categoryId);
 
+    Task<ICollection<MenuItemCardViewModel>> GetDeletedItemsByCategoryAsync(int? categoryId);
+
     Task<MenuItemEditViewModel> GetMenuItemEditFormByIdAsync(int id);
 
     Task AddMenuItemAsync(CreateMenuItemViewModel model);
 
     Task UpdateMenuItemAsync(MenuItemEditViewModel model);
+
+    Task UnDeleteItemAsync(int id);
 }
