@@ -30,4 +30,33 @@ public class CategoryService(IRepository<Category> repository) : ICategoryServic
 
         await _repository.AddAsync(category);
     }
+
+    public async Task<CategoryViewModel> GetCategoryByIdAsync(int id)
+    {
+        var category = await _repository.GetByIdAsync(id);
+
+        if (category == null)
+        {
+            return null;
+        }
+
+        return new CategoryViewModel()
+        {
+            CategoryId = category.CategoryId,
+            Name = category.Name
+        };
+    }
+
+    public async Task UpdateCategoryAsync(CategoryViewModel model)
+    {
+        var category = await _repository.GetByIdAsync(model.CategoryId);
+
+        if (category == null)
+        {
+            throw new Exception("Category not found");
+        }
+
+        category.Name = model.Name;
+        await _repository.UpdateAsync(category);
+    }
 }
