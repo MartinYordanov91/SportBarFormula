@@ -974,13 +974,13 @@
       return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`));
     },
 
-    offset(element) {
-      const rect = element.getBoundingClientRect();
-      return {
-        top: rect.top + window.pageYOffset,
-        left: rect.left + window.pageXOffset
-      };
-    },
+      offset(element) {
+          const rect = element.getBoundingClientRect();
+          return {
+              top: rect.top + window.scrollY,
+              left: rect.left + window.scrollX
+          };
+      },
 
     position(element) {
       return {

@@ -4,7 +4,7 @@ public static class ClaimsPrincipalExtensions
 {
     public static string Id(this ClaimsPrincipal user)
     {
-        return user.FindFirstValue(ClaimTypes.NameIdentifier);
+        return user.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
     }
 }
 
