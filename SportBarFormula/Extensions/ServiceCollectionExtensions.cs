@@ -13,11 +13,13 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
-        services.AddScoped<IMenuItemService , MenuItemService>();
-        services.AddScoped<ICategoryService , CategoryService>();
+        services.AddScoped<IMenuItemService, MenuItemService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IReservationService, ReservationService>();
 
         services.AddScoped<IRepository<MenuItem>, MenuItemRepository>();
         services.AddScoped<IRepository<Category>, CategoryRepository>();
+        services.AddScoped<IRepository<Reservation>, ReservationRepository>();
 
         return services;
     }
