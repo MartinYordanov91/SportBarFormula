@@ -37,6 +37,7 @@ public class CategoryRepository(SportBarFormulaDbContext context) : IRepository<
         _context.Categories.Update(entity);
         await _context.SaveChangesAsync();
     }
+
     public async Task DeleteAsync(int id)
     {
         var entity = await _context.Categories.FindAsync(id);

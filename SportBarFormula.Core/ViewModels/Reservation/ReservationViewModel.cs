@@ -10,7 +10,7 @@ public class ReservationViewModel
 
     [Display(Name = "Дата на резервация")]
     [RegularExpression(@"^\d{2}-\d{2}-\d{4} \d{2}:\d{2}$")]
-    public required DateTime ReservationDate { get; set; }
+    public required string ReservationDate { get; set; }
 
     [Display(Name = "Маса")]
     public int TableId { get; set; }

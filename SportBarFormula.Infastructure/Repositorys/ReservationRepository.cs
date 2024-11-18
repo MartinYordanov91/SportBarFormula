@@ -8,7 +8,7 @@ namespace SportBarFormula.Infrastructure.Repositorys;
 /// <summary>
 /// Reservation Management Repository.
 /// </summary>
-class ReservationRepository(SportBarFormulaDbContext context) : IRepository<Reservation>
+public class ReservationRepository(SportBarFormulaDbContext context) : IRepository<Reservation>
 {
     private readonly SportBarFormulaDbContext _context = context;
 
