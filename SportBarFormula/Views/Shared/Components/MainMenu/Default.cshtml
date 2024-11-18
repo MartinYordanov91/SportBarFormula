@@ -1,19 +1,35 @@
-﻿
-<ul class="navbar-nav mx-auto">
+﻿<ul class="navbar-nav mx-auto">
     <li class="nav-item px-lg-4">
         <a class="nav-link text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
     </li>
-    
-    <li class="nav-item px-lg-4">
+     <li class="nav-item px-lg-4">
         <a class="nav-link text-uppercase" asp-area="" asp-controller="Menu" asp-action="Index">Меню</a>
     </li>
     <li class="nav-item px-lg-4">
-        <a class="nav-link text-uppercase" asp-area="" asp-controller="Menu" asp-action="DeletedItems">Премахнати</a>
+        <a class="nav-link text-uppercase" asp-area="" asp-controller="Reservation" asp-action="MyReservations">Моите Резервации</a>
     </li>
-    <li class="nav-item px-lg-4">
-        <a class="nav-link text-uppercase" asp-area="" asp-controller="Category" asp-action="Index">Категории</a>
-    </li> 
-    <li class="nav-item px-lg-4">
-        <a class="nav-link text-uppercase" asp-area="" asp-controller="Reservation" asp-action="Index">Резервации</a>
+
+    <li class="nav-item px-lg-4 dropdown">
+        <div class="dropdown">
+            <button class="btn btn-secondary nav-link text-uppercase dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Админ меню
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li>
+                    <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="DeletedItems">Истрити Меню Итеми</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Index">Всички Категории</a>
+                </li>
+                <li>
+                    <a class="dropdown-item" asp-area="" asp-controller="Reservation" asp-action="Index">Резервации</a>
+                </li>
+            </ul>
+        </div>
     </li>
+   
 </ul>
+
+@section Scripts {
+    <link href="~/css/navbar/custom-styles.css" rel="stylesheet" asp-append-version="true" />
+}
