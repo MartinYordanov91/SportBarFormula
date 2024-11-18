@@ -1,0 +1,35 @@
+﻿/* Стилове за навигационното меню */
+.navbar-nav .nav-link {
+    color: #E4C087;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fff;
+}
+
+/* Стилове за dropdown менюто */
+.navbar-nav .dropdown-menu {
+    background-color: rgba(147, 98, 33, 0.5);
+    border-radius: 5px;
+    border: none;
+}
+
+.navbar-nav .dropdown-item {
+    color: #E4C087;
+    padding: 10px 20px;
+}
+
+.navbar-nav .dropdown-item:hover {
+    background-color: rgba(147, 98, 33, 0.8);
+    color: #fff;
+}
+
+.navbar-nav .dropdown-toggle {
+    color: #E4C087;
+}
+
+.navbar-nav .dropdown-toggle::after {
+    color: #E4C087;
+}
