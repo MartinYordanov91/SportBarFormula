@@ -1,0 +1,35 @@
+﻿.custom-btn {
+    background-color: rgba(147, 98, 33, 0.8);
+    color: #E4C087;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .custom-btn:hover {
+        background-color: rgba(147, 98, 33, 1);
+    }
+
+.custom-table {
+    background-color: rgba(147, 98, 33, 0.5);
+    border-radius: 10px;
+}
+
+.custom-row {
+    box-shadow: 6px 6px 10px 0px rgb(167, 117, 62);
+}
+
+.thead-dark th {
+    color: white;
+    background-color: rgba(147, 98, 33, 0.8);
+}
+
+.table-bordered td, .table-bordered th {
+    border-color: rgba(147, 98, 33, 0.8);
+}
