@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using SportBarFormula.Core.Services.Contracts;
+using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.Reservation;
 using System.Security.Claims;
 
@@ -9,13 +11,13 @@ namespace SportBarFormula.Controllers;
 /// Booking Management Controller.
 /// </summary>
 public class ReservationController(
-    ILogger<ReservationController> logger,
+   IModelStateLoggerService logger,
     IReservationService service
     ) : Controller
 {
 
     private readonly IReservationService _service = service;
-    private readonly ILogger<ReservationController> _logger = logger;
+    private readonly IModelStateLoggerService _logger = logger;
 
     //--------------------------------------------------------------------------------------------------------> Index
     /// <summary>
@@ -42,4 +44,42 @@ public class ReservationController(
         return View(reservations);
     }
 
+    //--------------------------------------------------------------------------------------------------------> Create
+    /// <summary>
+    ///Form to create a new reservation.
+    /// </summary>
+    [HttpGet]
+    public IActionResult Create()
+    {
+        var userId = User.Id();
+
+        var model = new ReservationViewModel()
+        {
+            UserId = userId
+        };
+
+        return View(model);
+    }
+
+    /// <summary>
+    /// Saves the new reservation.
+    /// </summary>
+    [HttpPost]
+    public async Task<IActionResult> Create(ReservationViewModel model)
+    {
+
+        var userId = User.Id();
+        model.UserId = userId;
+
+        if (!ModelState.IsValid)
+        {
+            _logger.LogModelErrors(ModelState);
+
+            return View(model);
+        }
+
+        await _service.AddReservationAsync(model);
+
+        return RedirectToAction(nameof(MyReservations));
+    }
 }
