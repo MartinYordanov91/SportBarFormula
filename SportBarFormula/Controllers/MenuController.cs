@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
+using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.MenuItem;
 using X.PagedList.Extensions;
 
@@ -15,12 +16,12 @@ namespace SportBarFormula.Controllers;
 public class MenuController(
     IMenuItemService service,
     ICategoryService categoryService,
-    ILogger<MenuController> logger
+    IModelStateLoggerService logger
     ) : Controller
 {
     private readonly IMenuItemService _service = service;
     private readonly ICategoryService _categoryService = categoryService;
-    private readonly ILogger<MenuController> _logger = logger;
+    private readonly IModelStateLoggerService _logger = logger;
 
     //--------------------------------------------------------------------------------------------------------------------->   Index
     /// <summary>
