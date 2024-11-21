@@ -1,0 +1,128 @@
+﻿@* 
+@model SportBarFormula.Core.ViewModels.Reservation.ReservationViewModel
+
+<h2 class="text-center mt-5" style="color:#E4C087;">Създаване на резервация</h2>
+<hr />
+<div class="d-flex justify-content-center mt-5 pb-5">
+    <div class="custom-form-container">
+        <form asp-action="Create" class="custom-form p-4">
+            <input type="hidden" asp-for="UserId" /> 
+            <div class="form-group">
+                <label for="ReservationDate" class="custom-label">Дата и час на резервацията</label>
+                <div class="input-group date-time">
+                    <input type="text" maxlength="2" class="form-control date-part" placeholder="DD" />
+                    <span>-</span>
+                    <input type="text" maxlength="2" class="form-control date-part" placeholder="MM" />
+                    <span>-</span>
+                    <input type="text" maxlength="4" class="form-control date-part" placeholder="YYYY" />
+                    <span>' '</span>
+                    <input type="text" maxlength="2" class="form-control date-part" placeholder="HH" />
+                    <span>:</span>
+                    <input type="text" maxlength="2" class="form-control date-part" placeholder="mm" />
+                </div>
+                <input type="hidden" asp-for="ReservationDate" />
+                <span asp-validation-for="ReservationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="NumberOfGuests" class="custom-label">Брой гости</label>
+                <input asp-for="NumberOfGuests" class="form-control custom-input" id="NumberOfGuests" min="1" max="10" />
+                <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="TableLocation" class="custom-label">Маса</label>
+                <select asp-for="IsIndor" class="form-control custom-select">
+                    <option value="true">Вътре</option>
+                    <option value="false">Вън</option>
+                </select>
+                <span asp-validation-for="IsIndor" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary custom-btn mt-3">Създаване</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <link href="~/css/reservation/create-form-sryles.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/js/datetimepicker.js" asp-append-version="true"></script>
+}
+
+ *@
+
+ @model SportBarFormula.Core.ViewModels.Reservation.ReservationViewModel
+
+<h2 class="text-center mt-5" style="color:#E4C087;">Създаване на резервация</h2>
+<hr />
+<div class="d-flex justify-content-center mt-5 pb-5">
+    <div class="custom-form-container">
+        <form asp-action="Create" class="custom-form p-4">
+            <input type="hidden" asp-for="UserId" />
+            <div class="form-group">
+                <label for="ReservationDate" class="custom-label">Дата и час на резервацията</label>
+                <div class="input-group date-time">
+                    <select class="form-control date-part" id="Day">
+                        @for (int day = 1; day <= 31; day++)
+                        {
+                            <option value="@day.ToString("D2")">@day.ToString("D2")</option>
+                        }
+                    </select>
+                    <span>-</span>
+                    <select class="form-control date-part" id="Month">
+                        @for (int month = 1; month <= 12; month++)
+                        {
+                            <option value="@month.ToString("D2")">@month.ToString("D2")</option>
+                        }
+                    </select>
+                    <span>-</span>
+                    <select class="form-control date-part" id="Year">
+                        @for (int year = 2024; year <= 2030; year++)
+                        {
+                            <option value="@year">@year</option>
+                        }
+                    </select>
+                    <span>' '</span>
+                    <select class="form-control date-part" id="Hour">
+                        @for (int hour = 9; hour <= 22; hour++)
+                        {
+                            <option value="@hour.ToString("D2")">@hour.ToString("D2")</option>
+                        }
+                    </select>
+                    <span>:</span>
+                    <select class="form-control date-part" id="Minute">
+                        @foreach (var minute in new[] { "00", "15", "30", "45" })
+                        {
+                            <option value="@minute">@minute</option>
+                        }
+                    </select>
+                </div>
+                <input type="hidden" asp-for="ReservationDate" />
+                <span asp-validation-for="ReservationDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="NumberOfGuests" class="custom-label">Брой гости</label>
+                <input asp-for="NumberOfGuests" class="form-control custom-input" id="NumberOfGuests" min="1" max="10" />
+                <span asp-validation-for="NumberOfGuests" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="TableLocation" class="custom-label">Маса</label>
+                <select asp-for="IsIndor" class="form-control custom-select">
+                    <option value="true">Вътре</option>
+                    <option value="false">Вън</option>
+                </select>
+                <span asp-validation-for="IsIndor" class="text-danger"></span>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary custom-btn mt-3">Създаване</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <link href="~/css/reservation/create-form-sryles.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/js/datetimepicker.js" asp-append-version="true"></script>
+}
