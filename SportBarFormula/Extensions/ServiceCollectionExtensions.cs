@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SportBarFormula.Core.Services.Contracts;
-using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Core.Services;
-using SportBarFormula.Infrastructure.Repositorys.Contracts;
-using SportBarFormula.Infrastructure.Repositorys;
+using SportBarFormula.Core.Services.Contracts;
+using SportBarFormula.Core.Services.Logging;
+using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
+using SportBarFormula.Infrastructure.Repositorys;
+using SportBarFormula.Infrastructure.Repositorys.Contracts;
 
 namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceCollectionExtensions
@@ -20,6 +21,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRepository<MenuItem>, MenuItemRepository>();
         services.AddScoped<IRepository<Category>, CategoryRepository>();
         services.AddScoped<IRepository<Reservation>, ReservationRepository>();
+
+        services.AddScoped<IModelStateLoggerService, ModelStateLoggerServiceILogger>();
 
         return services;
     }
