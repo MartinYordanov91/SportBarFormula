@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SportBarFormula.Core.Services.Contracts;
+using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.Category;
 
 namespace SportBarFormula.Controllers;
@@ -12,11 +13,11 @@ namespace SportBarFormula.Controllers;
 /// <param name="logger"></param>
 public class CategoryController(
     ICategoryService categoryService,
-    ILogger<CategoryController> logger) : Controller
+    IModelStateLoggerService logger) : Controller
 {
 
     private readonly ICategoryService _service = categoryService;
-    private readonly ILogger<CategoryController> _logger = logger;
+    private readonly IModelStateLoggerService _logger = logger;
 
     //----------------------------------------------------------------------------------------------------> Index
     /// <summary>
