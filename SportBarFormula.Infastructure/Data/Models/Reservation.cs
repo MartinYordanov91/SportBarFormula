@@ -18,16 +18,19 @@ public class Reservation
     public required string UserId { get; set; }
 
     [ForeignKey(nameof(UserId))]
-    public required virtual IdentityUser User { get; set; }
+    public  virtual IdentityUser User { get; set; } = null!;
 
     [Comment("Date and time of the reservation")]
     public required DateTime ReservationDate { get; set; }
 
     [Comment("Identifier of the reserved table")]
-    public required int TableId { get; set; }
+    public int? TableId { get; set; }
 
     [ForeignKey(nameof(TableId))]
-    public required virtual Table Table { get; set; }
+    public virtual Table? Table { get; set; }
+
+    [Comment("shows where the table is (indoor, outdoor)")]
+    public bool IsIndor { get; set; }
 
     [Comment("Number of guests")]
     public required int NumberOfGuests { get; set; }
