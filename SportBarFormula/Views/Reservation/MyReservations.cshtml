@@ -2,30 +2,32 @@
 
 <h2 class="text-center mt-5" style="color:#E4C087;">Моите резервации</h2>
 <hr />
+
+<div class="d-flex justify-content-center mb-3">
+    <a asp-action="Create" class="btn custom-btn">Добавяне на резервация</a>
+</div>
+
 <div class="container">
     <div class="table-responsive">
         <table class="table table-bordered table-striped custom-table">
             <thead class="thead-dark">
                 <tr>
-                    <th>Име на клиент</th>
-                    <th>Дата</th>
+                    <th>Дата и час</th>
+                    <th>Местоположение</th>
                     <th>Брой гости</th>
-                    <th>Маса</th>
                     <th>Състояние</th>
-                    <th>Действия</th>
+                    <th>Анулирай</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var reservation in Model)
                 {
                     <tr class="custom-row">
-                        <td>@reservation.UserId</td>
                         <td>@reservation.ReservationDate</td>
+                        <td>@(reservation.IsIndor ? "Вътре" : "Вън")</td>
                         <td>@reservation.NumberOfGuests</td>
-                        <td>@reservation.TableId</td>
                         <td>@(reservation.IsCanceled ? "Анулирана" : "Активна")</td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@reservation.ReservationId" class="btn custom-btn mx-1">Редактиране</a>
                             <form asp-action="Cancel" asp-route-id="@reservation.ReservationId" method="post" class="d-inline" onsubmit="return confirm('Сигурни ли сте, че искате да анулирате тази резервация?');">
                                 <input type="submit" value="Анулиране" class="btn custom-btn mx-1" />
                             </form>
