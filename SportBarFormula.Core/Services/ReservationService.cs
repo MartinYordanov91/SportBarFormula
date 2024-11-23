@@ -17,6 +17,29 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
     private readonly IRepository<Reservation> _repository = repository;
 
     /// <summary>
+    /// Adds a new reservation asynchronously to the repository.
+    /// </summary>
+    /// <param name="model">The reservation view model containing the details of the reservation to be added.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    public async Task AddReservationAsync(ReservationViewModel model)
+    {
+        if (!DateTime.TryParseExact(model.ReservationDate, ReservationDateTimeStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var reservationDate))
+        {
+            throw new ArgumentException("Invalid reservation date format.");
+        }
+        var reservation = new Reservation
+        {
+            UserId = model.UserId,
+            ReservationDate = reservationDate,
+            NumberOfGuests = model.NumberOfGuests,
+            IsIndor = model.IsIndor,
+        };
+
+        await _repository.AddAsync(reservation);
+    }
+
+
+    /// <summary>
     /// Returns all reservations.
     /// </summary>
     /// <returns>A list of all reservations.</returns>
