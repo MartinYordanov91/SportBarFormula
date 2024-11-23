@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ReservationViewModel>
+﻿@model IEnumerable<ReservationViewModel>;
 
 <h2 class="text-center mt-5" style="color:#E4C087;">Резервации</h2>
 <hr />
@@ -12,9 +12,10 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Потребител ID</th>
-                    <th>Дата</th>
+                    <th>Дата и час</th>
                     <th>Брой гости</th>
                     <th>Маса</th>
+                    <th>Местоположение</th>
                     <th>Състояние</th>
                     <th>Действия</th>
                 </tr>
@@ -27,6 +28,7 @@
                         <td>@reservation.ReservationDate</td>
                         <td>@reservation.NumberOfGuests</td>
                         <td>@reservation.TableId</td>
+                        <td>@(reservation.IsIndor ? "Вътре" : "Вън")</td>
                         <td>@(reservation.IsCanceled ? "Анулирана" : "Активна")</td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@reservation.ReservationId" class="btn custom-btn mx-1">Редактиране</a>
