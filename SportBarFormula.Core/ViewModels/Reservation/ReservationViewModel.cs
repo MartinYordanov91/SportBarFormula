@@ -8,12 +8,14 @@ public class ReservationViewModel
 
     public required string UserId { get; set; }
 
+    [Required]
     [Display(Name = "Дата на резервация")]
-    [RegularExpression(@"^\d{2}-\d{2}-\d{4} \d{2}:\d{2}$")]
-    public required string ReservationDate { get; set; }
+    public string ReservationDate { get; set; } = string.Empty;
+
+    public int? TableId { get; set; }
 
     [Display(Name = "Маса")]
-    public int TableId { get; set; }
+    public bool IsIndor { get; set; } =true;
 
     [Display(Name = "Брой гости")]
     public int NumberOfGuests { get; set; }
