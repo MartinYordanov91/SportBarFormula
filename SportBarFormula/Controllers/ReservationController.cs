@@ -84,8 +84,7 @@ public class ReservationController(
         return RedirectToAction(nameof(MyReservations));
     }
 
-    //--------------------------------------------------------------------------------------------------------> Create
-
+    //--------------------------------------------------------------------------------------------------------> Edit
     /// <summary>
     /// Displays the edit view for a specific reservation.
     /// </summary>
@@ -138,4 +137,20 @@ public class ReservationController(
         return RedirectToAction(nameof(Index));
     }
 
+    //--------------------------------------------------------------------------------------------------------> Cancel
+    /// <summary>
+    /// Cancels a reservation by calling the CancelReservationAsync method and redirects to the "MyReservations" view.
+    /// </summary>
+    /// <param name="id">The ID of the reservation to cancel.</param>
+    /// <returns>An IActionResult that represents a redirection to the "MyReservations" view after the cancellation is processed.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Cancel(int id)
+    {
+        await _service.CancelReservationAsync(id);
+
+        return RedirectToAction(nameof(MyReservations));
+    }
+
 }
+
+
