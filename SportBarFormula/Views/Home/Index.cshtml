@@ -1,48 +1,89 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Начало";
 }
 
-<section class="page-section clearfix">
-    <div class="container">
-        <div class="intro">
-            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="assets/img/intro.jpg" alt="..." />
-            <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-                <h2 class="section-heading mb-4">
-                    <span class="section-heading-upper">Прясно кафе</span>
-                    <span class="section-heading-lower">Струва си да се пие</span>
-                </h2>
-                <p class="mb-3">Всяка чаша от нашето качествено майсторско кафе започва с местни, ръчно подбрани съставки. След като го опитате, нашето кафе ще бъде блажено допълнение към ежедневната ви сутрешна рутина - гарантираме го!</p>
-                <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">Visit Us Today!</a></div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-<div class="product-item-description d-flex ms-auto">
-    <div class="embed-responsive embed-responsive-16by9 mx-auto">
-        <iframe class="embed-responsive-item" id="facebookVideo" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1988760764860138&show_text=0&width=560" width="315" height="630" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-        @* <iframe class="embed-responsive-item" id="facebookVideo2" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1198771361167065&show_text=0&width=560" width="315" height="630" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe> *@
-    </div>
-
+<div class="welcome-section text-center">
+    <h2 class="welcome-title">Добре дошли в Спортен Бар Формула</h2>
+    <p class="welcome-text">Спорт, вкусна храна, незабравими вечери и приятелска атмосфера!</p>
 </div>
 
-<section class="page-section cta">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-9 mx-auto">
-                <div class="cta-inner bg-faded text-center rounded">
-                    <h2 class="section-heading mb-4">
-                        <span class="section-heading-upper">Нашето обещание</span>
-                        <span class="section-heading-lower">към теб</span>
-                    </h2>
-                    <p class="mb-0">Когато влезете в нашето заведение, за да започнете деня си, ние сме посветени на това да ви предоставим приятелско обслужване, гостоприемна атмосфера и преди всичко отлични продукти, произведени от най-висококачествени съставки. Ако не сте доволни, моля, уведомете ни и ние ще направим всичко възможно, за да оправим нещата!</p>
-                </div>
-            </div>
+<div class="video-section">
+    <h2 class="section-title text-center">Открийте нашия бар</h2>
+    <div class="video-wrapper">
+        <div class="video-box">
+            <iframe class="video-frame" id="facebookVideo" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1988760764860138&show_text=0&width=315" allowfullscreen></iframe>
+            <p class="video-description">Нашето заведение – уют и стил!</p>
+        </div>
+        <div class="video-box">
+            <iframe class="video-frame" id="facebookVideo2" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1198771361167065&show_text=0&width=315" allowfullscreen></iframe>
+            <p class="video-description">Бързо и удобно – EasyPay каса.</p>
+        </div>
+        <div class="video-box">
+            <iframe class="video-frame" id="facebookVideo3" src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Freel%2F850585326540075&show_text=0&width=315" allowfullscreen></iframe>
+            <p class="video-description">Inbet – залагайте с удоволствие!</p>
         </div>
     </div>
-</section>
+</div>
 
-<script src="~/js/videoScript.js" asp-append-version="true"></script>
+<div class="gallery-section">
+    <h2 class="section-title text-center">Незабравими моменти</h2>
+    <div class="gallery-grid">
+        <img src="~/assets/img/all-element.jpg" alt="Лого бар каса букмейкар" class="gallery-item">
+        <img src="~/assets/img/barNight.jpg" alt="Футболна вечер" class="gallery-item">
+        <img src="~/assets/img/staff2.jpg" alt="Награди изненада " class="gallery-item">
+        <img src="~/assets/img/Backgammon2.jpg" alt="Турнир по табла" class="gallery-item">
+
+        <img src="~/assets/img/Backgammon4.jpg" alt="Турнир по табла" class="gallery-item">
+        <img src="~/assets/img/Backgammon3.jpg" alt="Турнир по табла" class="gallery-item">
+        <img src="~/assets/img/Barr1.jpg" alt="Заведение вечер" class="gallery-item">
+        <img src="~/assets/img/old-party.jpg" alt="Шефа на младени :)" class="gallery-item">
+
+        <img src="~/assets/img/inbet.jpg" alt="Inbet залагане" class="gallery-item">
+        <img src="~/assets/img/inbet2.jpg" alt="Inbet залагане" class="gallery-item">
+        <img src="~/assets/img/Backgammon1.jpg" alt="Турнир по табла" class="gallery-item">
+        <img src="~/assets/img/staff1.jpg" alt="Стаф Презентация" class="gallery-item">
+
+        <img src="~/assets/img/Barr0.jpg" alt="Футболни фенове" class="gallery-item">
+        <img src="~/assets/img/inbet3.jpg" alt="Футболни фенове" class="gallery-item">
+        <img src="~/assets/img/outdor1.jpg" alt="Децка катеръжка" class="gallery-item">
+        <img src="~/assets/img/Backgammon6.jpg" alt="Турнир по табла" class="gallery-item">
+    </div>
+</div>
+
+<div class="contact-section">
+    <h2 class="section-title text-center">Контакти и локация</h2>
+    <div class="map-and-contact">
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d365.75873605960567!2d27.907649433316962!3d43.21040215490429!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x40a454780c085af1%3A0x16730997518d0bd1!2zU3BvcnRzIEJhciBGb3JtdWxhLCDQpdGA0LjRgdGC0L4g0JHQvtGC0LXQstCe0LTQtdGB0L7RgSwg0LHRg9C7LiDigJ7QktC70LDQtNC40YHQu9Cw0LIg0JLQsNGA0L3QtdC90YfQuNC64oCcIDUzLTU1LCA1My01NSwgOTAwMCDQktCw0YDQvdCw!3m2!1d43.2104761!2d27.9074286!5e1!3m2!1sbg!2sbg!4v1732408925479!5m2!1sbg!2sbg"
+                    width="100%" height="300"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        <div class="contact-info">
+            <p><strong>Адрес:</strong> бул. „Владислав Варненчик“ 53-55, 9000 Варна</p>
+            <p><strong>Телефон:</strong> <a href="tel:+359895508998">0895 508 998</a></p>
+            <p>
+                <strong>Facebook страница:</strong>
+                <a href="https://www.facebook.com/sportsbarformula/?locale=bg_BG" target="_blank">
+                    Sports Bar Formula
+                </a>
+            </p>
+            <p>
+                <strong>Поръчки на храна:</strong>
+                <a href="https://www.takeaway.com/bg/menu/gossip-bar-formulagosip-bar-formula-2" target="_blank">
+                    Поръчайте чрез Takeaway
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <link href="~/css/home/custom-styles.css" rel="stylesheet" asp-append-version="true" />
+    <script src="~/js/videoScript.js" asp-append-version="true"></script>
+}
