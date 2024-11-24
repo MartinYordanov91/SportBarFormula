@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.Reservation;
 using SportBarFormula.Infrastructure.Data.Models;
@@ -27,6 +28,7 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
         {
             throw new ArgumentException("Invalid reservation date format.");
         }
+
         var reservation = new Reservation
         {
             UserId = model.UserId,
@@ -59,6 +61,34 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
             .ToList();
     }
 
+    /// <summary>
+    /// Retrieves a reservation by its ID asynchronously and returns it as a ReservationViewModel.
+    /// </summary>
+    /// <param name="id">The ID of the reservation to retrieve.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains the ReservationViewModel with the reservation details.</returns>
+    /// <exception cref="Exception">Thrown when the reservation is not found.</exception>
+    public async Task<ReservationViewModel> GetReservationByIdAsync(int id)
+    {
+        var model = await _repository.GetByIdAsync(id);
+
+        if (model == null)
+        {
+            throw new Exception("Reservation not found");
+        }
+
+        return new ReservationViewModel()
+        {
+            ReservationDate = model.ReservationDate.ToString(ReservationDateTimeStringFormat, CultureInfo.InvariantCulture),
+            UserId = model.UserId,
+            ReservationId = model.ReservationId,
+            IsIndor = model.IsIndor,
+            IsCanceled = model.IsCanceled,
+            NumberOfGuests = model.NumberOfGuests,
+            TableId = model.TableId,
+        };
+    }
+
+
     /// <summary> 
     /// Returns reservations for a specific user.
     /// </summary> 
@@ -80,6 +110,36 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
                 IsCanceled = r.IsCanceled
             })
             .ToList();
+    }
+
+    /// <summary>
+    /// Updates an existing reservation asynchronously.
+    /// </summary>
+    /// <param name="model">The reservation view model containing the updated details of the reservation.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">Thrown when the reservation is not found.</exception>
+    /// <exception cref="ArgumentException">Thrown when the reservation date format is invalid.</exception>
+    public async Task UpdateReservationAsync(ReservationViewModel model)
+    {
+        var reservation = await _repository.GetByIdAsync(model.ReservationId);
+
+        if (reservation == null)
+        {
+            throw new Exception("Reservation not found");
+        }
+
+        if (!DateTime.TryParseExact(model.ReservationDate, ReservationDateTimeStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var reservationDate))
+        {
+            throw new ArgumentException("Invalid reservation date format.");
+        }
+
+        reservation.TableId = model.TableId;
+        reservation.ReservationDate = reservationDate;
+        reservation.IsIndor = model.IsIndor;
+        reservation.IsCanceled = model.IsCanceled;
+        reservation.NumberOfGuests = model.NumberOfGuests;
+
+        await _repository.UpdateAsync(reservation);
     }
 
 }
