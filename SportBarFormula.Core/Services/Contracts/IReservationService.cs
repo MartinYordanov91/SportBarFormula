@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using SportBarFormula.Core.ViewModels.Reservation;
+﻿using SportBarFormula.Core.ViewModels.Reservation;
 
 namespace SportBarFormula.Core.Services.Contracts;
 

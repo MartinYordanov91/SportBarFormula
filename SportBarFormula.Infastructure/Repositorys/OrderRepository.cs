@@ -1,0 +1,91 @@
+﻿using Microsoft.EntityFrameworkCore;
+using SportBarFormula.Infrastructure.Data;
+using SportBarFormula.Infrastructure.Data.Models;
+using SportBarFormula.Infrastructure.Repositorys.Contracts;
+
+namespace SportBarFormula.Infrastructure.Repositorys;
+
+public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Order>
+{
+    private readonly SportBarFormulaDbContext _context = context;
+
+
+    /// <summary>
+    /// Asynchronously adds a new order to the database.
+    /// </summary>
+    /// <param name="order">The order to add.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    public async Task AddAsync(Order entity)
+    {
+        await _context.Orders.AddAsync(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Asynchronously deletes an order from the database by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the order to delete.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">Thrown when the order is not found.</exception>
+    public async Task DeleteAsync(int id)
+    {
+        var order = await _context.Orders.FindAsync(id);
+
+        if (order == null)
+        {
+            throw new Exception("Order not found");
+        }
+
+        _context.Orders.Remove(order);
+        await _context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Asynchronously retrieves all orders from the database, including their associated order items.
+    /// </summary>
+    /// <returns>A Task representing the asynchronous operation, containing an IEnumerable of orders.</returns>
+    public async Task<IEnumerable<Order>> GetAllAsync()
+    {
+        return await _context.Orders.Include(o => o.OrderItems).ToListAsync();
+    }
+
+    /// <summary>
+    /// Asynchronously retrieves an order by its ID from the database, including its associated order items.
+    /// </summary>
+    /// <param name="id">The ID of the order to retrieve.</param>
+    /// <returns>A Task representing the asynchronous operation, containing the order if found.</returns>
+    /// <exception cref="Exception">Thrown when the order is not found.</exception>
+    public async Task<Order> GetByIdAsync(int id)
+    {
+        var order = await _context
+            .Orders
+            .Include(o => o.OrderItems)
+            .FirstOrDefaultAsync(o => o.OrderId == id);
+
+        if (order == null)
+        {
+            throw new Exception("Order not found");
+        }
+
+        return order;
+    }
+
+
+    /// <summary>
+    /// Asynchronously updates an existing order in the database.
+    /// </summary>
+    /// <param name="entity">The order entity to update.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">Thrown when the order entity is null.</exception>
+    public async Task UpdateAsync(Order entity)
+    {
+        if (entity == null)
+        {
+            throw new Exception("Order is null");
+        }
+
+        _context.Orders.Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+}
