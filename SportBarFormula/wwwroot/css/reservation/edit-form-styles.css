@@ -1,0 +1,64 @@
+﻿/* Контейнер за центриране на формата */
+.custom-form-container {
+    width: 100%;
+    max-width: 600px; /* Максимална ширина на формата */
+    background-color: rgba(147, 98, 33, 0.4); /* Лек прозрачен кафяв фон */
+    border-radius: 10px; /* Заоблени ръбове */
+    padding: 20px; /* Падинг */
+    box-shadow: 6px 6px 10px 0px rgb(167, 117, 62); /* Подсека */
+    margin: 0 auto; /* Центриране на формата */
+    margin-bottom: 50px; /* Отстояние от долната страна */
+}
+
+/* Вертикално центриране на формата в контейнера */
+.custom-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Минимална височина на контейнера */
+    padding: 20px 0; /* Отстояние от горната и долната страна */
+}
+
+/* Стилизация за лейбълите */
+.custom-label {
+    color: #E4C087; /* Светъл цвят за лейбълите */
+    font-weight: bold; /* Удебелен шрифт за лейбълите */
+    margin-bottom: 5px; /* Разстояние под лейбълите */
+}
+
+/* Стилизация за полетата на формата */
+.custom-form .custom-input,
+.custom-form .custom-select {
+    background-color: rgba(255, 255, 255, 0.8); /* Лек прозрачен фон */
+    border: 1px solid #ced4da; /* Цвят на бордера */
+    border-radius: 5px; /* Заоблени ръбове */
+    padding: 10px; /* Падинг */
+    margin-bottom: 15px; /* Разстояние между полетата */
+    transition: background-color 0.3s ease;
+}
+
+    .custom-form .custom-input:focus,
+    .custom-form .custom-select:focus {
+        background-color: rgba(255, 255, 255, 1); /* Премахване на прозрачността при фокусиране */
+        border-color: #80bdff; /* Цвят на бордера при фокусиране */
+        outline: 0; /* Премахване на outline */
+    }
+
+/* Стилизация за бутоните */
+.custom-btn {
+    background-color: rgba(147, 98, 33, 0.8);
+    color: #E4C087;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .custom-btn:hover {
+        background-color: rgba(147, 98, 33, 1);
+    }
