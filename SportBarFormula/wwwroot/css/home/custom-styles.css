@@ -1,0 +1,132 @@
+﻿/* Общи стилове */
+body {
+    background-color: #3B2A23;
+    color: #E4C087;
+    font-family: 'Raleway', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Заглавна секция */
+.welcome-section {
+    margin: 20px 0;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    color: #FFD700;
+    margin-bottom: 10px;
+}
+
+.welcome-text {
+    font-size: 1.2rem;
+}
+
+/* Секция за видеа */
+.video-section {
+    margin: 40px 0;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+
+.video-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.video-box {
+    flex: 1 1 30%;
+    max-width: 30%;
+    text-align: center;
+}
+
+.video-frame {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border: none;
+    box-shadow: 6px 6px 10px rgba(167, 117, 62, 0.8);
+    margin-bottom: 10px;
+}
+
+.video-description {
+    font-size: 0.9rem;
+    color: #FFD700;
+}
+
+/* Галерия */
+.gallery-section {
+    padding: 20px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 колони на ред */
+    gap: 15px; /* Разстояние между изображенията */
+    margin: 0 auto;
+}
+
+.gallery-item {
+    width: 100%; /* Автоматично се настройва спрямо колоната */
+    height: 220px; /* Задава фиксирана височина */
+    object-fit: cover; /* Обрязва изображението, за да запази пропорциите */
+    border-radius: 8px; /* Закръглени ръбове за стил */
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Лека сянка за стил */
+}
+
+/*контакти*/
+.contact-section {
+    padding: 40px 20px;
+    background-color: rgba(147, 98, 33, 0.4); /* Нов фон с кафяв нюанс */
+    color: #ecf0f1; /* Светъл текст */
+    margin-top: 30px;
+    border-radius: 8px;
+    box-shadow: 6px 6px 10px 0px rgb(167, 117, 62); /* Златиста сянка */
+}
+
+.contact-section .section-title {
+    color: rgb(255, 215, 0); /* Акцент в червено */
+    margin-bottom: 20px;
+}
+
+.map-and-contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.map-container {
+    flex: 1 1 100%;
+    max-width: 60%; /* Картата заема максимум 60% */
+    min-width: 300px;
+}
+
+.contact-info {
+    flex: 1 1 35%;
+    background-color: rgba(147, 98, 33, 0.7); /* По-наситен нюанс за текстовата част */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 6px 6px 10px 0px rgba(167, 117, 62, 0.8); /* Сянка */
+}
+
+.contact-info p, .contact-info a {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 10px 0;
+    color: #ecf0f1;
+}
+
+.contact-info a {
+    color: #1abc9c; /* Зелен акцент за връзките */
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
