@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.Reservation;
@@ -82,4 +83,59 @@ public class ReservationController(
 
         return RedirectToAction(nameof(MyReservations));
     }
+
+    //--------------------------------------------------------------------------------------------------------> Create
+
+    /// <summary>
+    /// Displays the edit view for a specific reservation.
+    /// </summary>
+    /// <param name="id">The ID of the reservation to edit.</param>
+    /// <returns>An IActionResult representing the edit view or NotFound if the reservation is not found.</returns>
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var reservation = await _service.GetReservationByIdAsync(id);
+
+        if (reservation == null)
+        {
+            return NotFound();
+        }
+
+        ViewBag.IsIndorOptions = new SelectList(
+            new List<SelectListItem>
+            {
+                new SelectListItem { Value = "true", Text = "Вътре", Selected = reservation.IsIndor },
+                new SelectListItem { Value = "false", Text = "Вън", Selected = !reservation.IsIndor }
+            }, "Value", "Text", reservation.IsIndor
+        );
+
+        ViewBag.IsCanceledOptions = new SelectList(
+            new List<SelectListItem> { 
+                new SelectListItem { Value = "false", Text = "Активна", Selected = !reservation.IsCanceled },
+                new SelectListItem { Value = "true", Text = "Анулирана", Selected = reservation.IsCanceled } 
+            }, "Value", "Text", reservation.IsCanceled
+        );
+
+        return View(reservation);
+    }
+
+    /// <summary>
+    /// Processes the edit form submission for a specific reservation.
+    /// </summary>
+    /// <param name="model">The updated reservation view model.</param>
+    /// <returns>An IActionResult representing the result of the operation.</returns>
+    [HttpPost]
+    public async Task<IActionResult> Edit(ReservationViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            _logger.LogModelErrors(ModelState);
+            return View(model);
+        }
+
+        await _service.UpdateReservationAsync(model);
+
+        return RedirectToAction(nameof(Index));
+    }
+
 }
