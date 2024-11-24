@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SportBarFormula.Core.Services.Contracts;
+﻿using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.Reservation;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
@@ -16,6 +14,7 @@ namespace SportBarFormula.Core.Services;
 public class ReservationService(IRepository<Reservation> repository) : IReservationService
 {
     private readonly IRepository<Reservation> _repository = repository;
+
 
     /// <summary>
     /// Adds a new reservation asynchronously to the repository.
@@ -40,6 +39,24 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
         await _repository.AddAsync(reservation);
     }
 
+    /// <summary>
+    /// Cancels the reservation by setting the IsCanceled flag to true.
+    /// </summary>
+    /// <param name="id">The ID of the reservation to cancel.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    public async Task CancelReservationAsync(int id)
+    {
+        var reservation = await _repository.GetByIdAsync(id);
+
+        if (reservation == null)
+        {
+            throw new Exception("Reservation not found");
+        }
+
+        reservation.IsCanceled = true;
+
+        await _repository.UpdateAsync(reservation);
+    }
 
     /// <summary>
     /// Returns all reservations.
@@ -88,7 +105,6 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
         };
     }
 
-
     /// <summary> 
     /// Returns reservations for a specific user.
     /// </summary> 
@@ -100,6 +116,7 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
 
         return reservations
             .Where(r => r.UserId == userId)
+            .Where(r => r.IsCanceled == false)
             .Select(r => new ReservationViewModel
             {
                 ReservationId = r.ReservationId,
