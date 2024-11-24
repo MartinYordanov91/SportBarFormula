@@ -17,10 +17,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMenuItemService, MenuItemService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IReservationService, ReservationService>();
+        services.AddScoped<IOrderService, OrderService>();
 
         services.AddScoped<IRepository<MenuItem>, MenuItemRepository>();
         services.AddScoped<IRepository<Category>, CategoryRepository>();
         services.AddScoped<IRepository<Reservation>, ReservationRepository>();
+        services.AddScoped<IRepository<Order>, OrderRepository>();
 
         services.AddScoped<IModelStateLoggerService, ModelStateLoggerServiceILogger>();
 
@@ -43,7 +45,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddDefaultIdentity<IdentityUser>(options =>
         {
-            options.SignIn.RequireConfirmedAccount = true;
+            options.SignIn.RequireConfirmedAccount = false;
         })
         .AddEntityFrameworkStores<SportBarFormulaDbContext>();
 
