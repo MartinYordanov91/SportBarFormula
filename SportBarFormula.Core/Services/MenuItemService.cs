@@ -41,14 +41,14 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         {
             MenuItemId = menuItem.MenuItemId,
             Name = menuItem.Name,
-            Description = menuItem.Description,
+            Description = menuItem.Description ?? "",
             Price = menuItem.Price,
             Quantity = menuItem.Quantity,
             Category = menuItem.Category.Name,
             CategoryId = menuItem.CategoryId,
             ImageURL = menuItem.ImageURL,
             IsAvailable = menuItem.IsAvailable,
-            Ingredients = menuItem.Ingredients,
+            Ingredients = menuItem.Ingredients ?? "",
             PreparationTime = menuItem.PreparationTime
         };
 
