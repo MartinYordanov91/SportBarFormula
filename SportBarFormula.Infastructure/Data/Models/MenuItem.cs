@@ -33,7 +33,7 @@ public class MenuItem
     public int Quantity { get; set; }
 
     [Comment("Item category (drink, pizza, etc.)")]
-    public  Category Category { get; set; }
+    public Category Category { get; set; } = null!;
 
     [ForeignKey(nameof(Category))]
     [Comment("Unique identifier of the Category")]
