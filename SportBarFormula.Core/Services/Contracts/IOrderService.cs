@@ -12,4 +12,6 @@ public interface IOrderService
     public Task UpdateOrderAsync(OrderViewModel orderViewModel);
 
     public Task<Order?> CreateOrderAsync(OrderViewModel orderViewModel);
+
+    public Task DeleteOrderAsync(int id);
 }

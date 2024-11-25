@@ -179,4 +179,14 @@ public class OrderService(IRepository<Order> repository) : IOrderService
         return order;
     }
 
+    /// <summary>
+    /// Deletes an order by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the order to be deleted.</param>
+    /// <returns>A task representing the asynchronous delete operation.</returns>
+    public async Task DeleteOrderAsync(int id)
+    {
+        await _repository.DeleteAsync(id);
+    }
+
 }
