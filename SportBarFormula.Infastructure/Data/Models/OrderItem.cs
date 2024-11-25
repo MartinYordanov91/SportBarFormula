@@ -16,13 +16,13 @@ public class OrderItem
     public required int OrderId { get; set; }
 
     [ForeignKey(nameof(OrderId))]
-    public required virtual Order Order { get; set; }
+    public virtual Order Order { get; set; }
 
     [Comment("Item ID (foreign key to MenuItems table)")]
     public required int MenuItemId { get; set; }
 
     [ForeignKey(nameof(MenuItemId))]
-    public required virtual MenuItem MenuItem { get; set; }
+    public  virtual MenuItem MenuItem { get; set; }
 
     [Comment("Item quantity")]
     public required int Quantity { get; set; }

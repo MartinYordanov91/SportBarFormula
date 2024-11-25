@@ -23,7 +23,7 @@ public class Order
     public required string UserId { get; set; }
 
     [ForeignKey(nameof(UserId))]
-    public required virtual IdentityUser User { get; set; }
+    public  virtual IdentityUser User { get; set; }
 
     [Comment("Order date")]
     public required DateTime OrderDate { get; set; }
