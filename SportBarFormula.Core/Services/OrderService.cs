@@ -142,4 +142,41 @@ public class OrderService(IRepository<Order> repository) : IOrderService
         await _repository.UpdateAsync(orderToUpdate);
     }
 
+    /// <summary>
+    /// Creates a new order using the provided OrderViewModel.
+    /// </summary>
+    /// <param name="orderViewModel">The OrderViewModel containing details of the order to be created.</param>
+    /// <returns>
+    /// The newly created Order object if the creation is successful; otherwise, null.
+    /// </returns>
+    public async Task<Order?> CreateOrderAsync(OrderViewModel orderViewModel)
+    {
+        var order = new Order()
+        {
+            UserId = orderViewModel.UserId,
+            OrderDate = DateTime.Now,
+            TotalAmount = orderViewModel.TotalAmount,
+        };
+
+        if (order == null)
+        {
+            return null;
+        }
+
+        order.OrderItems = orderViewModel.OrderItems
+            .Select(oi => new OrderItem()
+            {
+                OrderId = order.OrderId,
+                OrderItemId = oi.OrderItemId,
+                MenuItemId = oi.MenuItemId,
+                Quantity = oi.Quantity,
+                Price = oi.Price
+            })
+            .ToList();
+
+        await _repository.AddAsync(order);
+
+        return order;
+    }
+
 }
