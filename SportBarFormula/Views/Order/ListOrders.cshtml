@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OrderViewModel>
+
+<h2 class="text-center mt-5" style="color:#E4C087;">Поръчки</h2>
+<hr />
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped custom-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>OrderId</th>
+                    <th>UserId</th>
+                    <th>OrderDate</th>
+                    <th>TotalAmount</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr class="custom-row">
+                        <td>@order.OrderId</td>
+                        <td>@order.UserId</td>
+                        <td>@order.OrderDate</td>
+                        <td>@order.TotalAmount</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "Order", new { id = order.OrderId })" class="btn custom-btn mx-1">Редактиране</a>
+                            <a href="@Url.Action("Details", "Order", new { id = order.OrderId })" class="btn custom-btn mx-1">Детайли</a>
+                            <a href="@Url.Action("Delete", "Order", new { id = order.OrderId })" class="btn custom-btn mx-1">Изтриване</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <link href="~/css/orders/list-orders.css" rel="stylesheet" asp-append-version="true" />
+}
