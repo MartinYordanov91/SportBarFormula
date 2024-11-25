@@ -55,5 +55,30 @@ namespace SportBarFormula.Controllers
             var allOrders = await _service.GetAllOrdersAsync();
             return Ok(allOrders);
         }
+
+        //-------------------------------------------------------------------------------------------------------> UpdateOrder
+        /// <summary>
+        /// Updates an existing order with the provided OrderViewModel.
+        /// </summary>
+        /// <param name="id">The ID of the order to be updated.</param>
+        /// <param name="orderViewModel">The OrderViewModel containing updated order details.</param>
+        /// <returns>
+        /// An ActionResult indicating the result of the update operation.
+        /// Returns BadRequest if the ID in the URL does not match the ID in the OrderViewModel.
+        /// Returns NoContent if the update operation is successful.
+        /// </returns>
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateOrder(int id, [FromBody] OrderViewModel orderViewModel)
+        {
+            if (id != orderViewModel.OrderId)
+            {
+                return BadRequest();
+            }
+
+            await _service.UpdateOrderAsync(orderViewModel);
+
+            return NoContent();
+        }
+
     }
 }
