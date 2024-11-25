@@ -26,6 +26,8 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IModelStateLoggerService, ModelStateLoggerServiceILogger>();
 
+        services.AddHttpClient();
+
         return services;
     }
 
