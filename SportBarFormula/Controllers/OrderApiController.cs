@@ -82,7 +82,7 @@ namespace SportBarFormula.Controllers
             return NoContent();
         }
 
-
+        //-------------------------------------------------------------------------------------------------------------------> CreateOrder
         /// <summary>
         /// Creates a new order using the provided OrderViewModel.
         /// </summary>
@@ -103,6 +103,20 @@ namespace SportBarFormula.Controllers
             }
 
             return CreatedAtAction(nameof(GetOrderById), new { id = order.OrderId }, orderViewModel);
+        }
+
+        //-----------------------------------------------------------------------------------------------------------------> DeleteOrder
+        /// <summary>
+        /// Deletes an order by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the order to be deleted.</param>
+        /// <returns>An ActionResult indicating the result of the delete operation.</returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteOrder(int id)
+        {
+            await _service.DeleteOrderAsync(id);
+
+            return NoContent();
         }
 
     }
