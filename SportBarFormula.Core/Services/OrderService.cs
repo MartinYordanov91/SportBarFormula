@@ -53,4 +53,42 @@ public class OrderService(IRepository<Order> repository) : IOrderService
         return orderViewModel;
     }
 
+    /// <summary>
+    /// Asynchronously retrieves all orders from the repository and maps them to a list of OrderViewModel.
+    /// </summary>
+    /// <returns>
+    /// A Task representing the asynchronous operation, containing an IEnumerable of OrderViewModel
+    /// with the total amounts calculated for each order.
+    /// </returns>
+    public async Task<IEnumerable<OrderViewModel>> GetAllOrdersAsync()
+    {
+        var allOrder = await _repository.GetAllAsync();
+
+        var allOrderViewModel = allOrder
+            .Select(o => new OrderViewModel()
+            {
+                OrderId = o.OrderId,
+                UserId = o.UserId,
+                OrderDate = o.OrderDate.ToString(OrderDateStringFormat),
+                OrderItems = o.OrderItems
+                    .Select(oi => new OrderItemViewModel()
+                    {
+                        MenuItemId = oi.MenuItemId,
+                        OrderItemId = oi.OrderItemId,
+                        MenuItemName = oi.MenuItem.Name,
+                        Quantity = oi.Quantity,
+                        Price = oi.Price,
+                    })
+                    .ToList()
+            })
+            .ToList();
+
+        foreach (var order in allOrderViewModel)
+        {
+            order.TotalAmount = order.OrderItems.Sum(item => item.Price * item.Quantity);
+        }
+
+        return allOrderViewModel;
+    }
+
 }
