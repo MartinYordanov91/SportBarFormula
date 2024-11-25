@@ -1,0 +1,46 @@
+﻿/* Основни стилове за бутоните */
+.custom-btn {
+    background-color: rgba(147, 98, 33, 0.8);
+    color: #E4C087;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+}
+
+    .custom-btn:hover {
+        background-color: rgba(147, 98, 33, 1);
+    }
+
+/* Основни стилове за таблицата */
+.custom-table {
+    background-color: rgba(147, 98, 33, 0.5);
+    border-radius: 10px;
+    color: #E4C087; /* Добавен цвят за текст */
+    text-align: center; /* Центриране на текста */
+}
+
+.custom-row {
+    box-shadow: 6px 6px 10px 0px rgb(167, 117, 62);
+}
+
+/* Стилове за заглавията на таблицата */
+.thead-dark th {
+    color: white;
+    background-color: rgba(147, 98, 33, 0.8);
+    text-align: center; /* Центриране на текста в заглавните клетки */
+}
+
+.table-bordered td, .table-bordered th {
+    border-color: rgba(147, 98, 33, 0.8);
+    vertical-align: middle; /* Вертикално центриране на текста в клетките */
+}
+
+.table td {
+    color: #E4C087 !important; /* Светъл цвят за текста в клетките */
+}
