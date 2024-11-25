@@ -1,46 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SportBarFormula.Core.Services.Contracts;
-using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.Order_OrderItems;
 
-namespace SportBarFormula.Controllers;
-
-/// <summary>
-/// Order Management Controller.
-/// </summary>
-/// <param name="service"></param>
-/// <param name="logger"></param>
-[ApiController]
-[Route("api/[controller]")]
-public class OrderController(
-    IOrderService service,
-    IModelStateLoggerService logger
-    ) : Controller
+namespace SportBarFormula.Controllers
 {
-
-    private readonly IOrderService _service = service;
-    private readonly IModelStateLoggerService _logger = logger;
-
-    //-------------------------------------------------------------------------------------------------------> GetOrderById
     /// <summary>
-    /// Retrieves an order by its ID and returns the corresponding OrderViewModel.
+    /// Controller for managing orders.
     /// </summary>
-    /// <param name="id">The ID of the order to retrieve.</param>
-    /// <returns>
-    /// An ActionResult containing the OrderViewModel if the order is found,
-    /// or a NotFound result if the order is not found.
-    /// </returns>
-    [HttpGet("{id}")]
-    public async Task<ActionResult<OrderViewModel>> GetOrderById(int id)
+    /// <param name="clientFactory">The HttpClientFactory instance.</param>
+    [Route("[controller]")]
+    public class OrderController(IHttpClientFactory clientFactory) : Controller
     {
-        var orderViewlModel = await _service.GetOrderByIdAsync(id);
+        private readonly IHttpClientFactory _clientFactory = clientFactory;
 
-        if (orderViewlModel == null)
+        //--------------------------------------------------------------------------------------------------------> Index
+        /// <summary>
+        /// Renders the list of all orders.
+        /// </summary>
+        /// <returns>
+        /// An IActionResult that renders the ListOrders view with the orders data.
+        /// Returns a NoContent status if the response is successful but contains no data.
+        /// </returns>
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return NotFound();
+            var client = _clientFactory.CreateClient();
+            var response = await client.GetAsync("https://localhost:7040/api/orderapi/getallorders");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return NoContent();
+            }
+
+            var orders = await response.Content.ReadFromJsonAsync<IEnumerable<OrderViewModel>>();
+
+            return View("ListOrders", orders);
         }
-
-        return Ok(orderViewlModel);
     }
-
 }
