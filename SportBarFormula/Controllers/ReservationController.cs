@@ -11,6 +11,8 @@ namespace SportBarFormula.Controllers;
 /// <summary>
 /// Booking Management Controller.
 /// </summary>
+/// <param name="logger"></param>
+/// <param name="service"></param>
 public class ReservationController(
    IModelStateLoggerService logger,
     IReservationService service
