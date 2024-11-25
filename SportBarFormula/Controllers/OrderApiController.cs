@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SportBarFormula.Core.Services;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.Order_OrderItems;
+using SportBarFormula.Infrastructure.Data.Models;
 
 namespace SportBarFormula.Controllers
 {
@@ -78,6 +80,29 @@ namespace SportBarFormula.Controllers
             await _service.UpdateOrderAsync(orderViewModel);
 
             return NoContent();
+        }
+
+
+        /// <summary>
+        /// Creates a new order using the provided OrderViewModel.
+        /// </summary>
+        /// <param name="orderViewModel">The OrderViewModel containing details of the order to be created.</param>
+        /// <returns>
+        /// An ActionResult indicating the result of the create operation.
+        /// Returns BadRequest if the order creation fails.
+        /// Returns CreatedAtAction with the newly created order's details if successful.
+        /// </returns>
+        [HttpPost]
+        public async Task<ActionResult> CreateOrder([FromBody] OrderViewModel orderViewModel)
+        {
+            var order = await _service.CreateOrderAsync(orderViewModel);
+
+            if (order == null)
+            {
+                return BadRequest();
+            }
+
+            return CreatedAtAction(nameof(GetOrderById), new { id = order.OrderId }, orderViewModel);
         }
 
     }
