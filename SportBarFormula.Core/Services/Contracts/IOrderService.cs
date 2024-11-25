@@ -7,4 +7,6 @@ public interface IOrderService
     public Task<OrderViewModel?> GetOrderByIdAsync(int id);
 
     public Task<IEnumerable<OrderViewModel>> GetAllOrdersAsync();
+
+    public Task UpdateOrderAsync(OrderViewModel orderViewModel);
 }

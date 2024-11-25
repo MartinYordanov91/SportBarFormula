@@ -1,7 +1,9 @@
-﻿using SportBarFormula.Core.Services.Contracts;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.Order_OrderItems;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
+using System.Globalization;
 using static SportBarFormula.Infrastructure.Constants.DataConstants.OrderConstants;
 
 namespace SportBarFormula.Core.Services;
@@ -89,6 +91,55 @@ public class OrderService(IRepository<Order> repository) : IOrderService
         }
 
         return allOrderViewModel;
+    }
+
+    /// <summary>
+    /// Updates an existing order with new information provided in the OrderViewModel.
+    /// </summary>
+    /// <param name="orderViewModel">The OrderViewModel containing updated order information.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">
+    /// Thrown when the order is not found or the date format is not valid.
+    /// </exception>
+    public async Task UpdateOrderAsync(OrderViewModel orderViewModel)
+    {
+        var orderToUpdate = await _repository.GetByIdAsync(orderViewModel.OrderId);
+
+        if (orderToUpdate == null)
+        {
+            throw new Exception("Order Not Found");
+        }
+
+        var isValid = DateTime.TryParseExact(orderViewModel.OrderDate, OrderDateStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime orderdata);
+
+        if (!isValid)
+        {
+            throw new Exception("Data Format is not Valid");
+        }
+
+        var order = new Order()
+        {
+            OrderId = orderViewModel.OrderId,
+            UserId = orderViewModel.UserId,
+            OrderDate = orderdata,
+            TotalAmount = orderViewModel.TotalAmount,
+            OrderItems = orderViewModel.OrderItems
+            .Select(oi => new OrderItem()
+            {
+                OrderId = orderViewModel.OrderId,
+                OrderItemId = oi.OrderItemId,
+                MenuItemId = oi.MenuItemId,
+                Quantity = oi.Quantity,
+                Price = oi.Price
+            })
+            .ToList()
+        };
+
+        orderToUpdate.OrderDate = order.OrderDate;
+        orderToUpdate.TotalAmount = order.TotalAmount;
+        orderToUpdate.OrderItems = order.OrderItems;
+
+        await _repository.UpdateAsync(orderToUpdate);
     }
 
 }
