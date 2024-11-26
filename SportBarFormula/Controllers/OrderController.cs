@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportBarFormula.Core.ViewModels.Order_OrderItems;
+using System.Net.Http;
 
 namespace SportBarFormula.Controllers
 {
@@ -35,5 +36,30 @@ namespace SportBarFormula.Controllers
 
             return View("ListOrders", orders);
         }
+        //---------------------------------------------------------------------------------------------------------> Create
+        /// <summary>
+        /// Creates a new order using the provided OrderViewModel.
+        /// </summary>
+        /// <param name="orderViewModel">The OrderViewModel containing details of the order to be created.</param>
+        /// <returns>
+        /// An ActionResult indicating the result of the create operation.
+        /// Returns BadRequest if the creation fails.
+        /// Redirects to the Index action upon successful creation.
+        /// </returns>
+        [HttpPost]
+        public async Task<IActionResult> Create(OrderViewModel orderViewModel)
+        {
+            var client = _clientFactory.CreateClient();
+
+            var response = await client.PostAsJsonAsync("https://localhost:7040/api/orderapi", orderViewModel);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
