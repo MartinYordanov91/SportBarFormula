@@ -15,14 +15,10 @@ public class OrderItem
     [Comment("Order ID (foreign key to Orders table)")]
     public required int OrderId { get; set; }
 
-    [ForeignKey(nameof(OrderId))]
-    public virtual Order Order { get; set; } = null!;
 
     [Comment("Item ID (foreign key to MenuItems table)")]
     public required int MenuItemId { get; set; }
 
-    [ForeignKey(nameof(MenuItemId))]
-    public  virtual MenuItem MenuItem { get; set; } = null!;
 
     [Comment("Item quantity")]
     public required int Quantity { get; set; }
@@ -31,4 +27,11 @@ public class OrderItem
     [Comment("Item price at time of order vs. quantity")]
     public required decimal Price { get; set; }
 
+
+
+    [ForeignKey(nameof(MenuItemId))]
+    public  virtual MenuItem MenuItem { get; set; } = null!;
+
+    [ForeignKey(nameof(OrderId))]
+    public virtual Order Order { get; set; } = null!;
 }

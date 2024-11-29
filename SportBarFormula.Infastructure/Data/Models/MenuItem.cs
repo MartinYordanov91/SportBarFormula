@@ -32,9 +32,6 @@ public class MenuItem
     [Comment("Shows how many grams or how many milliliters the given product is")]
     public int Quantity { get; set; }
 
-    [Comment("Item category (drink, pizza, etc.)")]
-    public Category Category { get; set; } = null!;
-
     [ForeignKey(nameof(Category))]
     [Comment("Unique identifier of the Category")]
     public int CategoryId { get; set; }
@@ -55,6 +52,12 @@ public class MenuItem
 
     [Comment("Soft delit flag")]
     public bool IsDeleted { get; set; } = false;
+
+
+
+    [Comment("Item category (drink, pizza, etc.)")]
+    public Category Category { get; set; } = null!;
+
 
 
     [Comment("Collection of order items associated with this menu item")]

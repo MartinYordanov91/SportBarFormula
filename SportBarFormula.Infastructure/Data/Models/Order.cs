@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SportBarFormula.Infrastructure.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using static SportBarFormula.Infrastructure.Constants.DataConstants.OrderConstants;
@@ -31,6 +32,9 @@ public class Order
     [Column(TypeName = OrderTotalAmountPrecision)]
     [Comment("Total amount of the order")]
     public required decimal TotalAmount { get; set; }
+
+    [Comment("Status of the order")]
+    public OrderStatus Status { get; set; } = OrderStatus.Draft;
 
     [Comment("Collection of order items")]
     public virtual ICollection<OrderItem> OrderItems { get; set; }
