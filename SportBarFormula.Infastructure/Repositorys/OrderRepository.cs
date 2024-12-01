@@ -41,13 +41,20 @@ public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Ord
     }
 
     /// <summary>
-    /// Asynchronously retrieves all orders from the database, including their associated order items.
+    /// Asynchronously retrieves all orders from the database, including their associated order items and menu items.
     /// </summary>
-    /// <returns>A Task representing the asynchronous operation, containing an IEnumerable of orders.</returns>
+    /// <returns>
+    /// A Task representing the asynchronous operation, containing an IEnumerable of orders.
+    /// Each order includes its associated order items, and each order item includes its associated menu item.
+    /// </returns>
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
-        return await _context.Orders.Include(o => o.OrderItems).ToListAsync();
+        return await _context.Orders
+            .Include(o => o.OrderItems)
+            .ThenInclude(oi => oi.MenuItem)
+            .ToListAsync();
     }
+
 
     /// <summary>
     /// Asynchronously retrieves an order by its ID from the database, including its associated order items.
