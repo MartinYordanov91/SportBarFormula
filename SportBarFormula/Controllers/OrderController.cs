@@ -73,7 +73,7 @@ public class OrderController : Controller
     /// Completes the checkout process.
     /// </summary>
     /// <returns>The result of the checkout action.</returns>
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> Checkout()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -106,6 +106,19 @@ public class OrderController : Controller
         }
 
         await _service.UpdateQuantityAsync(orderItemId, quantity);
+
+        return RedirectToAction(nameof(MyCart));
+    }
+
+    /// <summary>
+    /// Removes an item from the cart.
+    /// </summary>
+    /// <param name="orderItemId">The ID of the order item to remove.</param>
+    /// <returns>The result of the action.</returns>
+    [HttpPost]
+    public async Task<IActionResult> RemoveItem(int orderItemId)
+    {
+        await _service.RemoveItemFormCartAsync(orderItemId);
 
         return RedirectToAction(nameof(MyCart));
     }
