@@ -65,7 +65,7 @@ public class OrderService : IOrderService
         }
         else
         {
-            existOrderItem.Quantity += quantity;
+            await UpdateQuantityAsync(existOrderItem.OrderItemId, existOrderItem.Quantity + 1);
         }
     }
 
