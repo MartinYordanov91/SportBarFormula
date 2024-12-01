@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SportBarFormula.Core.Services.Contracts;
 
 namespace SportBarFormula.Controllers;
@@ -30,6 +31,7 @@ public class OrderController : Controller
     /// <param name="menuItemId">The ID of the menu item.</param>
     /// <param name="quantity">The quantity of the item. Default is 1.</param>
     /// <returns>The result of the action.</returns>
+    [HttpGet]
     public async Task<IActionResult> AddToCart(int menuItemId, int quantity = 1)
     {
         var user = await _userManager.GetUserAsync(User);
@@ -51,6 +53,7 @@ public class OrderController : Controller
     /// Displays the user's cart.
     /// </summary>
     /// <returns>The cart view.</returns>
+    [HttpGet]
     public async Task<IActionResult> MyCart()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -70,6 +73,7 @@ public class OrderController : Controller
     /// Completes the checkout process.
     /// </summary>
     /// <returns>The result of the checkout action.</returns>
+    [HttpGet]
     public async Task<IActionResult> Checkout()
     {
         var user = await _userManager.GetUserAsync(User);
@@ -85,4 +89,26 @@ public class OrderController : Controller
 
         return RedirectToAction(nameof(HomeController.Index));
     }
+
+    //--------------------------------------------------------------------------------------------------------------------------------------> UpdateQuantity
+    /// <summary>
+    /// Updates the quantity of an item in the cart.
+    /// </summary>
+    /// <param name="orderItemId">The ID of the order item.</param>
+    /// <param name="quantity">The new quantity for the order item.</param>
+    /// <returns>The result of the action.</returns>
+    [HttpPost]
+    public async Task<IActionResult> UpdateQuantity(int orderItemId, int quantity)
+    {
+        if (quantity < 1)
+        {
+            return RedirectToAction(nameof(MyCart));
+        }
+
+        await _service.UpdateQuantityAsync(orderItemId, quantity);
+
+        return RedirectToAction(nameof(MyCart));
+    }
+
+
 }
