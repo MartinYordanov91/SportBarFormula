@@ -50,6 +50,19 @@ public static class ServiceCollectionExtensions
         })
         .AddEntityFrameworkStores<SportBarFormulaDbContext>();
 
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = IdentityConstants.ApplicationScheme;
+            options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
+        })
+        .AddFacebook(options =>
+        {
+            options.AppId = config["Authentication:Facebook:AppId"];
+            options.AppSecret = config["Authentication:Facebook:AppSecret"];
+        });
+
+
         return services;
     }
+
 }
