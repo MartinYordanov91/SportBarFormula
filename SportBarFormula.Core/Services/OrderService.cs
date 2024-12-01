@@ -188,4 +188,26 @@ public class OrderService : IOrderService
 
         return orderModel;
     }
+
+    /// <summary>
+    /// Updates the quantity of an order item asynchronously.
+    /// </summary>
+    /// <param name="orderItemId">The ID of the order item to update.</param>
+    /// <param name="quantity">The new quantity for the order item.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">Throws an exception if the order item is not found.</exception>
+    public async Task UpdateQuantityAsync(int orderItemId, int quantity)
+    {
+        var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+
+        if (orderItem == null)
+        {
+            throw new Exception("Order item not found");
+        }
+
+        orderItem.Quantity = quantity;
+
+        await _orderItemRepository.UpdateAsync(orderItem);
+    }
+
 }
