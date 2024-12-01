@@ -1,28 +1,28 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
-    var iframe1 = document.getElementById('facebookVideo');
-    var iframe2 = document.getElementById('facebookVideo2');
-    var iframe3 = document.getElementById('facebookVideo3');
+    var video1 = document.getElementById('localVideo1');
+    var video2 = document.getElementById('localVideo2');
+    var video3 = document.getElementById('localVideo3');
 
-    function reloadIframe(iframe) {
-        var tempSrc = iframe.src;
-        iframe.src = '';
-        iframe.src = tempSrc;
+    function reloadVideo(video) {
+        video.currentTime = 0;
+        video.play();
     }
 
-    iframe1.onload = function () {
+    video1.onended = function () {
         setTimeout(function () {
-            reloadIframe(iframe1);
-        }, 27000); // Предполагаемото време за завършване на видеото в милисекунди
+            reloadVideo(video1);
+        }, 1000); // Време за пауза преди да презареди видеото
     };
 
-    iframe2.onload = function () {
+    video2.onended = function () {
         setTimeout(function () {
-            reloadIframe(iframe2);
-        }, 13000); // Предполагаемото време за завършване на видеото в милисекунди
+            reloadVideo(video2);
+        }, 1000); // Време за пауза преди да презареди видеото
     };
-    iframe3.onload = function () {
+
+    video3.onended = function () {
         setTimeout(function () {
-            reloadIframe(iframe2);
-        }, 29000); // Предполагаемото време за завършване на видеото в милисекунди
+            reloadVideo(video3);
+        }, 1000); // Време за пауза преди да презареди видеото
     };
 });
