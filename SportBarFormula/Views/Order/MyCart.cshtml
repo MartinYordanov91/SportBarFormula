@@ -44,6 +44,12 @@
 
 <h3 class="text-center mt-3" style="color:#E4C087;">Общо: @Model.OrderItems.Sum(i => i.Quantity * i.Price) лв.</h3>
 
+<div class="text-center mt-3">
+    <form asp-controller="Order" asp-action="Checkout" method="post">
+        <button type="submit" class="btn custom-btn">Поръчай</button>
+    </form>
+</div>
+
 @section Scripts {
     <link href="~/css/orders/my-cart-styles.css" rel="stylesheet" asp-append-version="true" />
 }
