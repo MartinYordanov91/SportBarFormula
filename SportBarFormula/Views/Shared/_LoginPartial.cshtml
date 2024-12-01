@@ -2,25 +2,52 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+@{
+    var userEmail = User.Identity?.Name;
+    var userName = string.Empty;
+
+    if (!string.IsNullOrEmpty(userEmail))
+    {
+        var atIndex = userEmail.IndexOf('@');
+        if (atIndex > 0)
+        {
+            userName = userEmail.Substring(0, atIndex);
+        }
+        else
+        {
+            userName = userEmail;
+        }
+        //Премахни всичко след първия символ, който не е буква
+        for (int i = 0; i < userName.Length; i++)
+        {
+            if (!char.IsLetter(userName[i]))
+            {
+                userName = userName.Substring(0, i);
+                break;
+            }
+        }
+    }
+}
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-            <a class="nav-link text-uppercase" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="nav-link btn btn-link text-uppercase">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-            <a class="nav-link text-uppercase" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-            <a class="nav-link text-uppercase" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-uppercase" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@userName</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-uppercase">Излез</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-uppercase" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-uppercase" asp-area="Identity" asp-page="/Account/Login">Влез</a>
+        </li>
+
+    }
 </ul>
