@@ -12,7 +12,7 @@
                 <div class="d-flex flex-column align-items-center mt-3">
                     <a href="@Url.Action("Index", new { categoryId = ViewBag.SelectedCategoryId })" class="btn custom-btn mb-2" style="width: 80%;">Назад към списъка</a>
                     <a href="@Url.Action("Edit", new { id = Model.MenuItemId })" class="btn custom-btn mb-2" style="width: 80%;">Редактирай</a>
-                    <a href="@Url.Action("AddToCart", new { id = Model.MenuItemId })" class="btn custom-btn mb-2" style="width: 80%;">Добави в количката</a>
+                    <a asp-controller="Order" asp-action="AddToCart" asp-route-menuItemId="@Model.MenuItemId" class="btn custom-btn mb-2" style="width: 80%;">Добави в количката</a>
                 </div>
             </div>
             <div class="col-md-8">
