@@ -1,17 +1,18 @@
-﻿using SportBarFormula.Core.ViewModels.Order_OrderItems;
+﻿using Microsoft.AspNetCore.Identity;
+using SportBarFormula.Core.ViewModels.Order_OrderItems;
 using SportBarFormula.Infrastructure.Data.Models;
 
 namespace SportBarFormula.Core.Services.Contracts;
 
 public interface IOrderService
 {
-    public Task<OrderViewModel?> GetOrderByIdAsync(int id);
+    public Task<OrderViewModel> GetUserDraftOrder(IdentityUser user);
 
-    public Task<IEnumerable<OrderViewModel>> GetAllOrdersAsync();
+    public Task AddOrderAsync(OrderViewModel order);
 
-    public Task UpdateOrderAsync(OrderViewModel orderViewModel);
+    public Task AddItemToCartAsync(int menuItemId, int quantity, OrderViewModel order);
 
-    public Task<Order?> CreateOrderAsync(OrderViewModel orderViewModel);
+    public Task AddOrderItemAsync(OrderItemViewModel orderitem, int orderId);
 
-    public Task DeleteOrderAsync(int id);
+    public Task CompletedOrderAsync(OrderViewModel order);
 }

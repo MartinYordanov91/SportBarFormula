@@ -1,192 +1,191 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Identity;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.Order_OrderItems;
+using SportBarFormula.Infrastructure.Data.Enums;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
-using System.Globalization;
-using static SportBarFormula.Infrastructure.Constants.DataConstants.OrderConstants;
 
 namespace SportBarFormula.Core.Services;
 
 /// <summary>
 /// Order Management Service.
 /// </summary>
-public class OrderService(IRepository<Order> repository) : IOrderService
+public class OrderService : IOrderService
 {
-
-    private readonly IRepository<Order> _repository = repository;
+    private readonly IRepository<Order> _repository;
+    private readonly IRepository<OrderItem> _orderItemRepository;
+    private readonly IRepository<MenuItem> _menuitemRepository;
 
     /// <summary>
-    /// Asynchronously retrieves an order by its ID from the repository and maps it to an OrderViewModel.
+    /// Initializes a new instance of the <see cref="OrderService"/> class.
     /// </summary>
-    /// <param name="id">The ID of the order to retrieve.</param>
-    /// <returns>
-    /// A Task representing the asynchronous operation, containing an OrderViewModel
-    /// if the order is found, or null if the order is not found.
-    /// </returns>
-    public async Task<OrderViewModel?> GetOrderByIdAsync(int id)
+    /// <param name="repository">The repository for orders.</param>
+    /// <param name="orderItemRepository">The repository for order items.</param>
+    /// <param name="menuitemRepository">The repository for menu items.</param>
+    public OrderService(
+        IRepository<Order> repository,
+        IRepository<OrderItem> orderItemRepository,
+        IRepository<MenuItem> menuitemRepository)
     {
-        var order = await _repository.GetByIdAsync(id);
+        _repository = repository;
+        _orderItemRepository = orderItemRepository;
+        _menuitemRepository = menuitemRepository;
+    }
 
-        if (order == null)
+    /// <summary>
+    /// Adds an item to the cart.
+    /// </summary>
+    /// <param name="menuItemId">The ID of the menu item.</param>
+    /// <param name="quantity">The quantity of the item.</param>
+    /// <param name="order">The current order.</param>
+    public async Task AddItemToCartAsync(int menuItemId, int quantity, OrderViewModel order)
+    {
+        var existOrderItem = order.OrderItems.FirstOrDefault(oi => oi.MenuItemId == menuItemId);
+
+        if (existOrderItem == null)
         {
-            return null;
-        }
+            var menuitem = await _menuitemRepository.GetByIdAsync(menuItemId);
 
-        var orderViewModel = new OrderViewModel()
+            if (menuitem == null)
+            {
+                throw new Exception("MenuItem not found");
+            }
+
+            existOrderItem = new OrderItemViewModel()
+            {
+                MenuItemId = menuItemId,
+                Quantity = quantity,
+                MenuItemName = menuitem.Name,
+                Price = menuitem.Price,
+            };
+
+            await AddOrderItemAsync(existOrderItem, order.OrderId);
+
+            order.OrderItems.Add(existOrderItem);
+        }
+        else
+        {
+            existOrderItem.Quantity += quantity;
+        }
+    }
+
+    /// <summary>
+    /// Adds a new order.
+    /// </summary>
+    /// <param name="order">The order to add.</param>
+    public async Task AddOrderAsync(OrderViewModel order)
+    {
+        var newOrder = new Order()
         {
             OrderId = order.OrderId,
             UserId = order.UserId,
-            OrderDate = order.OrderDate.ToString(OrderDateStringFormat),
-            OrderItems = order.OrderItems
-             .Select(oi => new OrderItemViewModel()
-             {
-                 MenuItemId = oi.MenuItemId,
-                 OrderItemId = oi.OrderItemId,
-                 MenuItemName = oi.MenuItem.Name,
-                 Quantity = oi.Quantity,
-                 Price = oi.Price,
-             })
-             .ToList(),
-        };
-
-        orderViewModel.TotalAmount = orderViewModel.OrderItems.Sum(item => item.Price * item.Quantity);
-
-        return orderViewModel;
-    }
-
-    /// <summary>
-    /// Asynchronously retrieves all orders from the repository and maps them to a list of OrderViewModel.
-    /// </summary>
-    /// <returns>
-    /// A Task representing the asynchronous operation, containing an IEnumerable of OrderViewModel
-    /// with the total amounts calculated for each order.
-    /// </returns>
-    public async Task<IEnumerable<OrderViewModel>> GetAllOrdersAsync()
-    {
-        var allOrder = await _repository.GetAllAsync();
-
-        var allOrderViewModel = allOrder
-            .Select(o => new OrderViewModel()
-            {
-                OrderId = o.OrderId,
-                UserId = o.UserId,
-                OrderDate = o.OrderDate.ToString(OrderDateStringFormat),
-                OrderItems = o.OrderItems
-                    .Select(oi => new OrderItemViewModel()
-                    {
-                        MenuItemId = oi.MenuItemId,
-                        OrderItemId = oi.OrderItemId,
-                        MenuItemName = oi.MenuItem.Name,
-                        Quantity = oi.Quantity,
-                        Price = oi.Price,
-                    })
-                    .ToList()
-            })
-            .ToList();
-
-        foreach (var order in allOrderViewModel)
-        {
-            order.TotalAmount = order.OrderItems.Sum(item => item.Price * item.Quantity);
-        }
-
-        return allOrderViewModel;
-    }
-
-    /// <summary>
-    /// Updates an existing order with new information provided in the OrderViewModel.
-    /// </summary>
-    /// <param name="orderViewModel">The OrderViewModel containing updated order information.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">
-    /// Thrown when the order is not found or the date format is not valid.
-    /// </exception>
-    public async Task UpdateOrderAsync(OrderViewModel orderViewModel)
-    {
-        var orderToUpdate = await _repository.GetByIdAsync(orderViewModel.OrderId);
-
-        if (orderToUpdate == null)
-        {
-            throw new Exception("Order Not Found");
-        }
-
-        var isValid = DateTime.TryParseExact(orderViewModel.OrderDate, OrderDateStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime orderdata);
-
-        if (!isValid)
-        {
-            throw new Exception("Data Format is not Valid");
-        }
-
-        var order = new Order()
-        {
-            OrderId = orderViewModel.OrderId,
-            UserId = orderViewModel.UserId,
-            OrderDate = orderdata,
-            TotalAmount = orderViewModel.TotalAmount,
-            OrderItems = orderViewModel.OrderItems
-            .Select(oi => new OrderItem()
-            {
-                OrderId = orderViewModel.OrderId,
-                OrderItemId = oi.OrderItemId,
-                MenuItemId = oi.MenuItemId,
-                Quantity = oi.Quantity,
-                Price = oi.Price
-            })
-            .ToList()
-        };
-
-        orderToUpdate.OrderDate = order.OrderDate;
-        orderToUpdate.TotalAmount = order.TotalAmount;
-        orderToUpdate.OrderItems = order.OrderItems;
-
-        await _repository.UpdateAsync(orderToUpdate);
-    }
-
-    /// <summary>
-    /// Creates a new order using the provided OrderViewModel.
-    /// </summary>
-    /// <param name="orderViewModel">The OrderViewModel containing details of the order to be created.</param>
-    /// <returns>
-    /// The newly created Order object if the creation is successful; otherwise, null.
-    /// </returns>
-    public async Task<Order?> CreateOrderAsync(OrderViewModel orderViewModel)
-    {
-        var order = new Order()
-        {
-            UserId = orderViewModel.UserId,
             OrderDate = DateTime.Now,
-            TotalAmount = orderViewModel.TotalAmount,
+            OrderItems = order.OrderItems
+                .Select(oi => new OrderItem()
+                {
+                    MenuItemId = oi.MenuItemId,
+                    OrderId = order.OrderId,
+                    Price = oi.Price,
+                    Quantity = oi.Quantity,
+                    OrderItemId = oi.OrderItemId,
+                })
+               .ToList(),
+            Status = order.Status,
+            TotalAmount = order.TotalAmount,
         };
+
+        await _repository.AddAsync(newOrder);
+    }
+
+    /// <summary>
+    /// Adds an order item to an existing order.
+    /// </summary>
+    /// <param name="orderitem">The order item to add.</param>
+    /// <param name="orderId">The ID of the order.</param>
+    public async Task AddOrderItemAsync(OrderItemViewModel orderitem, int orderId)
+    {
+        if (orderitem == null)
+        {
+            throw new Exception("Some order item field is missed");
+        }
+
+        var orderItem = new OrderItem()
+        {
+            OrderItemId = orderitem.OrderItemId,
+            OrderId = orderId,
+            MenuItemId = orderitem.MenuItemId,
+            Price = orderitem.Price,
+            Quantity = orderitem.Quantity,
+        };
+
+        await _orderItemRepository.AddAsync(orderItem);
+    }
+
+    /// <summary>
+    /// Completes the order process.
+    /// </summary>
+    /// <param name="order">The order to complete.</param>
+    public async Task CompletedOrderAsync(OrderViewModel order)
+    {
+        if (order == null)
+        {
+            throw new Exception("Order not found");
+        }
+
+        if (order.OrderItems.Count > 0)
+        {
+            var orderToUpdate = await _repository.GetByIdAsync(order.OrderId);
+            orderToUpdate.Status = OrderStatus.Completed;
+            await _repository.UpdateAsync(orderToUpdate);
+        }
+    }
+
+    /// <summary>
+    /// Retrieves the draft order for the specified user.
+    /// </summary>
+    /// <param name="user">The user whose draft order is to be retrieved.</param>
+    /// <returns>The draft order of the user.</returns>
+    public async Task<OrderViewModel> GetUserDraftOrder(IdentityUser user)
+    {
+        var allOrders = await _repository.GetAllAsync();
+
+        var order = allOrders
+            .Where(o => o.UserId == user.Id && o.Status == OrderStatus.Draft)
+            .FirstOrDefault();
 
         if (order == null)
         {
-            return null;
+            var newOrder = new OrderViewModel()
+            {
+                UserId = user.Id,
+                Status = OrderStatus.Draft,
+                OrderDate = DateTime.Now,
+                TotalAmount = 0,
+            };
+
+            await AddOrderAsync(newOrder);
+            return newOrder;
         }
 
-        order.OrderItems = orderViewModel.OrderItems
-            .Select(oi => new OrderItem()
-            {
-                OrderId = order.OrderId,
-                OrderItemId = oi.OrderItemId,
-                MenuItemId = oi.MenuItemId,
-                Quantity = oi.Quantity,
-                Price = oi.Price
-            })
-            .ToList();
+        var orderModel = new OrderViewModel()
+        {
+            OrderId = order.OrderId,
+            UserId = order.UserId,
+            OrderDate = DateTime.Now,
+            Status = OrderStatus.Draft,
+            OrderItems = order.OrderItems
+                    .Select(oi => new OrderItemViewModel()
+                    {
+                        OrderItemId = oi.OrderItemId,
+                        MenuItemId = oi.MenuItemId,
+                        MenuItemName = oi.MenuItem.Name,
+                        Price = oi.Price,
+                        Quantity = oi.Quantity,
+                    }).ToList()
+        };
 
-        await _repository.AddAsync(order);
+        orderModel.TotalAmount = order.OrderItems.Sum(oi => oi.Quantity * oi.Price);
 
-        return order;
+        return orderModel;
     }
-
-    /// <summary>
-    /// Deletes an order by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the order to be deleted.</param>
-    /// <returns>A task representing the asynchronous delete operation.</returns>
-    public async Task DeleteOrderAsync(int id)
-    {
-        await _repository.DeleteAsync(id);
-    }
-
 }
