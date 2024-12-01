@@ -1,0 +1,61 @@
+﻿/* Обща стилизация за контейнера */
+.container-privacy {
+    margin:auto;
+    max-width: 900px;
+    padding: 40px;
+    background-color: rgba(147, 98, 33, 0.5); /* Прозрачен кафяв фон */
+    border-radius: 10px; /* Заоблени ръбове */
+    color: #E4C087; /* Цвят на текста */
+}
+
+/* Заглавна секция */
+.page-header h1 {
+    text-align: center;
+    color: #E4C087;
+    margin-bottom: 30px;
+}
+
+/* Основно съдържание */
+main h2 {
+    text-align: center;
+    color: #E4C087;
+    margin-top: 20px;
+}
+
+main h3 {
+    text-align: center;
+    color: #E4C087;
+    margin-top: 20px;
+}
+
+main p, main ul {
+    margin-bottom: 20px;
+    color: #E4C087;
+}
+
+main ul {
+    list-style-type: disc;
+    padding-left: 40px;
+}
+
+    main ul li {
+        margin-bottom: 10px;
+    }
+
+/* Стил за линковете */
+a {
+    color: #E4C087;
+    text-decoration: underline;
+}
+
+    a:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+/* Специална стилизация за email линка */
+main a[href^="mailto:"] {
+    color: #E4C087;
+    text-decoration: underline;
+    font-weight: bold;
+}

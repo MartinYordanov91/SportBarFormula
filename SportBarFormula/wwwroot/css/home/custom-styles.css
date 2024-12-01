@@ -1,7 +1,7 @@
 ﻿/* Общи стилове */
 body {
     background-color: #3B2A23;
-    color: #E4C087;
+    /*color: #E4C087;*/
     font-family: 'Raleway', sans-serif;
     margin: 0;
     padding: 0;
@@ -14,7 +14,6 @@ body {
 
 .welcome-title {
     font-size: 2.5rem;
-    color: #FFD700;
     margin-bottom: 10px;
 }
 
@@ -29,7 +28,7 @@ body {
 
 .section-title {
     font-size: 2rem;
-    color: #FFD700;
+    color: #E4C087;
     margin-bottom: 20px;
 }
 
@@ -56,7 +55,6 @@ body {
 
 .video-description {
     font-size: 0.9rem;
-    color: #FFD700;
 }
 
 /* Галерия */
@@ -83,16 +81,14 @@ body {
 .contact-section {
     padding: 40px 20px;
     background-color: rgba(147, 98, 33, 0.4); /* Нов фон с кафяв нюанс */
-    color: #ecf0f1; /* Светъл текст */
     margin-top: 30px;
     border-radius: 8px;
     box-shadow: 6px 6px 10px 0px rgb(167, 117, 62); /* Златиста сянка */
 }
 
-.contact-section .section-title {
-    color: rgb(255, 215, 0); /* Акцент в червено */
-    margin-bottom: 20px;
-}
+    .contact-section .section-title {
+        margin-bottom: 20px;
+    }
 
 .map-and-contact {
     display: flex;
@@ -115,18 +111,18 @@ body {
     box-shadow: 6px 6px 10px 0px rgba(167, 117, 62, 0.8); /* Сянка */
 }
 
-.contact-info p, .contact-info a {
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 10px 0;
-    color: #ecf0f1;
-}
+    .contact-info p, .contact-info a {
+        font-size: 16px;
+        line-height: 1.6;
+        margin: 10px 0;
+        color: #ecf0f1;
+    }
 
-.contact-info a {
-    color: #1abc9c; /* Зелен акцент за връзките */
-    text-decoration: none;
-}
+    .contact-info a {
+        color: #1abc9c; /* Зелен акцент за връзките */
+        text-decoration: none;
+    }
 
-.contact-info a:hover {
-    text-decoration: underline;
-}
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
