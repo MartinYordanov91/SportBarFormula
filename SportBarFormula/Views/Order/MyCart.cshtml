@@ -22,7 +22,7 @@
                         <td>@item.MenuItemName</td>
                         <td>@item.Price лв</td>
                         <td>
-                            <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-inline">
+                            <form asp-controller="Order" asp-action="UpdateQuantity" method="post" class="d-inline">
                                 <input type="hidden" name="orderItemId" value="@item.OrderItemId" />
                                 <input type="number" name="quantity" value="@item.Quantity" min="1" />
                                 <button type="submit" class="btn custom-btn mx-1">Обнови</button>
@@ -30,7 +30,7 @@
                         </td>
                         <td>@(item.Quantity * item.Price) лв.</td>
                         <td>
-                            <form asp-controller="Cart" asp-action="RemoveItem" method="post" class="d-inline" onsubmit="return confirm('Сигурни ли сте, че искате да премахнете този артикул?');">
+                            <form asp-controller="Order" asp-action="RemoveItem" method="post" class="d-inline" onsubmit="return confirm('Сигурни ли сте, че искате да премахнете този артикул?');">
                                 <input type="hidden" name="orderItemId" value="@item.OrderItemId" />
                                 <button type="submit" class="btn custom-btn mx-1">Премахни</button>
                             </form>
