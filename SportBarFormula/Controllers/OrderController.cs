@@ -31,7 +31,7 @@ public class OrderController : Controller
     /// <param name="menuItemId">The ID of the menu item.</param>
     /// <param name="quantity">The quantity of the item. Default is 1.</param>
     /// <returns>The result of the action.</returns>
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> AddToCart(int menuItemId, int quantity = 1)
     {
         var user = await _userManager.GetUserAsync(User);
@@ -110,6 +110,7 @@ public class OrderController : Controller
         return RedirectToAction(nameof(MyCart));
     }
 
+    //--------------------------------------------------------------------------------------------------------------------------------------> RemoveItem
     /// <summary>
     /// Removes an item from the cart.
     /// </summary>

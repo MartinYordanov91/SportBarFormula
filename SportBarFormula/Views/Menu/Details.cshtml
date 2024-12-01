@@ -10,9 +10,21 @@
             <div class="col-md-4">
                 <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px 0 0 10px;">
                 <div class="d-flex flex-column align-items-center mt-3">
-                    <a href="@Url.Action("Index", new { categoryId = ViewBag.SelectedCategoryId })" class="btn custom-btn mb-2" style="width: 80%;">Назад към списъка</a>
-                    <a href="@Url.Action("Edit", new { id = Model.MenuItemId })" class="btn custom-btn mb-2" style="width: 80%;">Редактирай</a>
-                    <a asp-controller="Order" asp-action="AddToCart" asp-route-menuItemId="@Model.MenuItemId" class="btn custom-btn mb-2" style="width: 80%;">Добави в количката</a>
+                    <form asp-controller="Menu" asp-action="Index" method="get" class="wide-btn" style="display:inline;">
+                        <input type="hidden" name="categoryId" value="@ViewBag.SelectedCategoryId" />
+                        <button type="submit" class="btn custom-btn mb-2 wide-btn">Назад към списъка</button>
+                    </form>
+
+                    <form asp-controller="Menu" asp-action="Edit" method="get" class="wide-btn" style="display:inline;">
+                        <input type="hidden" name="id" value="@Model.MenuItemId" />
+                        <button type="submit" class="btn custom-btn mb-2 wide-btn">Редактирай</button>
+                    </form>
+
+                    <form asp-controller="Order" asp-action="AddToCart" method="post" class="wide-btn" style="display:inline;">
+                        <input type="hidden" name="menuItemId" value="@Model.MenuItemId" />
+                        <input type="hidden" name="quantity" value="1" />
+                        <button type="submit" class="btn custom-btn mb-2 wide-btn">Добави в количката</button>
+                    </form>
                 </div>
             </div>
             <div class="col-md-8">

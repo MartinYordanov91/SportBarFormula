@@ -121,3 +121,7 @@
     border-bottom-left-radius: 10px; /* Заоблени ръбове */
     border-bottom-right-radius: 10px; /* Заоблени ръбове */
 }
+
+.wide-btn {
+    width: 80%; /* Или същата ширина като линковете */
+}
