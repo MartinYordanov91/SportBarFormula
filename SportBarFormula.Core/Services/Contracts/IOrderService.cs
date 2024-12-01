@@ -17,4 +17,8 @@ public interface IOrderService
     public Task CompletedOrderAsync(OrderViewModel order);
 
     public Task UpdateQuantityAsync(int orderItemId, int quantity);
+
+    public Task RemoveItemFormCartAsync(int orderItemId);
+
+    public Task UpdateOrderAsync(OrderViewModel orderModel);
 }

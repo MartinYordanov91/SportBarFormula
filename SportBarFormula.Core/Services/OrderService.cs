@@ -186,8 +186,49 @@ public class OrderService : IOrderService
 
         orderModel.TotalAmount = order.OrderItems.Sum(oi => oi.Quantity * oi.Price);
 
+        await UpdateOrderAsync(orderModel);
+
         return orderModel;
     }
+
+    /// <summary>
+    /// Removes an item from the cart asynchronously.
+    /// </summary>
+    /// <param name="orderItemId">The ID of the order item to remove.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">Throws an exception if the order item is not found.</exception>
+    public async Task RemoveItemFormCartAsync(int orderItemId)
+    {
+        var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+
+        if (orderItem == null)
+        {
+            throw new Exception("Order item not found");
+        }
+
+        await _orderItemRepository.DeleteAsync(orderItemId);
+    }
+
+    /// <summary>
+    /// Updates an order TotalAmount asynchronously.
+    /// </summary>
+    /// <param name="orderModel">The order model containing updated information.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="Exception">Throws an exception if the order is not found.</exception>
+    public async Task UpdateOrderAsync(OrderViewModel orderModel)
+    {
+        var order = await _repository.GetByIdAsync(orderModel.OrderId);
+
+        if (order == null)
+        {
+            throw new Exception("Order not found");
+        }
+
+        order.TotalAmount = orderModel.TotalAmount;
+
+        await _repository.UpdateAsync(order);
+    }
+
 
     /// <summary>
     /// Updates the quantity of an order item asynchronously.
