@@ -1,0 +1,49 @@
+﻿@model OrderViewModel
+
+<h2 class="text-center mt-5" style="color:#E4C087;">Вашата количка</h2>
+<hr />
+
+<div class="container">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped custom-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Продукт</th>
+                    <th>Цена</th>
+                    <th>Количество</th>
+                    <th>Общо</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr class="custom-row">
+                        <td>@item.MenuItemName</td>
+                        <td>@item.Price лв</td>
+                        <td>
+                            <form asp-controller="Cart" asp-action="UpdateQuantity" method="post" class="d-inline">
+                                <input type="hidden" name="orderItemId" value="@item.OrderItemId" />
+                                <input type="number" name="quantity" value="@item.Quantity" min="1" />
+                                <button type="submit" class="btn custom-btn mx-1">Обнови</button>
+                            </form>
+                        </td>
+                        <td>@(item.Quantity * item.Price) лв.</td>
+                        <td>
+                            <form asp-controller="Cart" asp-action="RemoveItem" method="post" class="d-inline" onsubmit="return confirm('Сигурни ли сте, че искате да премахнете този артикул?');">
+                                <input type="hidden" name="orderItemId" value="@item.OrderItemId" />
+                                <button type="submit" class="btn custom-btn mx-1">Премахни</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h3 class="text-center mt-3" style="color:#E4C087;">Общо: @Model.OrderItems.Sum(i => i.Quantity * i.Price) лв.</h3>
+
+@section Scripts {
+    <link href="~/css/orders/my-cart-styles.css" rel="stylesheet" asp-append-version="true" />
+}
