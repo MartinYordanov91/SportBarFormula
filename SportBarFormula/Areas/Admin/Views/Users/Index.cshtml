@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+
+<h2>Потребители</h2>
+
+<div class="input-group input-group-sm mb-3">
+    <input style=" background-color: rgba(255, 255, 255, 0.75) !important;" type="text" id="searchInput" class="form-control" placeholder="Търси по имейл...">
+</div>
+
+<table class="table" id="usersTable">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-action="ManageRoles" asp-route-userId="@user.Id" class="btn btn-primary">Manage Roles</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/js/admin/userSerchFild.js"></script>
+}
