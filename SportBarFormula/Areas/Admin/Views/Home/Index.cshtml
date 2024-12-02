@@ -1,0 +1,36 @@
+﻿@page
+@model Microsoft.AspNetCore.Mvc.RazorPages.PageModel
+@{
+
+    var currentTime = DateTime.Now;
+    string greeting;
+    if (currentTime.Hour < 12)
+    {
+        greeting = "Добро утро";
+    }
+    else if (currentTime.Hour < 18)
+    {
+        greeting = "Добър ден";
+    }
+    else
+    {
+        greeting = "Добър вечер";
+    }
+}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-4">@greeting, Марто </h1>
+            <p class="lead">Добре дошли в администраторския панел на SportBarFormula!</p>
+            <hr class="my-4">
+            <p>„Пазете се от програмата – тя ще работи точно както сте я написали, а не както искате да работи!“ 😄</p>
+        </div>
+    </div>
+
+    <div class="row mt-5 text-center">
+        <div class="col-12">
+            <p class="text-muted">„Кодът е като шега – ако трябва да го обясняваш, значи не е добър.“ 😄</p>
+        </div>
+    </div>
+</div>
