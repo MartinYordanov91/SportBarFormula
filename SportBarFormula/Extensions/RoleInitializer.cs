@@ -17,7 +17,7 @@ public class RoleInitializer
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-        string[] roles = { "Admin", "Manager", "Staff" };
+        string[] roles = { "Admin", "Manager", "Staff", "Chef", "Waiter", "Bartender" , "Cleaner" };
 
         foreach (var role in roles)
         {
@@ -27,8 +27,8 @@ public class RoleInitializer
             }
         }
 
-        var adminEmail = "Admin@gmeil.com"; 
-        var adminPassword = "Admin123!"; 
+        var adminEmail = "Admin@gmeil.com";
+        var adminPassword = "Admin123!";
 
         if (await userManager.FindByEmailAsync(adminEmail) == null)
         {
