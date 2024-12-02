@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using SportBarFormula.Models;
+using SportBarFormula.Core.ViewModels;
 using System.Diagnostics;
 
 namespace SportBarFormula.Controllers;
