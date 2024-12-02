@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.Services.Logging;
@@ -11,6 +11,7 @@ namespace SportBarFormula.Controllers;
 /// </summary>
 /// <param name="categoryService"></param>
 /// <param name="logger"></param>
+[Authorize]
 public class CategoryController(
     ICategoryService categoryService,
     IModelStateLoggerService logger) : Controller
@@ -25,6 +26,7 @@ public class CategoryController(
     /// </summary>
     /// <returns>View with all categories.</returns>
     [HttpGet]
+    [Authorize(Roles ="Admin,Manager")]
     public async Task<IActionResult> Index()
     {
         var categories = await _service.GetAllCategoriesAsync();
@@ -38,6 +40,7 @@ public class CategoryController(
     /// </summary>
     /// <returns>View to create a new category.</returns>
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager")]
     public IActionResult Create()
     {
         return View();
@@ -49,6 +52,8 @@ public class CategoryController(
     /// <param name="model">ViewModel for the new category.</param>
     /// <returns>Redirects to the Index view on successful creation or displays the form again on failure.</returns>
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CategoryViewModel model)
     {
         if (!ModelState.IsValid)
@@ -68,6 +73,7 @@ public class CategoryController(
     /// <param name="id">Id of the category to edit.</param>
     /// <returns>View to edit the category if the category exists, or NotFound if it does not.</returns>
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Edit(int id)
     {
         var category = await _service.GetCategoryByIdAsync(id);
@@ -86,6 +92,8 @@ public class CategoryController(
     /// <param name="model">ViewModel with the updated category data.</param>
     /// <returns>Redirects to the Index view on successful update or displays the form again on failure</returns>
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(CategoryViewModel model)
     {
         if (!ModelState.IsValid)
@@ -105,6 +113,8 @@ public class CategoryController(
     /// <param name="id">Identifier of the category to delete.</param>
     /// <returns>Redirects to the Index view on successful deletion or NotFound if the category does not exist.</returns>
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
         var category = await _service.GetCategoryByIdAsync(id);

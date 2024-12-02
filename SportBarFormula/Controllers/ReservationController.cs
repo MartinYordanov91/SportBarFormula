@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
@@ -13,8 +13,9 @@ namespace SportBarFormula.Controllers;
 /// </summary>
 /// <param name="logger"></param>
 /// <param name="service"></param>
+[Authorize]
 public class ReservationController(
-   IModelStateLoggerService logger,
+    IModelStateLoggerService logger,
     IReservationService service
     ) : Controller
 {
@@ -27,6 +28,7 @@ public class ReservationController(
     /// List of all reservations for admins.
     /// </summary>
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager,Staff,Chef,Waiter,Bartender,Cleaner")]
     public async Task<IActionResult> Index()
     {
         var reservations = await _service.GetAllReservationsAsync();
@@ -68,6 +70,7 @@ public class ReservationController(
     /// Saves the new reservation.
     /// </summary>
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(ReservationViewModel model)
     {
 
@@ -105,15 +108,16 @@ public class ReservationController(
         ViewBag.IsIndorOptions = new SelectList(
             new List<SelectListItem>
             {
-                new SelectListItem { Value = "true", Text = "Вътре", Selected = reservation.IsIndor },
-                new SelectListItem { Value = "false", Text = "Вън", Selected = !reservation.IsIndor }
+               new() { Value = "true", Text = "Вътре", Selected = reservation.IsIndor },
+               new() { Value = "false", Text = "Вън", Selected = !reservation.IsIndor }
             }, "Value", "Text", reservation.IsIndor
         );
 
+
         ViewBag.IsCanceledOptions = new SelectList(
-            new List<SelectListItem> { 
-                new SelectListItem { Value = "false", Text = "Активна", Selected = !reservation.IsCanceled },
-                new SelectListItem { Value = "true", Text = "Анулирана", Selected = reservation.IsCanceled } 
+            new List<SelectListItem> {
+                new () { Value = "false", Text = "Активна", Selected = !reservation.IsCanceled },
+                new () { Value = "true", Text = "Анулирана", Selected = reservation.IsCanceled }
             }, "Value", "Text", reservation.IsCanceled
         );
 
@@ -126,6 +130,8 @@ public class ReservationController(
     /// <param name="model">The updated reservation view model.</param>
     /// <returns>An IActionResult representing the result of the operation.</returns>
     [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Edit(ReservationViewModel model)
     {
         if (!ModelState.IsValid)
@@ -146,6 +152,7 @@ public class ReservationController(
     /// <param name="id">The ID of the reservation to cancel.</param>
     /// <returns>An IActionResult that represents a redirection to the "MyReservations" view after the cancellation is processed.</returns>
     [HttpPost]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Cancel(int id)
     {
         await _service.CancelReservationAsync(id);

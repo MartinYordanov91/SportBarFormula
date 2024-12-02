@@ -2,38 +2,43 @@
     <li class="nav-item px-lg-4">
         <a class="nav-link text-uppercase" asp-area="" asp-controller="Home" asp-action="Index">Начало</a>
     </li>
-     <li class="nav-item px-lg-4">
+    <li class="nav-item px-lg-4">
         <a class="nav-link text-uppercase" asp-area="" asp-controller="Menu" asp-action="Index">Меню</a>
     </li>
-    <li class="nav-item px-lg-4">
-        <a class="nav-link text-uppercase" asp-area="" asp-controller="Reservation" asp-action="MyReservations">Моите Резервации</a>
-    </li>
-    <li class="nav-item px-lg-4">
-        <a class="nav-link text-uppercase" asp-area="" asp-controller="Order" asp-action="MyCart">Количка</a>
-    </li>
+    @if (User?.Identity?.IsAuthenticated == true)
+    {
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Reservation" asp-action="MyReservations">Моите Резервации</a>
+        </li>
+        <li class="nav-item px-lg-4">
+            <a class="nav-link text-uppercase" asp-area="" asp-controller="Order" asp-action="MyCart">Количка</a>
+        </li>
 
-    <li class="nav-item px-lg-4 dropdown">
-        <div class="dropdown">
-            <button class="btn btn-secondary nav-link text-uppercase dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-               Админ меню
-            </button>
-            <ul class="dropdown-menu dropdown-menu-dark">
-                <li>
-                    <a class="dropdown-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Админ</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="DeletedItems">Истрити Меню Итеми</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Index">Всички Категории</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="" asp-controller="Reservation" asp-action="Index">Резервации</a>
-                </li>
-            </ul>
-        </div>
-    </li>
-   
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item px-lg-4 dropdown">
+                <div class="dropdown">
+                    <button class="btn btn-secondary nav-link text-uppercase dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Админ меню
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-dark">
+                        <li>
+                            <a class="dropdown-item" asp-area="Admin" asp-controller="Home" asp-action="Index">Админ</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-controller="Menu" asp-action="DeletedItems">Истрити Меню Итеми</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-controller="Category" asp-action="Index">Всички Категории</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" asp-area="" asp-controller="Reservation" asp-action="Index">Резервации</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+    }
 </ul>
 
 @section Scripts {

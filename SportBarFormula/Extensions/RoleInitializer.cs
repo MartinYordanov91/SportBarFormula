@@ -2,22 +2,24 @@
 
 namespace SportBarFormula.Extensions;
 
-public class RoleInitializer
+/// <summary>
+/// Initializes roles and default admin user.
+/// </summary>
+public class RoleInitializer(IServiceProvider serviceProvider)
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    public RoleInitializer(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
-
+    /// <summary>
+    /// Initializes roles and a default admin user asynchronously.
+    /// </summary>
     public async Task InitializeAsync()
     {
         using var scope = _serviceProvider.CreateScope();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-        string[] roles = { "Admin", "Manager", "Staff", "Chef", "Waiter", "Bartender" , "Cleaner" };
+        var roles = new[] { "Admin", "Manager", "Staff", "Chef", "Waiter", "Bartender", "Cleaner" };
+
 
         foreach (var role in roles)
         {

@@ -7,26 +7,43 @@
 <div class="container mt-5">
     <div class="card" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
         <div class="row no-gutters">
+
             <div class="col-md-4">
-                <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px 0 0 10px;">
-                <div class="d-flex flex-column align-items-center mt-3">
-                    <form asp-controller="Menu" asp-action="Index" method="get" class="wide-btn" style="display:inline;">
-                        <input type="hidden" name="categoryId" value="@ViewBag.SelectedCategoryId" />
-                        <button type="submit" class="btn custom-btn mb-2 wide-btn">Назад към списъка</button>
-                    </form>
+                @if (Model.ImageURL.StartsWith("http"))
+                {
+                    <img src="@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px; margin-top: 10px; margin-left: 10px;">
+                }
+                else
+                {
+                    <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px; margin-top: 10px; margin-left: 10px;">
+                }
 
-                    <form asp-controller="Menu" asp-action="Edit" method="get" class="wide-btn" style="display:inline;">
-                        <input type="hidden" name="id" value="@Model.MenuItemId" />
-                        <button type="submit" class="btn custom-btn mb-2 wide-btn">Редактирай</button>
-                    </form>
+                @if (User?.Identity?.IsAuthenticated == true)
+                {
+                    <div class="d-flex flex-column align-items-center mt-3">
+                        <form asp-controller="Menu" asp-action="Index" method="get" class="wide-btn" style="display:inline;">
+                            <input type="hidden" name="categoryId" value="@ViewBag.SelectedCategoryId" />
+                            <button type="submit" class="btn custom-btn mb-2 wide-btn">Назад към списъка</button>
+                        </form>
 
-                    <form asp-controller="Order" asp-action="AddToCart" method="post" class="wide-btn" style="display:inline;">
-                        <input type="hidden" name="menuItemId" value="@Model.MenuItemId" />
-                        <input type="hidden" name="quantity" value="1" />
-                        <button type="submit" class="btn custom-btn mb-2 wide-btn">Добави в количката</button>
-                    </form>
-                </div>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Staff"))
+                        {
+                            <form asp-controller="Menu" asp-action="Edit" method="get" class="wide-btn" style="display:inline;">
+                                <input type="hidden" name="id" value="@Model.MenuItemId" />
+                                <button type="submit" class="btn custom-btn mb-2 wide-btn">Редактирай</button>
+                            </form>
+                        }
+
+                        <form asp-controller="Order" asp-action="AddToCart" method="post" class="wide-btn" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="menuItemId" value="@Model.MenuItemId" />
+                            <input type="hidden" name="quantity" value="1" />
+                            <button type="submit" class="btn custom-btn mb-2 wide-btn">Добави в количката</button>
+                        </form>
+                    </div>
+                }
             </div>
+
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title" style="color:#E4C087;">@Model.Name</h5>

@@ -2,41 +2,48 @@
 
 <h2 class="text-center mt-5" style="color:#E4C087;">Редактиране на резервация</h2>
 <hr />
+@if(User?.Identity?.IsAuthenticated == true)
+{
+    @if(User.IsInRole("Admin") || User.IsInRole("Manager"))
+    {
 
-<div class="custom-form-wrapper">
-    <div class="custom-form-container">
-        <form asp-action="Edit" class="custom-form">
-            <div class="form-group">
-                <label for="UserId" class="custom-label">Потребител ID</label>
-                <input type="text" class="form-control custom-input" id="UserId" name="UserId" value="@Model.UserId" readonly />
+        <div class="custom-form-wrapper">
+            <div class="custom-form-container">
+                <form asp-action="Edit" class="custom-form">
+                    @Html.AntiForgeryToken();
+                    <div class="form-group">
+                        <label for="UserId" class="custom-label">Потребител ID</label>
+                        <input type="text" class="form-control custom-input" id="UserId" name="UserId" value="@Model.UserId" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="ReservationDate" class="custom-label">Дата и час</label>
+                        <input type="text" class="form-control custom-input" id="ReservationDate" name="ReservationDate" value="@Model.ReservationDate" />
+                    </div>
+                    <div class="form-group">
+                        <label for="NumberOfGuests" class="custom-label">Брой гости</label>
+                        <input type="number" class="form-control custom-input" id="NumberOfGuests" name="NumberOfGuests" value="@Model.NumberOfGuests" />
+                    </div>
+                    <div class="form-group">
+                        <label for="TableId" class="custom-label">Маса</label>
+                        <input type="text" class="form-control custom-input" id="TableId" name="TableId" value="@Model.TableId" />
+                    </div>
+                    <div class="form-group">
+                        <label for="IsIndor" class="custom-label">Местоположение</label>
+                        <select class="form-control custom-select" id="IsIndor" name="IsIndor" asp-items="ViewBag.IsIndorOptions">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="IsCanceled" class="custom-label">Състояние</label>
+                        <select class="form-control custom-select" id="IsCanceled" name="IsCanceled" asp-items="ViewBag.IsCanceledOptions">
+                        </select>
+                    </div>
+                    <button type="submit" class="btn custom-btn">Запази промените</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="ReservationDate" class="custom-label">Дата и час</label>
-                <input type="text" class="form-control custom-input" id="ReservationDate" name="ReservationDate" value="@Model.ReservationDate" />
-            </div>
-            <div class="form-group">
-                <label for="NumberOfGuests" class="custom-label">Брой гости</label>
-                <input type="number" class="form-control custom-input" id="NumberOfGuests" name="NumberOfGuests" value="@Model.NumberOfGuests" />
-            </div>
-            <div class="form-group">
-                <label for="TableId" class="custom-label">Маса</label>
-                <input type="text" class="form-control custom-input" id="TableId" name="TableId" value="@Model.TableId" />
-            </div>
-            <div class="form-group">
-                <label for="IsIndor" class="custom-label">Местоположение</label>
-                <select class="form-control custom-select" id="IsIndor" name="IsIndor" asp-items="ViewBag.IsIndorOptions">
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="IsCanceled" class="custom-label">Състояние</label>
-                <select class="form-control custom-select" id="IsCanceled" name="IsCanceled" asp-items="ViewBag.IsCanceledOptions">
-                </select>
-            </div>
-            <button type="submit" class="btn custom-btn">Запази промените</button>
-        </form>
-    </div>
-</div>
+        </div>
 
+    }
+}
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <link href="~/css/reservation/edit-form-styles.css" rel="stylesheet" asp-append-version="true" />

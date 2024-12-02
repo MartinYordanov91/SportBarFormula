@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.Services.Logging;
@@ -13,6 +14,7 @@ namespace SportBarFormula.Controllers;
 /// <param name="service"></param>
 /// <param name="categoryService"></param>
 /// <param name="logger"></param>
+[Authorize]
 public class MenuController(
     IMenuItemService service,
     ICategoryService categoryService,
@@ -31,6 +33,7 @@ public class MenuController(
     /// <param name="page"></param>
     /// <returns></returns>
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Index(int? categoryId, int? page)
     {
         var menuItems = await _service.GetMenuItemsByCategoryAsync(categoryId);
@@ -53,6 +56,7 @@ public class MenuController(
     /// <param name="categoryId"></param>
     /// <returns></returns>
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> Details(int id, int? categoryId)
     {
         MenuItemDetailsViewModel viewModel = await _service.GetMenuItemDetailsByIdAsync(id);
@@ -73,6 +77,7 @@ public class MenuController(
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Create()
     {
         ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
@@ -85,6 +90,8 @@ public class MenuController(
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CreateMenuItemViewModel model)
     {
         if (!ModelState.IsValid)
@@ -105,6 +112,7 @@ public class MenuController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> Edit(int id)
     {
         var model = await _service.GetMenuItemEditFormByIdAsync(id);
@@ -119,6 +127,8 @@ public class MenuController(
     /// <param name="model"></param>
     /// <returns></returns>
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(MenuItemEditViewModel model)
     {
         if (!ModelState.IsValid)
@@ -138,6 +148,7 @@ public class MenuController(
     /// </summary>
     /// <returns></returns>
     [HttpGet]
+    [Authorize(Roles = "Admin,Manager")]
     public async Task<IActionResult> DeletedItems(int? categoryId, int? page)
     {
         var deletedItems = await _service.GetDeletedItemsByCategoryAsync(categoryId);
@@ -158,6 +169,8 @@ public class MenuController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> UnDelete(int id)
     {
         await _service.UnDeleteItemAsync(id);
