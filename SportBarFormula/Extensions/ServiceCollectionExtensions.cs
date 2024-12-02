@@ -48,6 +48,7 @@ public static class ServiceCollectionExtensions
         {
             options.SignIn.RequireConfirmedAccount = false;
         })
+        .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<SportBarFormulaDbContext>();
 
         services.AddAuthentication(options =>
@@ -57,8 +58,8 @@ public static class ServiceCollectionExtensions
         })
         .AddFacebook(options =>
         {
-            options.AppId = config["Authentication:Facebook:AppId"];
-            options.AppSecret = config["Authentication:Facebook:AppSecret"];
+            options.AppId = config["Authentication:Facebook:AppId"]!;
+            options.AppSecret = config["Authentication:Facebook:AppSecret"]!;
         });
 
 
