@@ -12,6 +12,8 @@ public class MenuItemCardViewModel
 
     public required decimal Price { get; set; }
 
+    public required int PreparationTime { get; set; }
+
     public int Quantity { get; set; }
 
     public int CategoryId { get; set; }

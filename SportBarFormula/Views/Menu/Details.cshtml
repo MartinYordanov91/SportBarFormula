@@ -5,36 +5,42 @@
 }
 
 <div class="container mt-5">
-    <div class="card" style="background-color: rgba(147, 98, 33, 0.5); border-radius: 10px;">
+    <div class="card">
         <div class="row no-gutters">
 
             <div class="col-md-4">
                 @if (Model.ImageURL.StartsWith("http"))
                 {
-                    <img src="@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px; margin-top: 10px; margin-left: 10px;">
+                    <img src="@Model.ImageURL" class="card-img" alt="@Model.Name">
                 }
                 else
                 {
-                    <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name" style="border-radius: 10px; margin-top: 10px; margin-left: 10px;">
+                    <img src="~/@Model.ImageURL" class="card-img" alt="@Model.Name">
                 }
 
                 @if (User?.Identity?.IsAuthenticated == true)
                 {
                     <div class="d-flex flex-column align-items-center mt-3">
-                        <form asp-controller="Menu" asp-action="Index" method="get" class="wide-btn" style="display:inline;">
-                            <input type="hidden" name="categoryId" value="@ViewBag.SelectedCategoryId" />
+
+                        <form asp-controller="Menu" asp-action="Index" method="get" class="wide-btn">
+                            <input type="hidden" name="currentPage" value="@ViewBag.CurrentPage" />
+                            <input type="hidden" name="menuItemsPerPage" value="@ViewBag.MenuItemsPerPage" />
+                            <input type="hidden" name="category" value="@ViewBag.Category" />
+                            <input type="hidden" name="serchString" value="@ViewBag.SerchString" />
+                            <input type="hidden" name="menuItemSorting" value="@ViewBag.MenuItemSorting" />
                             <button type="submit" class="btn custom-btn mb-2 wide-btn">Назад към списъка</button>
                         </form>
 
+
                         @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Staff"))
                         {
-                            <form asp-controller="Menu" asp-action="Edit" method="get" class="wide-btn" style="display:inline;">
+                            <form asp-controller="Menu" asp-action="Edit" method="get" class="wide-btn">
                                 <input type="hidden" name="id" value="@Model.MenuItemId" />
                                 <button type="submit" class="btn custom-btn mb-2 wide-btn">Редактирай</button>
                             </form>
                         }
 
-                        <form asp-controller="Order" asp-action="AddToCart" method="post" class="wide-btn" style="display:inline;">
+                        <form asp-controller="Order" asp-action="AddToCart" method="post" class="wide-btn">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="menuItemId" value="@Model.MenuItemId" />
                             <input type="hidden" name="quantity" value="1" />
@@ -46,19 +52,19 @@
 
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title" style="color:#E4C087;">@Model.Name</h5>
-                    <p class="card-text" style="color:#E4C087;">@Model.Description</p>
-                    <p class="card-text" style="color:#E4C087;">Цена: @Model.Price лв</p>
-                    <p class="card-text" style="color:#E4C087;">Количество: @Model.Quantity гр/мл</p>
-                    <p class="card-text" style="color:#E4C087;">Категория: @Model.Category</p>
-                    <p class="card-text" style="color:#E4C087;">Съставки: @Model.Ingredients</p>
-                    <p class="card-text" style="color:#E4C087;">Време за подготовка: @Model.PreparationTime минути</p>
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Description</p>
+                    <p class="card-text">Цена: @Model.Price лв</p>
+                    <p class="card-text">Количество: @Model.Quantity гр/мл</p>
+                    <p class="card-text">Категория: @Model.Category</p>
+                    <p class="card-text">Съставки: @Model.Ingredients</p>
+                    <p class="card-text">Време за подготовка: @Model.PreparationTime минути</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts {
-    <link href="~/css/custom-styles.css" rel="stylesheet" asp-append-version="true" />
-}
+<head>
+    <link rel="stylesheet" href="~/css/menu/details-view-styles.css" />
+</head>

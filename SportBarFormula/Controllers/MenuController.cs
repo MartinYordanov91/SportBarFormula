@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.MenuItem;
+using SportBarFormula.Core.Views.Menu.Enums;
+using SportBarFormula.Infrastructure.Data.Models;
 using X.PagedList.Extensions;
 
 namespace SportBarFormula.Controllers;
@@ -27,37 +29,36 @@ public class MenuController(
 
     //--------------------------------------------------------------------------------------------------------------------->   Index
     /// <summary>
-    ///  Displays lists of all menu items.
+    /// Displays a list of all menu items.
     /// </summary>
-    /// <param name="categoryId"></param>
-    /// <param name="page"></param>
-    /// <returns></returns>
+    /// <param name="queryModel">The query model containing filter, search, and sorting options.</param>
+    /// <returns>Returns the view with the filtered, sorted, and paginated list of menu items.</returns>
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> Index(int? categoryId, int? page)
+    public async Task<IActionResult> Index([FromQuery] AllMenuItemsQueryModel queryModel)
     {
-        var menuItems = await _service.GetMenuItemsByCategoryAsync(categoryId);
-        ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
-        ViewBag.SelectedCategoryId = categoryId;
+        var serviceModel = await _service.AllAsync(queryModel);
 
-        int pageSize = 20;
-        int pageNumber = (page ?? 1);
+        queryModel.Menuitems = serviceModel.MenuItems;
+        queryModel.TotalMenuItems = queryModel.TotalMenuItems;
 
-        var pagedList = menuItems.ToPagedList(pageNumber, pageSize);
+        var allcategory = await _categoryService.GetAllCategoriesAsync();
+        queryModel.Categories = allcategory.Select(c => c.Name).ToList();
 
-        return View(pagedList);
+        return View(queryModel);
     }
+
 
     //--------------------------------------------------------------------------------------------------------------------->   Details
     /// <summary>
     /// Shows details about a specific menu item.
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="categoryId"></param>
-    /// <returns></returns>
+    /// <param name="queryModel">The query model containing filter and sorting options.</param>
+    /// <param name="id">The ID of the menu item.</param>
+    /// <returns>Returns the view with the menu item details.</returns>
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> Details(int id, int? categoryId)
+    public async Task<IActionResult> Details([FromQuery] AllMenuItemsQueryModel queryModel, int id)
     {
         MenuItemDetailsViewModel viewModel = await _service.GetMenuItemDetailsByIdAsync(id);
 
@@ -66,10 +67,15 @@ public class MenuController(
             return NotFound();
         }
 
-        ViewBag.SelectedCategoryId = categoryId;
+        ViewBag.MenuItemsPerPage = queryModel.MenuItemsPerPage;
+        ViewBag.Category = queryModel.Category;
+        ViewBag.SerchString = queryModel.SerchString;
+        ViewBag.MenuItemSorting = queryModel.MenuItemSorting;
+        ViewBag.CurrentPage = queryModel.CurrentPage;
 
         return View(viewModel);
     }
+
 
     //--------------------------------------------------------------------------------------------------------------------->   Create
     /// <summary>

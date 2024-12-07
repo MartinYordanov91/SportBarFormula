@@ -1,0 +1,39 @@
+﻿/* Карта */
+.card {
+    background-color: rgba(147, 98, 33, 0.5);
+    border-radius: 10px;
+}
+
+/* Картинка в карта */
+.card-img {
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+/* Бутон */
+.btn.custom-btn {
+    background-color: rgba(147, 98, 33, 0.8); /* Прозрачно кафяв фон */
+    color: #E4C087; /* Цвят на текста */
+    border: none; /* Без граници */
+    border-radius: 5px; /* Заоблени ръбове */
+    padding: 10px 20px; /* Падинг за бутона */
+    text-align: center; /* Центриране на текста */
+    text-decoration: none; /* Премахване на подчертаването */
+    display: inline-block; /* Блоково показване */
+    transition: background-color 0.3s ease; /* Плавен преход за фона */
+}
+
+    .btn.custom-btn:hover {
+        background-color: rgba(147, 98, 33, 1); /* По-тъмен прозрачно кафяв фон при hover */
+        color: #fff; /* Бял цвят на текста при hover */
+    }
+
+/* Заглавие и текстове в карта */
+.card-title, .card-text {
+    color: #E4C087;
+}
+
+.wide-btn {
+    width: 80%; /* Или същата ширина като линковете */
+}

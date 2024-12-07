@@ -71,10 +71,27 @@ public class CategoryService(IRepository<Category> repository) : ICategoryServic
 
         if (category.MenuItems.Any())
         {
-           return false;
+            return false;
         }
 
         await _repository.DeleteAsync(id);
         return true;
+    }
+
+    public async Task<CategoryViewModel?> GetCategoryByNameAsync(string name)
+    {
+        var allcategory = await _repository.GetAllAsync();
+        var category = allcategory.FirstOrDefault();
+
+        if (category == null)
+        {
+            return null;
+        }
+
+        return new CategoryViewModel()
+        {
+            CategoryId = category.CategoryId,
+            Name = name
+        };
     }
 }

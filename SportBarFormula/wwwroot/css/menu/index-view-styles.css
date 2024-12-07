@@ -1,0 +1,49 @@
+﻿/* Заглавие */
+.text-center.text-uppercase {
+    color: #E4C087;
+}
+
+/* Хоризонтална линия */
+.mb-4 {
+    border-color: #E4C087;
+}
+
+/* Формуляр */
+form {
+    background-color: rgba(147, 98, 33, 0.2);
+    border-radius: 10px;
+}
+
+/* Бутон за търсене */
+.btn.btn-primary.btn-lg.px-4 {
+    height: calc(2.75rem + 2px);
+}
+
+/* Карти */
+.card.h-100.d-flex.flex-column {
+    position: relative;
+    background-color: rgba(147, 98, 33, 0.5);
+    border-radius: 10px;
+}
+
+/* Картинка в карта */
+.card-img-top {
+    border-radius: 10px 10px 0 0;
+}
+
+/* Текстове в карта */
+.card-title, .card-text {
+    color: #E4C087;
+}
+
+/* Футър на карта */
+.card-footer.mt-auto.d-flex.justify-content-between {
+    background-color: rgba(147, 98, 33, 0.5);
+}
+
+/* Бутон за напред */
+.btn.btn-outline-primary.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.65;
+}

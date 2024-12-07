@@ -1,4 +1,5 @@
-﻿using SportBarFormula.Core.ViewModels.MenuItem;
+﻿using SportBarFormula.Core.ServiceModel.MenuIrem;
+using SportBarFormula.Core.ViewModels.MenuItem;
 
 namespace SportBarFormula.Core.Services.Contracts;
 
@@ -17,4 +18,6 @@ public interface IMenuItemService
     Task UpdateMenuItemAsync(MenuItemEditViewModel model);
 
     Task UnDeleteItemAsync(int id);
+
+    Task<AllMenuItemFilteredAndPagetVielModels>  AllAsync(AllMenuItemsQueryModel queryModel);
 }
