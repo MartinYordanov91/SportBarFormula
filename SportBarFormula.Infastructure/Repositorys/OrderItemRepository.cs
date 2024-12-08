@@ -8,7 +8,9 @@ namespace SportBarFormula.Infrastructure.Repositorys
     /// <summary>
     /// Repository for managing OrderItem entities.
     /// </summary>
-    public class OrderItemRepository(SportBarFormulaDbContext context) : IRepository<OrderItem>
+    public class OrderItemRepository(
+        SportBarFormulaDbContext context
+        ) : IRepository<OrderItem>
     {
         private readonly SportBarFormulaDbContext _context = context;
 
@@ -26,20 +28,18 @@ namespace SportBarFormula.Infrastructure.Repositorys
         /// Deletes an OrderItem entity from the database by its ID.
         /// </summary>
         /// <param name="id">The ID of the OrderItem to delete.</param>
-        /// <exception cref="Exception">Throws an exception if the OrderItem is not found.</exception>
+        /// <exception cref="KeyNotFoundException">Throws an exception if the OrderItem is not found.</exception>
         public async Task DeleteAsync(int id)
         {
             var entity = await _context.OrderItems.FindAsync(id);
 
-            if (entity != null)
+            if (entity == null)
             {
-                _context.OrderItems.Remove(entity);
-                await _context.SaveChangesAsync();
+                throw new KeyNotFoundException("OrderItem not found");
             }
-            else
-            {
-                throw new Exception("OrderItem not found");
-            }
+
+            _context.OrderItems.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -56,14 +56,14 @@ namespace SportBarFormula.Infrastructure.Repositorys
         /// </summary>
         /// <param name="id">The ID of the OrderItem to retrieve.</param>
         /// <returns>The OrderItem entity.</returns>
-        /// <exception cref="Exception">Throws an exception if the OrderItem is not found.</exception>
+        /// <exception cref="KeyNotFoundException">Throws an exception if the OrderItem is not found.</exception>
         public async Task<OrderItem> GetByIdAsync(int id)
         {
             var orderItem = await _context.OrderItems.FindAsync(id);
 
             if (orderItem == null)
             {
-                throw new Exception("OrderItem not found");
+                throw new KeyNotFoundException("OrderItem not found");
             }
 
             return orderItem;
@@ -73,12 +73,12 @@ namespace SportBarFormula.Infrastructure.Repositorys
         /// Updates an existing OrderItem entity in the database.
         /// </summary>
         /// <param name="entity">The OrderItem entity to update.</param>
-        /// <exception cref="Exception">Throws an exception if the OrderItem entity is null.</exception>
+        /// <exception cref="ArgumentNullException">Throws an exception if the OrderItem entity is null.</exception>
         public async Task UpdateAsync(OrderItem entity)
         {
             if (entity == null)
             {
-                throw new Exception("OrderItem is Null");
+                throw new ArgumentNullException(nameof(entity), "OrderItem is null");
             }
 
             _context.OrderItems.Update(entity);
