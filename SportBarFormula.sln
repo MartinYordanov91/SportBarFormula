@@ -5,9 +5,11 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBarFormula", "SportBarFormula\SportBarFormula.csproj", "{8476608C-4301-46AB-AAB9-D37B7D528274}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportBarFormula.Core", "SportBarFormula.Core\SportBarFormula.Core.csproj", "{562669F4-7ACD-440F-8DA4-91467D3B4608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBarFormula.Core", "SportBarFormula.Core\SportBarFormula.Core.csproj", "{562669F4-7ACD-440F-8DA4-91467D3B4608}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportBarFormula.Infrastructure", "SportBarFormula.Infastructure\SportBarFormula.Infrastructure.csproj", "{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBarFormula.Infrastructure", "SportBarFormula.Infastructure\SportBarFormula.Infrastructure.csproj", "{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportBarFormula.UnitTests", "SportBarFormula.UnitTests\SportBarFormula.UnitTests.csproj", "{33AEFDDB-37AE-41A7-A5AE-5079C3754141}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAF643BE-5EAD-495A-99BA-A6E709EE3D01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33AEFDDB-37AE-41A7-A5AE-5079C3754141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33AEFDDB-37AE-41A7-A5AE-5079C3754141}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33AEFDDB-37AE-41A7-A5AE-5079C3754141}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33AEFDDB-37AE-41A7-A5AE-5079C3754141}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
