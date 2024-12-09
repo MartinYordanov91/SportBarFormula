@@ -32,7 +32,8 @@ public static class MockDbContextFactory
             dbContext.Categories.AddRange(
                 new Category { CategoryId = 1, Name = "Pizza" },
                 new Category { CategoryId = 2, Name = "Drinks" },
-                new Category { CategoryId = 3, Name = "Desserts" }
+                new Category { CategoryId = 3, Name = "Desserts" },
+                new Category { CategoryId = 4, Name = "Category to Delete" }
             );
             dbContext.SaveChanges();
         }

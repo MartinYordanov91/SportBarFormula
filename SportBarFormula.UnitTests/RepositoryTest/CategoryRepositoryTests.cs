@@ -2,11 +2,13 @@
 using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys;
+using SportBarFormula.UnitTests.Moq;
+
+namespace SportBarFormula.UnitTests.RepositoryTest;
 
 [TestFixture]
 public class CategoryRepositoryTests
 {
-    private DbContextOptions<SportBarFormulaDbContext> _options;
     private SportBarFormulaDbContext _dbContext;
     private CategoryRepository _categoryRepository;
 
@@ -16,12 +18,7 @@ public class CategoryRepositoryTests
     [SetUp]
     public void SetUp()
     {
-        // Set up an in-memory database
-        _options = new DbContextOptionsBuilder<SportBarFormulaDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-            .Options;
-
-        _dbContext = new SportBarFormulaDbContext(_options);
+        _dbContext = MockDbContextFactory.Create();
         _categoryRepository = new CategoryRepository(_dbContext);
     }
 
@@ -41,22 +38,12 @@ public class CategoryRepositoryTests
     [Test]
     public async Task GetAllAsync_ShouldReturnAllCategories()
     {
-        // Arrange
-        var categories = new List<Category>
-        {
-            new Category { CategoryId = 1, Name = "Category 1" },
-            new Category { CategoryId = 2, Name = "Category 2" }
-        };
-
-        await _dbContext.Categories.AddRangeAsync(categories);
-        await _dbContext.SaveChangesAsync();
-
         // Act
         var result = await _categoryRepository.GetAllAsync();
 
         // Assert
-        Assert.That(result.Count(), Is.EqualTo(categories.Count));
-        CollectionAssert.AreEquivalent(categories.Select(c => c.Name), result.Select(c => c.Name));
+        Assert.That(result.Count(), Is.EqualTo(4));
+        CollectionAssert.AreEquivalent(new[] { "Pizza", "Drinks", "Desserts", "Category to Delete" }, result.Select(c => c.Name));
     }
 
     /// <summary>
@@ -65,17 +52,12 @@ public class CategoryRepositoryTests
     [Test]
     public async Task GetByIdAsync_ShouldReturnCategory_WhenCategoryExists()
     {
-        // Arrange
-        var category = new Category { CategoryId = 1, Name = "Test Category" };
-        await _dbContext.Categories.AddAsync(category);
-        await _dbContext.SaveChangesAsync();
-
         // Act
-        var result = await _categoryRepository.GetByIdAsync(category.CategoryId);
+        var result = await _categoryRepository.GetByIdAsync(1);
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(category.Name));
+        Assert.That(result.Name, Is.EqualTo("Pizza"));
     }
 
     /// <summary>
@@ -96,7 +78,7 @@ public class CategoryRepositoryTests
     public async Task AddAsync_ShouldAddCategory()
     {
         // Arrange
-        var category = new Category { CategoryId = 1, Name = "New Category" };
+        var category = new Category { CategoryId = 5, Name = "New Category" };
 
         // Act
         await _categoryRepository.AddAsync(category);
@@ -104,7 +86,7 @@ public class CategoryRepositoryTests
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(category.Name));
+        Assert.That(result.Name, Is.EqualTo("New Category"));
     }
 
     /// <summary>
@@ -114,10 +96,7 @@ public class CategoryRepositoryTests
     public async Task UpdateAsync_ShouldUpdateCategory()
     {
         // Arrange
-        var category = new Category { CategoryId = 1, Name = "Old Name" };
-        await _dbContext.Categories.AddAsync(category);
-        await _dbContext.SaveChangesAsync();
-
+        var category = await _categoryRepository.GetByIdAsync(1);
         category.Name = "Updated Name";
 
         // Act
@@ -130,23 +109,30 @@ public class CategoryRepositoryTests
     }
 
     /// <summary>
-    /// Tests if DeleteAsync removes a category when it exists.
+    /// Tests if DeleteAsync removes a category when it exists and has no related menu items.
     /// </summary>
     [Test]
-    public async Task DeleteAsync_ShouldRemoveCategory_WhenCategoryExists()
+    public async Task DeleteAsync_ShouldRemoveCategory_WhenCategoryExistsAndHasNoMenuItems()
     {
-        // Arrange
-        var category = new Category { CategoryId = 1, Name = "Category to Delete" };
-        await _dbContext.Categories.AddAsync(category);
-        await _dbContext.SaveChangesAsync();
-
         // Act
-        await _categoryRepository.DeleteAsync(category.CategoryId);
-        var result = await _dbContext.Categories.FindAsync(category.CategoryId);
+        await _categoryRepository.DeleteAsync(4);
+        var result = await _dbContext.Categories.FindAsync(4);
 
         // Assert
         Assert.That(result, Is.Null);
     }
+
+    /// <summary>
+    /// Tests if DeleteAsync throws InvalidOperationException when the category has related menu items.
+    /// </summary>
+    [Test]
+    public void DeleteAsync_ShouldThrowInvalidOperationException_WhenCategoryHasMenuItems()
+    {
+        // Act & Assert
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await _categoryRepository.DeleteAsync(1));
+        Assert.That(exception.Message, Does.Contain("The association between entity types 'Category' and 'MenuItem'"));
+    }
+
 
     /// <summary>
     /// Tests if DeleteAsync throws a KeyNotFoundException when the category does not exist.
