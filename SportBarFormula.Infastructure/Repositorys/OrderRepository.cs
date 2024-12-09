@@ -5,7 +5,9 @@ using SportBarFormula.Infrastructure.Repositorys.Contracts;
 
 namespace SportBarFormula.Infrastructure.Repositorys;
 
-public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Order>
+public class OrderRepository(
+    SportBarFormulaDbContext context
+    ) : IRepository<Order>
 {
     private readonly SportBarFormulaDbContext _context = context;
 
@@ -26,19 +28,20 @@ public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Ord
     /// </summary>
     /// <param name="id">The ID of the order to delete.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Thrown when the order is not found.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when the order is not found.</exception>
     public async Task DeleteAsync(int id)
     {
         var order = await _context.Orders.FindAsync(id);
 
         if (order == null)
         {
-            throw new Exception("Order not found");
+            throw new KeyNotFoundException("Order not found");
         }
 
         _context.Orders.Remove(order);
         await _context.SaveChangesAsync();
     }
+
 
     /// <summary>
     /// Asynchronously retrieves all orders from the database, including their associated order items and menu items.
@@ -61,7 +64,7 @@ public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Ord
     /// </summary>
     /// <param name="id">The ID of the order to retrieve.</param>
     /// <returns>A Task representing the asynchronous operation, containing the order if found.</returns>
-    /// <exception cref="Exception">Thrown when the order is not found.</exception>
+    /// <exception cref="KeyNotFoundException">Thrown when the order is not found.</exception>
     public async Task<Order> GetByIdAsync(int id)
     {
         var order = await _context
@@ -71,11 +74,12 @@ public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Ord
 
         if (order == null)
         {
-            throw new Exception("Order not found");
+            throw new KeyNotFoundException("Order not found");
         }
 
         return order;
     }
+
 
 
     /// <summary>
@@ -83,16 +87,17 @@ public class OrderRepository(SportBarFormulaDbContext context) : IRepository<Ord
     /// </summary>
     /// <param name="entity">The order entity to update.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Thrown when the order entity is null.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when the order entity is null.</exception>
     public async Task UpdateAsync(Order entity)
     {
         if (entity == null)
         {
-            throw new Exception("Order is null");
+            throw new ArgumentNullException(nameof(entity), "Order is null");
         }
 
         _context.Orders.Update(entity);
         await _context.SaveChangesAsync();
     }
+
 
 }
