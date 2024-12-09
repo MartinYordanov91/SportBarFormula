@@ -2,11 +2,13 @@
 using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys;
+using SportBarFormula.UnitTests.Moq;
+
+namespace SportBarFormula.UnitTests.RepositoryTest;
 
 [TestFixture]
 public class MenuItemRepositoryTests
 {
-    private DbContextOptions<SportBarFormulaDbContext> _options;
     private SportBarFormulaDbContext _dbContext;
     private MenuItemRepository _menuItemRepository;
 
@@ -16,18 +18,8 @@ public class MenuItemRepositoryTests
     [SetUp]
     public void SetUp()
     {
-        // Set up an in-memory database
-        _options = new DbContextOptionsBuilder<SportBarFormulaDbContext>()
-            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-            .Options;
-
-        _dbContext = new SportBarFormulaDbContext(_options);
+        _dbContext = MockDbContextFactory.Create();
         _menuItemRepository = new MenuItemRepository(_dbContext);
-
-        // Seed data
-        _dbContext.Categories.Add(new Category { CategoryId = 1, Name = "Pizza" });
-        _dbContext.Categories.Add(new Category { CategoryId = 2, Name = "Drinks" });
-        _dbContext.SaveChanges();
     }
 
     /// <summary>
@@ -46,22 +38,12 @@ public class MenuItemRepositoryTests
     [Test]
     public async Task GetAllAsync_ShouldReturnAllMenuItems()
     {
-        // Arrange
-        var menuItems = new List<MenuItem>
-        {
-            new MenuItem { MenuItemId = 1, Name = "Margarita", Price = 10.5m, CategoryId = 1, ImageURL = "image1.jpg", Quantity = 500, PreparationTime = 15 },
-            new MenuItem { MenuItemId = 2, Name = "Coke", Price = 2.0m, CategoryId = 2, ImageURL = "image2.jpg", Quantity = 330, PreparationTime = 0 }
-        };
-
-        await _dbContext.MenuItems.AddRangeAsync(menuItems);
-        await _dbContext.SaveChangesAsync();
-
         // Act
         var result = await _menuItemRepository.GetAllAsync();
 
         // Assert
-        Assert.That(result.Count(), Is.EqualTo(menuItems.Count));
-        CollectionAssert.AreEquivalent(menuItems.Select(mi => mi.Name), result.Select(mi => mi.Name));
+        Assert.That(result.Count(), Is.EqualTo(4));
+        CollectionAssert.AreEquivalent(new[] { "Margherita Pizza", "Coke", "Cheesecake", "Burger" }, result.Select(mi => mi.Name));
     }
 
     /// <summary>
@@ -70,17 +52,12 @@ public class MenuItemRepositoryTests
     [Test]
     public async Task GetByIdAsync_ShouldReturnMenuItem_WhenMenuItemExists()
     {
-        // Arrange
-        var menuItem = new MenuItem { MenuItemId = 1, Name = "Margarita", Price = 10.5m, CategoryId = 1, ImageURL = "image1.jpg", Quantity = 500, PreparationTime = 15 };
-        await _dbContext.MenuItems.AddAsync(menuItem);
-        await _dbContext.SaveChangesAsync();
-
         // Act
-        var result = await _menuItemRepository.GetByIdAsync(menuItem.MenuItemId);
+        var result = await _menuItemRepository.GetByIdAsync(1);
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(menuItem.Name));
+        Assert.That(result.Name, Is.EqualTo("Margherita Pizza"));
     }
 
     /// <summary>
@@ -101,7 +78,7 @@ public class MenuItemRepositoryTests
     public async Task AddAsync_ShouldAddMenuItem()
     {
         // Arrange
-        var menuItem = new MenuItem { MenuItemId = 1, Name = "Margarita", Price = 10.5m, CategoryId = 1, ImageURL = "image1.jpg", Quantity = 500, PreparationTime = 15 };
+        var menuItem = new MenuItem { MenuItemId = 5, Name = "New MenuItem", Price = 12.5m, CategoryId = 1, ImageURL = "image5.jpg", Quantity = 300, PreparationTime = 20 };
 
         // Act
         await _menuItemRepository.AddAsync(menuItem);
@@ -109,7 +86,7 @@ public class MenuItemRepositoryTests
 
         // Assert
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.Name, Is.EqualTo(menuItem.Name));
+        Assert.That(result.Name, Is.EqualTo("New MenuItem"));
     }
 
     /// <summary>
@@ -119,10 +96,7 @@ public class MenuItemRepositoryTests
     public async Task UpdateAsync_ShouldUpdateMenuItem()
     {
         // Arrange
-        var menuItem = new MenuItem { MenuItemId = 1, Name = "Old Name", Price = 10.5m, CategoryId = 1, ImageURL = "image1.jpg", Quantity = 500, PreparationTime = 15 };
-        await _dbContext.MenuItems.AddAsync(menuItem);
-        await _dbContext.SaveChangesAsync();
-
+        var menuItem = await _menuItemRepository.GetByIdAsync(1);
         menuItem.Name = "Updated Name";
 
         // Act
@@ -135,22 +109,18 @@ public class MenuItemRepositoryTests
     }
 
     /// <summary>
-    /// Tests if DeleteAsync removes a menu item when it exists.
-    /// </summary>
+    /// Tests if DeleteAsync sets IsDeleted to true when the menu item exists.
+    /// </summary> 
     [Test]
-    public async Task DeleteAsync_ShouldRemoveMenuItem_WhenMenuItemExists()
-    {
-        // Arrange
-        var menuItem = new MenuItem { MenuItemId = 1, Name = "Margarita", Price = 10.5m, CategoryId = 1, ImageURL = "image1.jpg", Quantity = 500, PreparationTime = 15 };
-        await _dbContext.MenuItems.AddAsync(menuItem);
-        await _dbContext.SaveChangesAsync();
-
-        // Act
-        await _menuItemRepository.DeleteAsync(menuItem.MenuItemId);
-        var result = await _dbContext.MenuItems.FindAsync(menuItem.MenuItemId);
+    public async Task DeleteAsync_ShouldSetIsDeletedToTrue_WhenMenuItemExists()
+    {  
+        //Act 
+        await _menuItemRepository.DeleteAsync(1);
+        var result = await _dbContext.MenuItems.FindAsync(1);
 
         // Assert
-        Assert.That(result, Is.Null);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.IsDeleted, Is.True);
     }
 
     /// <summary>

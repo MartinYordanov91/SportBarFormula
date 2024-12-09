@@ -68,14 +68,14 @@ namespace SportBarFormula.Infrastructure.Repositorys
         /// <exception cref="KeyNotFoundException">Thrown when the menu item is not found.</exception>
         public async Task DeleteAsync(int id)
         {
-            var menuitem = await _context.MenuItems.FindAsync(id);
+            var menuItem = await _context.MenuItems.FindAsync(id);
 
-            if (menuitem == null)
+            if (menuItem == null)
             {
                 throw new KeyNotFoundException("MenuItem not found");
             }
 
-            _context.MenuItems.Remove(menuitem);
+            menuItem.IsDeleted = true;
             await _context.SaveChangesAsync();
         }
     }
