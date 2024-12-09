@@ -52,7 +52,7 @@ public static class MockDbContextFactory
         if (!dbContext.Orders.Any())
         {
             dbContext.Orders.AddRange(
-                new Order { OrderId = 1, UserId = "user1", OrderDate = DateTime.UtcNow, TotalAmount = 15.97m, Status = OrderStatus.Completed },
+                new Order { OrderId = 1, UserId = "user1", OrderDate = DateTime.UtcNow, TotalAmount = 15.97m, Status = OrderStatus.Draft },
                 new Order { OrderId = 2, UserId = "user2", OrderDate = DateTime.UtcNow, TotalAmount = 5.98m, Status = OrderStatus.Draft },
                 new Order { OrderId = 3, UserId = "test-user-id", OrderDate = DateTime.UtcNow, TotalAmount = 10.99m, Status = OrderStatus.Completed }
             );
