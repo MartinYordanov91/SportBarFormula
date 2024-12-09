@@ -145,4 +145,38 @@ public class OrderItemRepositoryTests
         Assert.That(order, Is.Not.Null);
         Assert.That(order.Status, Is.EqualTo(OrderStatus.Draft));
     }
+
+    /// <summary>
+    /// Tests if DeleteAsync throws KeyNotFoundException when the OrderItem does not exist.
+    /// </summary>
+    [Test]
+    public void DeleteAsync_ShouldThrowKeyNotFoundException_WhenOrderItemDoesNotExist()
+    {
+        // Act & Assert
+        var exception = Assert.ThrowsAsync<KeyNotFoundException>(async () => await _orderItemRepository.DeleteAsync(999));
+        Assert.That(exception.Message, Is.EqualTo("OrderItem not found"));
+    }
+
+    /// <summary>
+    /// Tests if GetByIdAsync throws KeyNotFoundException when the OrderItem does not exist.
+    /// </summary>
+    [Test]
+    public void GetByIdAsync_ShouldThrowKeyNotFoundException_WhenOrderItemDoesNotExist()
+    {
+        // Act & Assert
+        var exception = Assert.ThrowsAsync<KeyNotFoundException>(async () => await _orderItemRepository.GetByIdAsync(999));
+        Assert.That(exception.Message, Is.EqualTo("OrderItem not found"));
+    }
+
+    /// <summary>
+    /// Tests if UpdateAsync throws ArgumentNullException when the OrderItem entity is null.
+    /// </summary>
+    [Test]
+    public void UpdateAsync_ShouldThrowArgumentNullException_WhenOrderItemIsNull()
+    {
+        // Act & Assert
+        var exception = Assert.ThrowsAsync<ArgumentNullException>(async () => await _orderItemRepository.UpdateAsync(null));
+        Assert.That(exception.ParamName, Is.EqualTo("entity"));
+        Assert.That(exception.Message, Does.Contain("OrderItem is null"));
+    }
 }
