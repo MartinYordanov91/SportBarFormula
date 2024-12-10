@@ -11,7 +11,9 @@ namespace SportBarFormula.Core.Services;
 /// <summary>
 /// Reservation Management Service.
 /// </summary>
-public class ReservationService(IRepository<Reservation> repository) : IReservationService
+public class ReservationService(
+    IRepository<Reservation> repository
+    ) : IReservationService
 {
     private readonly IRepository<Reservation> _repository = repository;
 
@@ -46,11 +48,15 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
     /// <returns>A Task representing the asynchronous operation.</returns>
     public async Task CancelReservationAsync(int id)
     {
-        var reservation = await _repository.GetByIdAsync(id);
+        Reservation reservation;
 
-        if (reservation == null)
+        try
         {
-            throw new Exception("Reservation not found");
+            reservation = await _repository.GetByIdAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new InvalidOperationException("No reservation found in the repository.");
         }
 
         reservation.IsCanceled = true;
@@ -83,14 +89,18 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
     /// </summary>
     /// <param name="id">The ID of the reservation to retrieve.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the ReservationViewModel with the reservation details.</returns>
-    /// <exception cref="Exception">Thrown when the reservation is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the reservation is not found.</exception>
     public async Task<ReservationViewModel> GetReservationByIdAsync(int id)
     {
-        var model = await _repository.GetByIdAsync(id);
+        Reservation model;
 
-        if (model == null)
+        try
         {
-            throw new Exception("Reservation not found");
+            model = await _repository.GetByIdAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new InvalidOperationException("No reservation found in the repository.");
         }
 
         return new ReservationViewModel()
@@ -134,15 +144,19 @@ public class ReservationService(IRepository<Reservation> repository) : IReservat
     /// </summary>
     /// <param name="model">The reservation view model containing the updated details of the reservation.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Thrown when the reservation is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the reservation is not found.</exception>
     /// <exception cref="ArgumentException">Thrown when the reservation date format is invalid.</exception>
     public async Task UpdateReservationAsync(ReservationViewModel model)
     {
-        var reservation = await _repository.GetByIdAsync(model.ReservationId);
+        Reservation reservation;
 
-        if (reservation == null)
+        try
         {
-            throw new Exception("Reservation not found");
+            reservation = await _repository.GetByIdAsync(model.ReservationId);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new InvalidOperationException("No reservation found in the repository.");
         }
 
         if (!DateTime.TryParseExact(model.ReservationDate, ReservationDateTimeStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var reservationDate))

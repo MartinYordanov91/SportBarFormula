@@ -3,7 +3,6 @@ using SportBarFormula.Core.ViewModels.MenuItem;
 using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Repositorys;
 using SportBarFormula.UnitTests.Moq;
-using NUnit.Framework;
 
 namespace SportBarFormula.UnitTests.ServiceTest;
 
