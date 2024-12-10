@@ -8,11 +8,11 @@ public interface ICategoryService
 
     public Task AddCategoryAsync(CategoryViewModel model);
 
-    public Task<CategoryViewModel?> GetCategoryByIdAsync(int id);
+    public Task<CategoryViewModel> GetCategoryByIdAsync(int id);
 
-    public Task<CategoryViewModel?> GetCategoryByNameAsync(string name);
+    public Task<CategoryViewModel> GetCategoryByNameAsync(string name);
 
     public Task UpdateCategoryAsync(CategoryViewModel model);
 
-    public Task<bool> DeleteCategoryAsync(int id);
+    public Task DeleteCategoryAsync(int id);
 }

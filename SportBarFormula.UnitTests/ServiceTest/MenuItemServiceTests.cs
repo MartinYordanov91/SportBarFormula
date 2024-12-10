@@ -78,14 +78,14 @@ public class MenuItemServiceTests
     }
 
     /// <summary>
-    /// Tests if GetMenuItemDetailsByIdAsync throws ArgumentNullException when the menu item is not found.
+    /// Tests if GetMenuItemDetailsByIdAsync throws InvalidOperationException when the menu item is not found.
     /// </summary>
     [Test]
     public void GetMenuItemDetailsByIdAsync_ShouldThrowArgumentNullException_WhenItemNotFound()
     {
         // Act & Assert
-        var exception = Assert.ThrowsAsync<ArgumentNullException>(async () => await _menuItemService.GetMenuItemDetailsByIdAsync(999));
-        Assert.That(exception.ParamName, Is.EqualTo("menuItem"));
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await _menuItemService.GetMenuItemDetailsByIdAsync(999));
+        Assert.That(exception.Message, Is.EqualTo("No MenuItem found in the repository."));
     }
 
     /// <summary>
@@ -143,14 +143,14 @@ public class MenuItemServiceTests
     }
 
     /// <summary>
-    /// Tests if GetMenuItemEditFormByIdAsync throws Exception when the menu item is not found.
+    /// Tests if GetMenuItemEditFormByIdAsync throws InvalidOperationException when the menu item is not found.
     /// </summary>
     [Test]
     public void GetMenuItemEditFormByIdAsync_ShouldThrowException_WhenItemNotFound()
     {
         // Act & Assert
-        var exception = Assert.ThrowsAsync<Exception>(async () => await _menuItemService.GetMenuItemEditFormByIdAsync(999));
-        Assert.That(exception.Message, Is.EqualTo("MenuItem not found"));
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await _menuItemService.GetMenuItemEditFormByIdAsync(999));
+        Assert.That(exception.Message, Is.EqualTo("No MenuItem found in the repository."));
     }
 
     /// <summary>
@@ -187,7 +187,7 @@ public class MenuItemServiceTests
     }
 
     /// <summary>
-    /// Tests if UpdateMenuItemAsync throws Exception when the menu item is not found.
+    /// Tests if UpdateMenuItemAsync throws InvalidOperationException when the menu item is not found.
     /// </summary>
     [Test]
     public void UpdateMenuItemAsync_ShouldThrowException_WhenItemNotFound()
@@ -210,8 +210,8 @@ public class MenuItemServiceTests
         };
 
         // Act & Assert
-        var exception = Assert.ThrowsAsync<Exception>(async () => await _menuItemService.UpdateMenuItemAsync(updateModel));
-        Assert.That(exception.Message, Is.EqualTo("MenuItem not found"));
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await _menuItemService.UpdateMenuItemAsync(updateModel));
+        Assert.That(exception.Message, Is.EqualTo("No MenuItem found in the repository."));
     }
 
     /// <summary>
@@ -235,14 +235,14 @@ public class MenuItemServiceTests
     }
 
     /// <summary>
-    /// Tests if UnDeleteItemAsync throws Exception when the menu item is not found.
+    /// Tests if UnDeleteItemAsync throws InvalidOperationException when the menu item is not found.
     /// </summary>
     [Test]
     public void UnDeleteItemAsync_ShouldThrowException_WhenItemNotFound()
     {
         // Act & Assert
-        var exception = Assert.ThrowsAsync<Exception>(async () => await _menuItemService.UnDeleteItemAsync(999));
-        Assert.That(exception.Message, Is.EqualTo("MenuItem not found"));
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(async () => await _menuItemService.UnDeleteItemAsync(999));
+        Assert.That(exception.Message, Is.EqualTo("No MenuItem found in the repository."));
     }
 
     /// <summary>

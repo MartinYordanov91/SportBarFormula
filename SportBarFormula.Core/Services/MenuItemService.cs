@@ -39,7 +39,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// </summary>
     /// <param name="id">The ID of the menu item.</param>
     /// <returns>The view model containing menu item details.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when the menu item is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the menu item is not found.</exception>
     public async Task<MenuItemDetailsViewModel> GetMenuItemDetailsByIdAsync(int id)
     {
         MenuItem menuItem;
@@ -50,7 +50,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         }
         catch (KeyNotFoundException)
         {
-            throw new ArgumentNullException(nameof(menuItem), "MenuItem not found");
+            throw new InvalidOperationException("No MenuItem found in the repository.");
         }
 
         var viewModel = new MenuItemDetailsViewModel
@@ -132,7 +132,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// </summary>
     /// <param name="id">The ID of the menu item.</param>
     /// <returns>The edit form view model.</returns>
-    /// <exception cref="Exception">Thrown when the menu item is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the menu item is not found.</exception>
     public async Task<MenuItemEditViewModel> GetMenuItemEditFormByIdAsync(int id)
     {
         MenuItem currentItem;
@@ -143,7 +143,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         }
         catch (KeyNotFoundException)
         {
-            throw new Exception("MenuItem not found");
+            throw new InvalidOperationException("No MenuItem found in the repository.");
         }
 
         var model = new MenuItemEditViewModel
@@ -170,7 +170,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// </summary>
     /// <param name="model">The view model containing updated menu item details.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Thrown when the menu item is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the menu item is not found.</exception>
     public async Task UpdateMenuItemAsync(MenuItemEditViewModel model)
     {
         MenuItem existingMenuItem;
@@ -181,7 +181,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         }
         catch (KeyNotFoundException)
         {
-            throw new Exception("MenuItem not found");
+            throw new InvalidOperationException("No MenuItem found in the repository.");
         }
 
         existingMenuItem.Name = model.Name;
@@ -204,7 +204,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// </summary>
     /// <param name="id">The ID of the menu item.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Thrown when the menu item is not found.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the menu item is not found.</exception>
     public async Task UnDeleteItemAsync(int id)
     {
         MenuItem unDeleteItem;
@@ -215,7 +215,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         }
         catch (KeyNotFoundException)
         {
-            throw new Exception("MenuItem not found");
+            throw new InvalidOperationException( "No MenuItem found in the repository.");
         }
 
         unDeleteItem.IsDeleted = false;

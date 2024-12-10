@@ -117,18 +117,14 @@ public class CategoryController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        var category = await _service.GetCategoryByIdAsync(id);
-
-        if (category == null)
+        try
         {
-            return NotFound();
+            await _service.DeleteCategoryAsync(id);
         }
-
-        var result = await _service.DeleteCategoryAsync(id);
-
-        if (!result)
+        catch (InvalidOperationException ex)
         {
-            TempData["ErrorMessage"] = "Не можете да изтриете тази категория, защото се използва.";
+            TempData["ErrorMessage"] = ex.Message;
+            return RedirectToAction(nameof(Index));
         }
 
         return RedirectToAction(nameof(Index));
