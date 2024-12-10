@@ -83,4 +83,13 @@ public static class MockDbContextFactory
 
         return dbContext;
     }
+
+    public static SportBarFormulaDbContext CreateEmpty()
+    {
+        var options = new DbContextOptionsBuilder<SportBarFormulaDbContext>()
+            .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+            .Options;
+
+        return new SportBarFormulaDbContext(options);
+    }
 }

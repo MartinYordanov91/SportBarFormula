@@ -147,6 +147,11 @@ public class CategoryService(
             throw new InvalidOperationException("No categories found in the repository.");
         }
 
+        if (!allcategory.Any())
+        {
+            throw new InvalidOperationException("No categories found in the repository.");
+        }
+
         var category = allcategory.FirstOrDefault(c => c.Name == name);
 
         if (category == null)
@@ -160,5 +165,6 @@ public class CategoryService(
             Name = name
         };
     }
+
 
 }
