@@ -1,5 +1,4 @@
-﻿using SportBarFormula.Core.Views.Menu.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SportBarFormula.Core.ViewModels.MenuItem;
 

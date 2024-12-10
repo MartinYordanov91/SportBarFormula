@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.Services.Logging;
 using SportBarFormula.Core.ViewModels.MenuItem;
-using SportBarFormula.Core.Views.Menu.Enums;
-using SportBarFormula.Infrastructure.Data.Models;
 using X.PagedList.Extensions;
 
 namespace SportBarFormula.Controllers;

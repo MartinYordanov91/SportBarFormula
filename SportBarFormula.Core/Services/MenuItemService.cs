@@ -1,7 +1,6 @@
 ﻿using SportBarFormula.Core.ServiceModel.MenuIrem;
 using SportBarFormula.Core.Services.Contracts;
 using SportBarFormula.Core.ViewModels.MenuItem;
-using SportBarFormula.Core.Views.Menu.Enums;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
 
@@ -43,11 +42,15 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// <exception cref="ArgumentNullException">Thrown when the menu item is not found.</exception>
     public async Task<MenuItemDetailsViewModel> GetMenuItemDetailsByIdAsync(int id)
     {
-        var menuItem = await _repository.GetByIdAsync(id);
+        MenuItem menuItem;
 
-        if (menuItem == null)
+        try
         {
-            throw new ArgumentNullException(nameof(menuItem));
+            menuItem = await _repository.GetByIdAsync(id);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new ArgumentNullException(nameof(menuItem), "MenuItem not found");
         }
 
         var viewModel = new MenuItemDetailsViewModel
@@ -132,9 +135,13 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// <exception cref="Exception">Thrown when the menu item is not found.</exception>
     public async Task<MenuItemEditViewModel> GetMenuItemEditFormByIdAsync(int id)
     {
-        var currentItem = await _repository.GetByIdAsync(id);
+        MenuItem currentItem;
 
-        if (currentItem == null)
+        try
+        {
+            currentItem = await _repository.GetByIdAsync(id);
+        }
+        catch (KeyNotFoundException)
         {
             throw new Exception("MenuItem not found");
         }
@@ -166,9 +173,13 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// <exception cref="Exception">Thrown when the menu item is not found.</exception>
     public async Task UpdateMenuItemAsync(MenuItemEditViewModel model)
     {
-        MenuItem existingMenuItem = await _repository.GetByIdAsync(model.MenuItemId);
+        MenuItem existingMenuItem;
 
-        if (existingMenuItem == null)
+        try
+        {
+            existingMenuItem = await _repository.GetByIdAsync(model.MenuItemId);
+        }
+        catch (KeyNotFoundException)
         {
             throw new Exception("MenuItem not found");
         }
@@ -187,6 +198,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
         await _repository.UpdateAsync(existingMenuItem);
     }
 
+
     /// <summary>
     /// Undeletes a menu item by its ID.
     /// </summary>
@@ -195,9 +207,13 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
     /// <exception cref="Exception">Thrown when the menu item is not found.</exception>
     public async Task UnDeleteItemAsync(int id)
     {
-        var unDeleteItem = await _repository.GetByIdAsync(id);
+        MenuItem unDeleteItem;
 
-        if (unDeleteItem == null)
+        try
+        {
+            unDeleteItem = await _repository.GetByIdAsync(id);
+        }
+        catch (KeyNotFoundException)
         {
             throw new Exception("MenuItem not found");
         }
@@ -206,6 +222,7 @@ public class MenuItemService(IRepository<MenuItem> repository) : IMenuItemServic
 
         await _repository.UpdateAsync(unDeleteItem);
     }
+
 
     /// <summary>
     /// Retrieves all menu items with filtering, sorting, and pagination.
