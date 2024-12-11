@@ -1,0 +1,13 @@
+﻿.image-container {
+    display: flex;
+    justify-content: center;
+    margin-top: -20px;
+    margin-bottom: 50px;
+}
+
+.table-layout-image {
+    width: 50%;
+    max-width: 50%;
+    border-radius: 15px; /* Заоблени краища */
+    object-fit: cover; /* За да запази съотношението и да покрие контейнера */
+}

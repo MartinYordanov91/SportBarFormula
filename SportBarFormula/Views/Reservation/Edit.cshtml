@@ -2,15 +2,16 @@
 
 <h2 class="text-center mt-5" style="color:#E4C087;">Редактиране на резервация</h2>
 <hr />
-@if(User?.Identity?.IsAuthenticated == true)
+@if (User?.Identity?.IsAuthenticated == true)
 {
-    @if(User.IsInRole("Admin") || User.IsInRole("Manager"))
+    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
     {
-
         <div class="custom-form-wrapper">
             <div class="custom-form-container">
                 <form asp-action="Edit" class="custom-form">
-                    @Html.AntiForgeryToken();
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" id="ReservationId" name="ReservationId" value="@Model.ReservationId" />
+
                     <div class="form-group">
                         <label for="UserId" class="custom-label">Потребител ID</label>
                         <input type="text" class="form-control custom-input" id="UserId" name="UserId" value="@Model.UserId" readonly />
@@ -25,7 +26,8 @@
                     </div>
                     <div class="form-group">
                         <label for="TableId" class="custom-label">Маса</label>
-                        <input type="text" class="form-control custom-input" id="TableId" name="TableId" value="@Model.TableId" />
+                        <select class="form-control custom-select" id="TableId" name="TableId" asp-items="ViewBag.TableOptions">
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="IsIndor" class="custom-label">Местоположение</label>
@@ -42,9 +44,14 @@
             </div>
         </div>
 
+        <!-- Добавяне на изображение с разположение на масите -->
+        <div class="image-container mt-4">
+            <img src="~/assets/img/tables-layout.jpg" alt="Разположение на масите" class="table-layout-image" />
+        </div>
     }
 }
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <link href="~/css/reservation/edit-form-styles.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/reservation/edit-table-map-styles.css" rel="stylesheet" asp-append-version="true" />
 }

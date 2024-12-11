@@ -28,6 +28,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IReservationService, ReservationService>();
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITableService, TableService>();
 
         services.AddScoped<IRepository<MenuItem>, MenuItemRepository>();
         services.AddScoped<IRepository<Category>, CategoryRepository>();

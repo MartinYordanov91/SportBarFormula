@@ -16,12 +16,14 @@ namespace SportBarFormula.Controllers;
 [Authorize]
 public class ReservationController(
     IModelStateLoggerService logger,
-    IReservationService service
+    IReservationService service,
+    ITableService tableService
     ) : Controller
 {
 
     private readonly IReservationService _service = service;
     private readonly IModelStateLoggerService _logger = logger;
+    private readonly ITableService _tableService = tableService;
 
     //--------------------------------------------------------------------------------------------------------> Index
     /// <summary>
@@ -116,24 +118,27 @@ public class ReservationController(
             return NotFound();
         }
 
+        var tables = await _tableService.GetAllTablesAsync();
+        ViewBag.TableOptions = new SelectList(tables, "TableId", "TableNumber", reservation.TableId);
+
         ViewBag.IsIndorOptions = new SelectList(
             new List<SelectListItem>
             {
-               new() { Value = "true", Text = "Вътре", Selected = reservation.IsIndor },
-               new() { Value = "false", Text = "Вън", Selected = !reservation.IsIndor }
+           new() { Value = "true", Text = "Вътре", Selected = reservation.IsIndor },
+           new() { Value = "false", Text = "Вън", Selected = !reservation.IsIndor }
             }, "Value", "Text", reservation.IsIndor
         );
 
-
         ViewBag.IsCanceledOptions = new SelectList(
             new List<SelectListItem> {
-                new () { Value = "false", Text = "Активна", Selected = !reservation.IsCanceled },
-                new () { Value = "true", Text = "Анулирана", Selected = reservation.IsCanceled }
+            new () { Value = "false", Text = "Активна", Selected = !reservation.IsCanceled },
+            new () { Value = "true", Text = "Анулирана", Selected = reservation.IsCanceled }
             }, "Value", "Text", reservation.IsCanceled
         );
 
         return View(reservation);
     }
+
 
     /// <summary>
     /// Processes the edit form submission for a specific reservation.
@@ -147,6 +152,24 @@ public class ReservationController(
     {
         if (!ModelState.IsValid)
         {
+            var tables = await _tableService.GetAllTablesAsync();
+            ViewBag.TableOptions = new SelectList(tables, "TableId", "TableNumber", model.TableId);
+
+            ViewBag.IsIndorOptions = new SelectList(
+                new List<SelectListItem>
+                {
+               new() { Value = "true", Text = "Вътре", Selected = model.IsIndor },
+               new() { Value = "false", Text = "Вън", Selected = !model.IsIndor }
+                }, "Value", "Text", model.IsIndor
+            );
+
+            ViewBag.IsCanceledOptions = new SelectList(
+                new List<SelectListItem> {
+                new () { Value = "false", Text = "Активна", Selected = !model.IsCanceled },
+                new () { Value = "true", Text = "Анулирана", Selected = model.IsCanceled }
+                }, "Value", "Text", model.IsCanceled
+            );
+
             _logger.LogModelErrors(ModelState);
             return View(model);
         }
@@ -155,6 +178,7 @@ public class ReservationController(
 
         return RedirectToAction(nameof(Index));
     }
+
 
     //--------------------------------------------------------------------------------------------------------> Cancel
     /// <summary>
