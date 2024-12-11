@@ -1,52 +1,48 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SportBarFormula.Core.ViewModels;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 
-namespace SportBarFormula.Controllers;
-
-/// <summary>
-/// Home controller for handling main application pages.
-/// </summary>
-public class HomeController() : Controller
+namespace SportBarFormula.Controllers
 {
     /// <summary>
-    /// Handles the Index page request.
+    /// Home controller for handling main application pages.
     /// </summary>
-    /// <returns>Returns the Index view.</returns>
-    public IActionResult Index()
+    public class HomeController : Controller
     {
-        return View();
-    }
-
-    /// <summary>
-    /// Handles the Privacy page request.
-    /// </summary>
-    /// <returns>Returns the Privacy view.</returns>
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-   
-    /// <summary>
-    /// Handles errors and returns the Error view.
-    /// </summary>
-    /// <returns>Returns the Error view with the error details.</returns>
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error(int statusCode)
-    {
-
-        if(statusCode == 400)
+        /// <summary>
+        /// Handles the Index page request.
+        /// </summary>
+        /// <returns>Returns the Index view.</returns>
+        public IActionResult Index()
         {
-            return View("Error400");
+            return View();
         }
 
-        if(statusCode == 401)
+        /// <summary>
+        /// Handles the Privacy page request.
+        /// </summary>
+        /// <returns>Returns the Privacy view.</returns>
+        public IActionResult Privacy()
         {
-            return View("Error401");
+            return View();
         }
 
-        return View();
+        /// <summary>
+        /// Handles errors and returns the Error view.
+        /// </summary>
+        /// <returns>Returns the Error view with the error details.</returns>
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error(int statusCode)
+        {
+            if (statusCode == 400)
+            {
+                return View("Error400");
+            }
+
+            if (statusCode == 401)
+            {
+                return View("Error401");
+            }
+
+            return View();
+        }
     }
 }
