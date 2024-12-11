@@ -81,6 +81,18 @@ public static class MockDbContextFactory
             dbContext.SaveChanges();
         }
 
+        if (!dbContext.Tables.Any())
+        {
+            dbContext.Tables.AddRange(
+
+                new Table { TableId = 1, Capacity = 6, TableNumber = "100", Location = "indoor", IsAvailable = true, },
+                new Table { TableId = 2, Capacity = 6, TableNumber = "101", Location = "indoor", IsAvailable = true, },
+                new Table { TableId = 3, Capacity = 6, TableNumber = "102", Location = "indoor", IsAvailable = true, },
+                new Table { TableId = 4, Capacity = 6, TableNumber = "103", Location = "indoor", IsAvailable = true, },
+                new Table { TableId = 5, Capacity = 6, TableNumber = "104", Location = "indoor", IsAvailable = true, }
+            );
+            dbContext.SaveChanges();
+        };
         return dbContext;
     }
 

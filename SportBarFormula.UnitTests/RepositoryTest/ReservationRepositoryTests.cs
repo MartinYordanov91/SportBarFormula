@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SportBarFormula.Infrastructure.Data;
+﻿using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys;
 using SportBarFormula.UnitTests.Moq;
