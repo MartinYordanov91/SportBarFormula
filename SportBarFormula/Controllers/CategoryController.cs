@@ -46,6 +46,7 @@ public class CategoryController(
         return View();
     }
 
+   
     /// <summary>
     /// Processes the post request to create a new category.
     /// </summary>
@@ -61,7 +62,19 @@ public class CategoryController(
             return View(model);
         }
 
-        await _service.AddCategoryAsync(model);
+        try
+        {
+            await _service.AddCategoryAsync(model);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Unauthorized();
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return BadRequest();
+        }
 
         return RedirectToAction(nameof(Index));
     }
@@ -101,7 +114,19 @@ public class CategoryController(
             return View(model);
         }
 
-        await _service.UpdateCategoryAsync(model);
+        try
+        {
+            await _service.UpdateCategoryAsync(model);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Unauthorized();
+        }
+        catch (InvalidOperationException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return BadRequest();
+        }
 
         return RedirectToAction(nameof(Index));
     }
