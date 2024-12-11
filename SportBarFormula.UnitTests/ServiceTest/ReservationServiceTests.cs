@@ -39,10 +39,11 @@ public class ReservationServiceTests
     public async Task AddReservationAsync_ShouldAddReservation()
     {
         // Arrange
+        var futureDate = DateTime.UtcNow.AddDays(1).ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
         var newReservation = new ReservationViewModel
         {
             UserId = "test-user-id-1",
-            ReservationDate = DateTime.UtcNow.ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture),
+            ReservationDate = futureDate,
             NumberOfGuests = 4,
             IsIndor = true
         };
@@ -75,8 +76,30 @@ public class ReservationServiceTests
 
         // Act & Assert
         var exception = Assert.ThrowsAsync<ArgumentException>(async () => await _reservationService.AddReservationAsync(newReservation));
-        Assert.That(exception.Message, Is.EqualTo("Invalid reservation date format."));
+        Assert.That(exception.Message, Is.EqualTo("Грешна дата"));
     }
+
+    /// <summary>
+    /// Tests if AddReservationAsync throws ArgumentException for reservation date in the past.
+    /// </summary>
+    [Test]
+    public void AddReservationAsync_ShouldThrowArgumentException_ForDateInThePast()
+    {
+        // Arrange
+        var pastDate = DateTime.UtcNow.AddDays(-1).ToString("dd-MM-yyyy HH:mm", CultureInfo.InvariantCulture);
+        var newReservation = new ReservationViewModel
+        {
+            UserId = "test-user-id",
+            ReservationDate = pastDate,
+            NumberOfGuests = 4,
+            IsIndor = true
+        };
+
+        // Act & Assert
+        var exception = Assert.ThrowsAsync<ArgumentException>(async () => await _reservationService.AddReservationAsync(newReservation));
+        Assert.That(exception.Message, Is.EqualTo("Не може да резервирате в миналото"));
+    }
+
 
     /// <summary>
     /// Tests if CancelReservationAsync cancels the reservation correctly.
