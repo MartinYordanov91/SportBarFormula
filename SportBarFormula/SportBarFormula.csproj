@@ -4,7 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-SportBarFormula-90b56048-6e47-4e08-9577-70d493fe3599</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
