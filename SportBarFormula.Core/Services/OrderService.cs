@@ -10,27 +10,16 @@ namespace SportBarFormula.Core.Services;
 /// <summary>
 /// Order Management Service.
 /// </summary>
-public class OrderService : IOrderService
-{
-    private readonly IRepository<Order> _repository;
-    private readonly IRepository<OrderItem> _orderItemRepository;
-    private readonly IRepository<MenuItem> _menuitemRepository;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="OrderService"/> class.
-    /// </summary>
-    /// <param name="repository">The repository for orders.</param>
-    /// <param name="orderItemRepository">The repository for order items.</param>
-    /// <param name="menuitemRepository">The repository for menu items.</param>
-    public OrderService(
+public class OrderService(
         IRepository<Order> repository,
         IRepository<OrderItem> orderItemRepository,
-        IRepository<MenuItem> menuitemRepository)
-    {
-        _repository = repository;
-        _orderItemRepository = orderItemRepository;
-        _menuitemRepository = menuitemRepository;
-    }
+        IRepository<MenuItem> menuitemRepository
+    ) : IOrderService
+{
+    private readonly IRepository<Order> _repository = repository;
+    private readonly IRepository<OrderItem> _orderItemRepository = orderItemRepository;
+    private readonly IRepository<MenuItem> _menuitemRepository = menuitemRepository;
+
 
     /// <summary>
     /// Adds an item to the cart.
@@ -44,11 +33,15 @@ public class OrderService : IOrderService
 
         if (existOrderItem == null)
         {
-            var menuitem = await _menuitemRepository.GetByIdAsync(menuItemId);
+            MenuItem menuitem;
 
-            if (menuitem == null)
+            try
             {
-                throw new Exception("MenuItem not found");
+                menuitem = await _menuitemRepository.GetByIdAsync(menuItemId);
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new InvalidOperationException("No MenuItem found in the repository.");
             }
 
             existOrderItem = new OrderItemViewModel()
@@ -65,7 +58,7 @@ public class OrderService : IOrderService
         }
         else
         {
-            await UpdateQuantityAsync(existOrderItem.OrderItemId, existOrderItem.Quantity + 1);
+            await UpdateQuantityAsync(existOrderItem.OrderItemId, existOrderItem.Quantity + quantity);
         }
     }
 
@@ -129,7 +122,7 @@ public class OrderService : IOrderService
     {
         if (order == null)
         {
-            throw new Exception("Order not found");
+            throw new ArgumentNullException(nameof(order), "Order not found");
         }
 
         if (order.OrderItems.Count > 0)
@@ -139,6 +132,7 @@ public class OrderService : IOrderService
             await _repository.UpdateAsync(orderToUpdate);
         }
     }
+
 
     /// <summary>
     /// Retrieves the draft order for the specified user.
@@ -196,14 +190,18 @@ public class OrderService : IOrderService
     /// </summary>
     /// <param name="orderItemId">The ID of the order item to remove.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Throws an exception if the order item is not found.</exception>
+    /// <exception cref="InvalidOperationException">Throws an exception if the order item is not found.</exception>
     public async Task RemoveItemFormCartAsync(int orderItemId)
     {
-        var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+        OrderItem orderItem ;
 
-        if (orderItem == null)
+        try
         {
-            throw new Exception("Order item not found");
+            orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new InvalidOperationException("No orderItem found in the repository.");
         }
 
         await _orderItemRepository.DeleteAsync(orderItemId);
@@ -214,14 +212,18 @@ public class OrderService : IOrderService
     /// </summary>
     /// <param name="orderModel">The order model containing updated information.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Throws an exception if the order is not found.</exception>
+    /// <exception cref="InvalidOperationException">Throws an exception if the order is not found.</exception>
     public async Task UpdateOrderAsync(OrderViewModel orderModel)
     {
-        var order = await _repository.GetByIdAsync(orderModel.OrderId);
+        Order order ;
 
-        if (order == null)
+        try
         {
-            throw new Exception("Order not found");
+            order = await _repository.GetByIdAsync(orderModel.OrderId);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new InvalidOperationException("No order found in the repository.");
         }
 
         order.TotalAmount = orderModel.TotalAmount;
@@ -236,14 +238,18 @@ public class OrderService : IOrderService
     /// <param name="orderItemId">The ID of the order item to update.</param>
     /// <param name="quantity">The new quantity for the order item.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
-    /// <exception cref="Exception">Throws an exception if the order item is not found.</exception>
+    /// <exception cref="InvalidOperationException">Throws an exception if the order item is not found.</exception>
     public async Task UpdateQuantityAsync(int orderItemId, int quantity)
     {
-        var orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+        OrderItem orderItem ;
 
-        if (orderItem == null)
+        try
         {
-            throw new Exception("Order item not found");
+            orderItem = await _orderItemRepository.GetByIdAsync(orderItemId);
+        }
+        catch (KeyNotFoundException)
+        {
+            throw new InvalidOperationException("No orderItem found in the repository.");
         }
 
         orderItem.Quantity = quantity;
