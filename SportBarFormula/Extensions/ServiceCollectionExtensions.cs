@@ -34,6 +34,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRepository<Reservation>, ReservationRepository>();
         services.AddScoped<IRepository<Order>, OrderRepository>();
         services.AddScoped<IRepository<OrderItem>, OrderItemRepository>();
+        services.AddScoped<IRepository<Table>, TableRepository>();
 
         services.AddScoped<IModelStateLoggerService, ModelStateLoggerServiceILogger>();
 
