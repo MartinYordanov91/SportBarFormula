@@ -73,18 +73,29 @@ public class ReservationController(
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(ReservationViewModel model)
     {
-
         var userId = User.Id();
         model.UserId = userId;
 
         if (!ModelState.IsValid)
         {
             _logger.LogModelErrors(ModelState);
-
             return View(model);
         }
 
-        await _service.AddReservationAsync(model);
+        try
+        {
+            await _service.AddReservationAsync(model);
+        }
+        catch (ArgumentException ex)
+        {
+            ModelState.AddModelError(string.Empty, ex.Message);
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError(string.Empty, "An unexpected error occurred. Please try again.");
+            return View(model);
+        }
 
         return RedirectToAction(nameof(MyReservations));
     }

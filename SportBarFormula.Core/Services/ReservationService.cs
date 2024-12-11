@@ -27,7 +27,12 @@ public class ReservationService(
     {
         if (!DateTime.TryParseExact(model.ReservationDate, ReservationDateTimeStringFormat, CultureInfo.InvariantCulture, DateTimeStyles.None, out var reservationDate))
         {
-            throw new ArgumentException("Invalid reservation date format.");
+            throw new ArgumentException("Грешна дата");
+        }
+
+        if (reservationDate < DateTime.Now)
+        {
+            throw new ArgumentException("Не може да резервирате в миналото");
         }
 
         var reservation = new Reservation

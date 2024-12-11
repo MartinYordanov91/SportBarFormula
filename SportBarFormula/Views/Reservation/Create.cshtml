@@ -11,6 +11,7 @@
                 <input type="hidden" asp-for="UserId" />
                 <div class="form-group">
                     <label for="ReservationDate" class="custom-label">Дата и час на резервацията</label>
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="input-group date-time">
                         <select class="form-control date-part" id="Day">
                             @for (int day = 1; day <= 31; day++)
@@ -32,7 +33,7 @@
                                 <option value="@year">@year</option>
                             }
                         </select>
-                        <span>' '</span>
+                        <br />
                         <select class="form-control date-part" id="Hour">
                             @for (int hour = 9; hour <= 22; hour++)
                             {
