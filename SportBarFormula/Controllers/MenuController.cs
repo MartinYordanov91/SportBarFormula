@@ -38,7 +38,7 @@ public class MenuController(
         var serviceModel = await _service.AllAsync(queryModel);
 
         queryModel.Menuitems = serviceModel.MenuItems;
-        queryModel.TotalMenuItems = queryModel.TotalMenuItems;
+        queryModel.TotalMenuItems = serviceModel.TotalMenuItemsCount;
 
         var allcategory = await _categoryService.GetAllCategoriesAsync();
         queryModel.Categories = allcategory.Select(c => c.Name).ToList();
@@ -46,6 +46,8 @@ public class MenuController(
         return View(queryModel);
     }
 
+  
+   
 
     //--------------------------------------------------------------------------------------------------------------------->   Details
     /// <summary>
@@ -104,10 +106,23 @@ public class MenuController(
             return View(model);
         }
 
-        await _service.AddMenuItemAsync(model);
-
-        return RedirectToAction(nameof(Index));
+        try
+        {
+            await _service.AddMenuItemAsync(model);
+            return RedirectToAction(nameof(Index));
+        }
+        catch (InvalidOperationException)
+        {
+            ModelState.AddModelError(string.Empty, "There was an error creating the menu item.");
+            ViewBag.Categories = new SelectList(await _categoryService.GetAllCategoriesAsync(), "CategoryId", "Name");
+            return View(model);
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return Unauthorized();
+        }
     }
+
 
     //--------------------------------------------------------------------------------------------------------------------->   Edit
     /// <summary>
