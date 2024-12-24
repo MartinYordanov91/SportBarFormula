@@ -1,124 +1,113 @@
-# SportBarFormula
+# SportBarFormula.Core Documentation
 
-SportBarFormula е уеб приложение, предназначено за управление на спортни барове, предоставяйки функционалности за резервации, управление на менюта и събития. Проектът е базиран на архитектура с четири слоя и е лесен за разширяване и поддръжка.
-
----
-
-## Основни функционалности
-- **Резервации:** Лесно управление на резервации от клиенти.
-- **Управление на меню:** Динамично актуализиране на менюто в реално време.
-- **Събития:** Управление и реклама на спортни събития.
-- **Модулни тестове:** Гарантиране на качеството чрез добре дефинирани тестови случаи.
+## Overview
+This document provides a summary of the main classes, methods, and their descriptions for the SportBarFormula.Core project.
 
 ---
 
-## Структура на проекта
-Проектът е организиран в четири основни слоя:
+## Services
 
-### 1. Web Layer
-- **Описание:** Слой, отговарящ за потребителския интерфейс (UI) и взаимодействието с потребителя.
-- **Основни компоненти:**
-  - Контролери: Обработват заявките от потребителите.
-  - Изгледи: HTML/CSS/JavaScript за визуализиране на данните.
-  - Статични ресурси: CSS, JS и изображения.
+### CategoryService
+#### Methods:
+- **GetAllCategoriesAsync**
+  - **Description**: Retrieves all categories.
+  - **Returns**: A collection of `CategoryViewModel` containing category details.
 
-### 2. Core Layer
-- **Описание:** Съдържа бизнес логиката на приложението.
-- **Основни компоненти:**
-  - Сервизи: Изпълняват бизнес операциите.
-  - Модели: Представят основните структури от данни.
-  - Бизнес правила: Валидират и обработват данните.
+- **AddCategoryAsync(CategoryViewModel)**
+  - **Description**: Adds a new category.
+  - **Parameters**:
+    - `model`: The view model containing category details to add.
+  - **Returns**: A task representing the asynchronous operation.
 
-### 3. Infrastructure Layer
-- **Описание:** Отговаря за достъпа до данни и външни услуги.
-- **Основни компоненти:**
-  - Репозитории: Управляват операциите с базата данни.
-  - Контексти: Връзка с базата данни чрез ORM.
-  - Интеграции: Връзки с външни API.
+- **GetCategoryByIdAsync(int id)**
+  - **Description**: Retrieves a category by its ID.
+  - **Parameters**:
+    - `id`: The ID of the category.
+  - **Returns**: The view model containing category details.
+  - **Throws**:
+    - `InvalidOperationException`: When no categories are found.
 
-### 4. UnitTest Layer
-- **Описание:** Съдържа модулни тестове за проверка на функционалността на отделните компоненти.
-- **Основни компоненти:**
-  - Тестови класове: Тестове за всеки слой на приложението.
-  - Методи за проверка: Уверяват се, че бизнес логиката работи коректно.
+- **UpdateCategoryAsync(CategoryViewModel)**
+  - **Description**: Updates an existing category.
+  - **Parameters**:
+    - `model`: The view model containing updated category details.
+  - **Returns**: A task representing the asynchronous operation.
 
----
-
-## Инсталация и стартиране
-
-### 1. Клониране на репозиторито
-```bash
-git clone https://github.com/MartinYordanov91/SportBarFormula.git
-```
-
-### 2. Настройка на средата
-- Уверете се, че разполагате с:
-  - .NET Core SDK
-  - SQL Server или друга съвместима база данни
-- Конфигурирайте `appsettings.json`:
-```json
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER;Database=SportBarFormula;User Id=YOUR_USER;Password=YOUR_PASSWORD;"
-  }
-}
-```
-
-### 3. Стартиране на приложението
-```bash
-dotnet run
-```
+- **DeleteCategoryAsync(int id)**
+  - **Description**: Deletes a category by its ID if it has no associated menu items.
+  - **Parameters**:
+    - `id`: The ID of the category.
+  - **Returns**: A task representing the asynchronous operation.
+  - **Throws**:
+    - `InvalidOperationException`: When no categories are found.
+    - `InvalidOperationException`: When the category has associated menu items.
 
 ---
 
-## Тестване
-Модулните тестове гарантират, че отделните компоненти работят коректно. Стартиране на тестовете:
-```bash
-dotnet test
-```
+### MenuItemService
+#### Methods:
+- **AddMenuItemAsync(CreateMenuItemViewModel)**
+  - **Description**: Adds a new menu item to the repository.
+  - **Parameters**:
+    - `model`: The view model containing menu item details.
+  - **Returns**: A task representing the asynchronous operation.
+
+- **GetMenuItemDetailsByIdAsync(int id)**
+  - **Description**: Retrieves the details of a menu item by its ID.
+  - **Parameters**:
+    - `id`: The ID of the menu item.
+  - **Returns**: The view model containing menu item details.
+  - **Throws**:
+    - `InvalidOperationException`: When the menu item is not found.
 
 ---
 
-## Структура на XML файловете
+### OrderService
+#### Methods:
+- **AddOrderAsync(OrderViewModel)**
+  - **Description**: Adds a new order.
+  - **Parameters**:
+    - `order`: The order to add.
 
-### WebLayer.xml
-- **Описание:** Конфигурация за уеб слоя.
-- **Основни елементи:**
-  - Настройки за рутинг.
-  - Зависимости между контролерите и изгледите.
-
-### CoreLayer.xml
-- **Описание:** Конфигурация за бизнес логиката.
-- **Основни елементи:**
-  - Регистрация на сервизи.
-  - Бизнес правила.
-
-### InfrastructureLayer.xml
-- **Описание:** Конфигурация за достъп до данни.
-- **Основни елементи:**
-  - Настройки за базата данни.
-  - Репозитории и контексти.
-
-### UnitTestLayer.xml
-- **Описание:** Конфигурация за тестовете.
-- **Основни елементи:**
-  - Настройки за тестови среди.
-  - Тестови класове и методи.
+- **RemoveItemFormCartAsync(int orderItemId)**
+  - **Description**: Removes an item from the cart asynchronously.
+  - **Parameters**:
+    - `orderItemId`: The ID of the order item to remove.
+  - **Returns**: A task representing the asynchronous operation.
+  - **Throws**:
+    - `InvalidOperationException`: When the order item is not found.
 
 ---
 
-## Принос
-- Изпращайте pull request-и с нови функционалности или подобрения.
-- Докладвайте проблеми в секцията Issues на GitHub.
+### ReservationService
+#### Methods:
+- **AddReservationAsync(ReservationViewModel)**
+  - **Description**: Adds a new reservation asynchronously to the repository.
+  - **Parameters**:
+    - `model`: The reservation view model containing the details of the reservation to be added.
+  - **Returns**: A task representing the asynchronous operation.
+
+- **CancelReservationAsync(int id)**
+  - **Description**: Cancels the reservation by setting the IsCanceled flag to true.
+  - **Parameters**:
+    - `id`: The ID of the reservation to cancel.
+  - **Returns**: A task representing the asynchronous operation.
 
 ---
 
-## Лиценз
-Този проект е лицензиран под [MIT лиценз](LICENSE).
+## ViewModels
 
----
+### OrderItemViewModel
+- **OrderItemId**: Gets or sets the unique identifier of the order item.
+- **MenuItemId**: Gets or sets the unique identifier of the menu item.
+- **MenuItemName**: Gets or sets the name of the menu item.
+- **Quantity**: Gets or sets the quantity of the menu item.
+- **Price**: Gets or sets the price of the menu item at the time of the order.
 
-## Контакти
-За въпроси и предложения:
-- GitHub: [MartinYordanov91](https://github.com/MartinYordanov91)
-- Email: martin.yordanov91@example.com
+### OrderViewModel
+- **OrderId**: Gets or sets the unique identifier of the order.
+- **UserId**: Gets or sets the identifier of the user who placed the order.
+- **OrderDate**: Gets or sets the date of the order in string format.
+- **TotalAmount**: Gets or sets the total amount of the order.
+- **Status**: Gets or sets the status of the order (Draft, Completed, or Canceled).
+- **OrderItems**: Gets or sets the list of items in the order.
