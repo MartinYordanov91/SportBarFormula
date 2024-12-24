@@ -2,11 +2,12 @@
 using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
+using static SportBarFormula.Infrastructure.Constants.ErrorMessageConstants.DataErrorMessages;
 
 namespace SportBarFormula.Infrastructure.Repositorys;
 
 /// <summary>
-/// Reservation Management Repository.
+/// Repository class for managing Reservation entities in the database.
 /// </summary>
 public class ReservationRepository(
     SportBarFormulaDbContext context
@@ -19,28 +20,15 @@ public class ReservationRepository(
     /// </summary>
     /// <param name="entity">The reservation to add.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the Reservation entity is null.</exception>
     public async Task AddAsync(Reservation entity)
     {
-        await _context.Reservations.AddAsync(entity);
-        await _context.SaveChangesAsync();
-    }
-
-    /// <summary>
-    /// Asynchronously deletes a reservation from the database by its ID.
-    /// </summary>
-    /// <param name="id">The ID of the reservation to delete.</param>
-    /// <returns>A Task representing the asynchronous operation.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown when the reservation is not found.</exception>
-    public async Task DeleteAsync(int id)
-    {
-        var entity = await _context.Reservations.FindAsync(id);
-
         if (entity == null)
         {
-            throw new KeyNotFoundException("Reservation not found");
+            throw new ArgumentNullException(nameof(entity), ReservationObjectIsNull);
         }
 
-        _context.Reservations.Remove(entity);
+        await _context.Reservations.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
 
@@ -65,7 +53,7 @@ public class ReservationRepository(
 
         if (entity == null)
         {
-            throw new KeyNotFoundException("Reservation not found");
+            throw new KeyNotFoundException(ReservationNotFound);
         }
 
         return entity;
@@ -76,9 +64,34 @@ public class ReservationRepository(
     /// </summary>
     /// <param name="entity">The reservation to update.</param>
     /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="ArgumentNullException">Thrown when the Reservation entity is null.</exception>
     public async Task UpdateAsync(Reservation entity)
     {
+        if (entity == null)
+        {
+            throw new ArgumentNullException(nameof(entity), ReservationObjectIsNull);
+        }
+
         _context.Reservations.Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Asynchronously deletes a reservation from the database by its ID.
+    /// </summary>
+    /// <param name="id">The ID of the reservation to delete.</param>
+    /// <returns>A Task representing the asynchronous operation.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when the reservation is not found.</exception>
+    public async Task DeleteAsync(int id)
+    {
+        var entity = await _context.Reservations.FindAsync(id);
+
+        if (entity == null)
+        {
+            throw new KeyNotFoundException(ReservationNotFound);
+        }
+
+        _context.Reservations.Remove(entity);
         await _context.SaveChangesAsync();
     }
 }

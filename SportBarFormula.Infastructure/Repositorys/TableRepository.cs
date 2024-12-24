@@ -2,6 +2,7 @@
 using SportBarFormula.Infrastructure.Data;
 using SportBarFormula.Infrastructure.Data.Models;
 using SportBarFormula.Infrastructure.Repositorys.Contracts;
+using static SportBarFormula.Infrastructure.Constants.ErrorMessageConstants.DataErrorMessages;
 
 namespace SportBarFormula.Infrastructure.Repositorys;
 
@@ -24,21 +25,19 @@ public class TableRepository(
     }
 
     /// <summary>
-    /// Deletes a Table entity by its ID asynchronously.
+    /// Adds a new Table entity to the database asynchronously.
     /// </summary>
-    /// <param name="id">The ID of the Table entity to delete.</param>
+    /// <param name="entity">The Table entity to add.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    /// <exception cref="KeyNotFoundException">Thrown when the Table entity is not found.</exception>
-    public async Task DeleteAsync(int id)
+    /// <exception cref="ArgumentNullException">Thrown when the Table entity is null.</exception>
+    public async Task AddAsync(Table entity)
     {
-        var table = await _context.Tables.FindAsync(id);
-
-        if (table == null)
+        if (entity == null)
         {
-            throw new KeyNotFoundException("table not found");
+            throw new ArgumentNullException(nameof(entity), TableObjectIsNull);
         }
 
-        _context.Tables.Remove(table);
+        await _context.Tables.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
 
@@ -54,27 +53,10 @@ public class TableRepository(
 
         if (table == null)
         {
-            throw new KeyNotFoundException("table not found");
+            throw new KeyNotFoundException(TableNotFound);
         }
 
         return table;
-    }
-
-    /// <summary>
-    /// Adds a new Table entity to the database asynchronously.
-    /// </summary>
-    /// <param name="entity">The Table entity to add.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    /// <exception cref="ArgumentNullException">Thrown when the Table entity is null.</exception>
-    public async Task AddAsync(Table entity)
-    {
-        if (entity == null)
-        {
-            throw new ArgumentNullException(nameof(entity), "Table entity is null");
-        }
-
-        await _context.Tables.AddAsync(entity);
-        await _context.SaveChangesAsync();
     }
 
     /// <summary>
@@ -87,10 +69,29 @@ public class TableRepository(
     {
         if (entity == null)
         {
-            throw new ArgumentNullException(nameof(entity), "Table entity is null");
+            throw new ArgumentNullException(nameof(entity), TableObjectIsNull);
         }
 
         _context.Tables.Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// Deletes a Table entity by its ID asynchronously.
+    /// </summary>
+    /// <param name="id">The ID of the Table entity to delete.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <exception cref="KeyNotFoundException">Thrown when the Table entity is not found.</exception>
+    public async Task DeleteAsync(int id)
+    {
+        var table = await _context.Tables.FindAsync(id);
+
+        if (table == null)
+        {
+            throw new KeyNotFoundException(TableNotFound);
+        }
+
+        _context.Tables.Remove(table);
         await _context.SaveChangesAsync();
     }
 }

@@ -177,6 +177,6 @@ public class OrderItemRepositoryTests
         // Act & Assert
         var exception = Assert.ThrowsAsync<ArgumentNullException>(async () => await _orderItemRepository.UpdateAsync(null));
         Assert.That(exception.ParamName, Is.EqualTo("entity"));
-        Assert.That(exception.Message, Does.Contain("OrderItem is null"));
+        Assert.That(exception.Message, Does.Contain("OrderItem entity is null"));
     }
 }
