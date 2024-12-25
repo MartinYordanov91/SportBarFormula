@@ -393,3 +393,42 @@ This module contains unit tests to validate the functionality of services, contr
     - **Parameters**:
       - `id`: The ID of the reservation to delete.
     - **Returns**: A task representing the asynchronous operation.
+
+## Extensions
+
+### Role Initializer
+- **Purpose**: Initializes roles and a default admin user in the application.
+- **Methods**:
+  - `InitializeAsync()`: Asynchronously creates predefined roles and a default administrator account.
+    - **Details**:
+      - Roles are created using the `RoleManager` provided by ASP.NET Core Identity.
+      - A default admin user is created with a predefined email and password if no admin user exists.
+    - **Dependencies**:
+      - `IServiceProvider`: Used to resolve `RoleManager` and `UserManager`.
+
+---
+
+### ServiceCollectionExtensions
+- **Purpose**: Provides extension methods for configuring and adding application-specific services to the dependency injection container.
+- **Methods**:
+  - `AddApplicationServices(IServiceCollection services)`: Registers core services, such as category, menu, and order services, into the dependency injection container.
+    - **Parameters**:
+      - `services`: The `IServiceCollection` instance where services will be registered.
+    - **Returns**: The updated `IServiceCollection`.
+    - **Details**: Includes custom business logic services required by the application.
+
+  - `AddApplicationDbContext(IServiceCollection services, IConfiguration config)`: Configures and registers the application's DbContext.
+    - **Parameters**:
+      - `services`: The `IServiceCollection` instance where the DbContext will be registered.
+      - `config`: The `IConfiguration` instance used to retrieve connection strings.
+    - **Returns**: The updated `IServiceCollection`.
+    - **Details**: Sets up Entity Framework Core with a connection string defined in the application's configuration files.
+
+  - `AddApplicationIdentity(IServiceCollection services, IConfiguration config)`: Configures and adds ASP.NET Core Identity services for user authentication and authorization.
+    - **Parameters**:
+      - `services`: The `IServiceCollection` instance where Identity services will be registered.
+      - `config`: The `IConfiguration` instance used to retrieve Identity-specific settings.
+    - **Returns**: The updated `IServiceCollection`.
+    - **Details**:
+      - Configures password requirements, user lockout options, and cookie settings.
+      - Integrates Identity with Entity Framework Core for user and role management.
