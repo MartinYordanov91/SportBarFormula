@@ -432,3 +432,72 @@ This module contains unit tests to validate the functionality of services, contr
     - **Details**:
       - Configures password requirements, user lockout options, and cookie settings.
       - Integrates Identity with Entity Framework Core for user and role management.
+
+## Testing
+
+### Overview
+The **SportBarFormula** project includes comprehensive testing to ensure the reliability and correctness of the application's components. The testing strategy covers unit tests for services, controllers, and repositories.
+
+---
+
+### Testing Frameworks
+- **xUnit**: Used for writing and executing unit tests.
+- **Moq**: Utilized for mocking dependencies, such as services and repositories, during testing.
+- **In-Memory Database**: Entity Framework Core's in-memory provider is used to test data access layers without requiring a physical database.
+
+---
+
+### Test Categories
+
+#### 1. **Controller Tests**
+- **Purpose**: Validates that controllers return correct views, statuses, and model states.
+- **Tested Controllers**:
+  - `Admin Controllers`: Tests for `HomeController`, `RoleController`, and `UsersController`.
+  - `Application Controllers`: Tests for `CategoryController`, `MenuController`, `OrderController`, and `ReservationController`.
+- **Example Tests**:
+  - Ensures `Index` actions return the correct view with expected data.
+  - Validates `Create` actions handle valid and invalid model states appropriately.
+  - Verifies redirect results for actions such as `Edit` and `Delete`.
+
+#### 2. **Service Tests**
+- **Purpose**: Ensures the business logic in services behaves correctly under various conditions.
+- **Tested Services**:
+  - `CategoryService`
+  - `MenuItemService`
+  - `OrderService`
+  - `ReservationService`
+- **Example Tests**:
+  - Verifies that `AddCategoryAsync` correctly adds a category.
+  - Ensures `GetMenuItemDetailsByIdAsync` throws an exception when the item does not exist.
+  - Confirms that `CancelReservationAsync` updates the reservation's status correctly.
+
+#### 3. **Repository Tests**
+- **Purpose**: Confirms that repositories interact with the database as expected.
+- **Approach**:
+  - Uses the EF Core In-Memory Database provider to simulate database operations.
+  - Verifies CRUD operations for `Category`, `MenuItem`, `Order`, and `Reservation` repositories.
+- **Example Tests**:
+  - Ensures `GetByIdAsync` retrieves the correct entity.
+  - Validates that `DeleteAsync` removes entities correctly and throws exceptions for non-existent IDs.
+
+---
+
+### Test Structure
+
+#### Naming Convention
+- Test methods are named using the `MethodName_StateUnderTest_ExpectedBehavior` format.
+  - **Example**: `AddCategoryAsync_ValidCategory_ReturnsSuccess`
+
+#### Test Organization
+- Each test class corresponds to the service, controller, or repository being tested.
+- Mock dependencies are initialized in the constructor or `SetUp` methods.
+
+---
+
+### Running Tests
+
+#### Command Line
+1. Navigate to the test project directory.
+2. Run the following command:
+   ```bash
+   dotnet test
