@@ -16,14 +16,8 @@ public class Payment
     [Comment("Identifier of the order associated with the payment")]
     public required int OrderId { get; set; }
 
-    [ForeignKey(nameof(OrderId))]
-    public required virtual Order Order { get; set; }
-
     [Comment("Identifier of the user who made the payment")]
     public required string UserId { get; set; }
-
-    [ForeignKey(nameof(UserId))]
-    public required virtual IdentityUser User { get; set; }
 
     [Comment("Date and time of the payment")]
     public required DateTime PaymentDate { get; set; }
@@ -39,5 +33,15 @@ public class Payment
     [MaxLength(PaymentStatusMaxLength)]
     [Comment("Payment status (e.g., successful, unsuccessful)")]
     public required string Status { get; set; }
+
+
+
+    [ForeignKey(nameof(OrderId))]
+    [Comment("Details of the order associated with this payment")]
+    public required virtual Order Order { get; set; }
+
+    [ForeignKey(nameof(UserId))]
+    [Comment("Details of the user who made the payment")]
+    public required virtual IdentityUser User { get; set; }
 }
 

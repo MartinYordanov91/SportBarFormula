@@ -15,9 +15,6 @@ public class Feedback
     [Comment("Identifier of the user who provided the feedback")]
     public required string UserId { get; set; }
 
-    [ForeignKey(nameof(UserId))]
-    public required virtual IdentityUser User { get; set; }
-
     [Comment("Rating given by the user (e.g., from 1 to 5)")]
     public required int Rating { get; set; }
 
@@ -26,4 +23,9 @@ public class Feedback
 
     [Comment("Date and time when the feedback was created")]
     public required DateTime CreatedDate { get; set; }
+
+
+    [ForeignKey(nameof(UserId))]
+    [Comment("Details of the user who provided the feedback")]
+    public required virtual IdentityUser User { get; set; }
 }

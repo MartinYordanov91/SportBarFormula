@@ -23,9 +23,6 @@ public class Order
     [Comment("Identifier of the user who placed the order")]
     public required string UserId { get; set; }
 
-    [ForeignKey(nameof(UserId))]
-    public virtual IdentityUser User { get; set; } = null!;
-
     [Comment("Order date")]
     public required DateTime OrderDate { get; set; }
 
@@ -36,9 +33,15 @@ public class Order
     [Comment("Status of the order")]
     public OrderStatus Status { get; set; } = OrderStatus.Draft;
 
+
+
+    [ForeignKey(nameof(UserId))]
+    [Comment("Details of the user who placed the order")]
+    public virtual IdentityUser User { get; set; } = null!;
+
     [Comment("Collection of order items")]
     public virtual ICollection<OrderItem> OrderItems { get; set; }
 
-    [Comment("Collection of payments associated with this order")] 
+    [Comment("Collection of payments associated with this order")]
     public virtual ICollection<Payment> Payments { get; set; }
 }

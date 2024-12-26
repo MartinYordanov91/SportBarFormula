@@ -58,8 +58,6 @@ public class MenuItem
     [Comment("Item category (drink, pizza, etc.)")]
     public Category Category { get; set; } = null!;
 
-
-
     [Comment("Collection of order items associated with this menu item")]
     public virtual ICollection<OrderItem> OrderItems { get; set; }
 }

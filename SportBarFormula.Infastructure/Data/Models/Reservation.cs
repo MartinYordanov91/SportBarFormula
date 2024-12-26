@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportBarFormula.Infrastructure.Data.Models;
 
@@ -17,17 +17,11 @@ public class Reservation
     [Comment("Identifier of the user who made the reservation")]
     public required string UserId { get; set; }
 
-    [ForeignKey(nameof(UserId))]
-    public  virtual IdentityUser User { get; set; } = null!;
-
     [Comment("Date and time of the reservation")]
     public required DateTime ReservationDate { get; set; }
 
     [Comment("Identifier of the reserved table")]
     public int? TableId { get; set; }
-
-    [ForeignKey(nameof(TableId))]
-    public virtual Table? Table { get; set; }
 
     [Comment("shows where the table is (indoor, outdoor)")]
     public bool IsIndor { get; set; }
@@ -37,5 +31,15 @@ public class Reservation
 
     [Comment("Indicates whether the reservation is canceled")]
     public bool IsCanceled { get; set; } = false;
+
+
+
+    [ForeignKey(nameof(TableId))]
+    [Comment("Details of the reserved table")]
+    public virtual Table? Table { get; set; }
+
+    [ForeignKey(nameof(UserId))]
+    [Comment("Details of the user who made the reservation")]
+    public virtual IdentityUser User { get; set; } = null!;
 }
 
