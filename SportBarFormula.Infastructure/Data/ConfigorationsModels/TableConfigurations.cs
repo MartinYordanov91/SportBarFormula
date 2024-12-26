@@ -5,7 +5,7 @@ using SportBarFormula.Infrastructure.Data.SeedData;
 
 namespace SportBarFormula.Infrastructure.Data.ConfigorationsModels;
 
-internal class TableConfigurations : IEntityTypeConfiguration<Table>
+public class TableConfigurations : IEntityTypeConfiguration<Table>
 {
 
     public void Configure(EntityTypeBuilder<Table> builder)
