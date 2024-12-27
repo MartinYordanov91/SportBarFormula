@@ -66,6 +66,28 @@ public class OrderController(
         return View(userOrder);
     }
 
+    /// <summary>
+    /// Retrieves the count of items in the current user's cart.
+    /// </summary>
+    /// <returns>The count of items in the cart as JSON.</returns>
+    [HttpGet]
+    public async Task<IActionResult> GetCartItemCount()
+    {
+        var user = await _userManager.GetUserAsync(User);
+
+        if (user == null)
+        {
+            return Json(0);
+        }
+
+        var userOrder = await _service.GetUserDraftOrder(user);
+        var cartItemCount = userOrder.OrderItems.Sum(oi => oi.Quantity);
+
+        return Json(cartItemCount);
+    }
+
+
+
     //--------------------------------------------------------------------------------------------------------------------------------------> Checkout
     /// <summary>
     /// Completes the checkout process.
